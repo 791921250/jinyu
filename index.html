@@ -1,0 +1,2596 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#050907">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23050907'/%3E%3Ctext x='16' y='23' font-size='18' text-anchor='middle' fill='%23c9a86a'%3E缘%3C/text%3E%3C/svg%3E">
+<title>金玉良缘 · 上京联姻局</title>
+<style>
+:root{
+  --ink:#050907;--ink2:#0a100d;--ink3:#0e1612;--ink4:#131d17;
+  --jade:#8fb3a4;--jade2:#cfe0d6;--jade3:#5f8274;
+  --gold:#c9a86a;--gold2:#eed9a8;--gold3:#7d6236;
+  --red:#9e3d30;--red2:#c25a47;
+  --paper:#efe9da;--text:#d9e2da;--muted:#93a399;--dim:#66766c;
+  --line:rgba(201,168,106,.20);--line2:rgba(201,168,106,.44);--line3:rgba(143,179,164,.16);
+  --serif:"Songti SC","STSong","Noto Serif SC","Source Han Serif SC","SimSun",serif;
+  --sans:"PingFang SC","HarmonyOS Sans SC","Noto Sans SC","Microsoft YaHei",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:#020403;color:var(--text);font-family:var(--sans);font-size:16.5px;line-height:1.7;overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer;touch-action:manipulation}
+input{font-family:inherit;color:inherit;background:none;border:none;outline:none}
+img{display:block;max-width:100%}
+[hidden]{display:none!important}
+::selection{background:rgba(201,168,106,.28);color:#fff}
+::-webkit-scrollbar{width:0;height:0}
+
+#app{position:relative;width:100%;max-width:480px;height:100vh;height:100dvh;margin:0 auto;overflow:hidden;background:var(--ink)}
+@media(min-width:520px){
+  #app{box-shadow:0 0 0 1px rgba(201,168,106,.14),0 40px 120px rgba(0,0,0,.85)}
+}
+
+/* ---------- 氛围层 ---------- */
+#ambient{position:absolute;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;overflow:hidden}
+#ambient::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;
+  background:radial-gradient(120% 60% at 50% -8%,rgba(143,179,164,.10),transparent 60%),
+  radial-gradient(90% 40% at 100% 108%,rgba(201,168,106,.06),transparent 70%),
+  linear-gradient(180deg,#07100c 0%,#050907 60%,#040705 100%)}
+#motes{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;z-index:3;pointer-events:none;opacity:.55}
+.f-cool{filter:brightness(1.12) saturate(.55) hue-rotate(-8deg)}
+.f-warm{filter:brightness(1.04) saturate(1.24) hue-rotate(-6deg)}
+.f-dark{filter:brightness(.55) saturate(.6) contrast(1.05)}
+.grain{position:absolute;top:0;left:0;right:0;bottom:0;z-index:4;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E")}
+
+/* ---------- 通用 ---------- */
+.screen{position:absolute;top:0;left:0;right:0;bottom:0;z-index:5;display:flex;flex-direction:column}
+.btn-main{position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:55px;
+  border:1px solid rgba(201,168,106,.62);color:var(--gold2);font-size:18px;letter-spacing:.42em;text-indent:.42em;
+  background:linear-gradient(180deg,rgba(201,168,106,.13),rgba(201,168,106,.03) 55%,rgba(158,61,48,.14));
+  overflow:hidden;transition:transform .18s ease,box-shadow .3s ease;font-family:var(--serif)}
+.btn-main::before{content:"";position:absolute;top:0;left:-60%;width:32%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(238,217,168,.30),transparent);transform:skewX(-18deg);
+  animation:sheen 5.5s ease-in-out infinite}
+.btn-main:active{transform:scale(.985)}
+.btn-main.ghost{border-color:var(--line);background:rgba(255,255,255,.015);color:var(--muted);letter-spacing:.3em}
+.btn-main:disabled{opacity:.36;pointer-events:none}
+@keyframes sheen{0%,72%{left:-60%}86%,100%{left:130%}}
+.serif{font-family:var(--serif)}
+.gold{color:var(--gold2)}
+.hair{height:1px;background:linear-gradient(90deg,transparent,var(--line2),transparent)}
+.toast{position:absolute;left:50%;top:calc(env(safe-area-inset-top) + 74px);z-index:90;transform:translate(-50%,-8px);
+  padding:9px 18px;border:1px solid var(--line2);background:rgba(8,14,11,.94);color:var(--gold2);
+  font-size:14.5px;letter-spacing:.14em;white-space:nowrap;opacity:0;pointer-events:none;transition:.28s ease;
+  box-shadow:0 8px 30px rgba(0,0,0,.6)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- 开场 ---------- */
+.boot{position:absolute;top:0;left:0;right:0;bottom:0;z-index:20;overflow:hidden;background:#050907 url(images/BOOT_ART.jpg) center 20%/cover no-repeat}
+.boot-bg{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block}
+.boot-veil{position:absolute;top:0;left:0;right:0;bottom:0;background:
+  linear-gradient(180deg,rgba(3,7,5,.56) 0%,rgba(3,7,5,.14) 17%,rgba(3,7,5,0) 36%,rgba(3,7,5,.26) 51%,rgba(4,8,6,.70) 63%,rgba(4,8,6,.94) 76%,#050907 88%),
+  radial-gradient(120% 62% at 50% 100%,rgba(5,10,7,.92),transparent 62%)}
+.boot-frame{position:absolute;top:13px;left:13px;right:13px;bottom:13px;border:1px solid rgba(201,168,106,.20);pointer-events:none;z-index:6}
+.boot-frame::before,.boot-frame::after{content:"";position:absolute;width:26px;height:26px;border:1px solid rgba(201,168,106,.55)}
+.boot-frame::before{left:-1px;top:-1px;border-right:0;border-bottom:0}
+.boot-frame::after{right:-1px;bottom:-1px;border-left:0;border-top:0}
+.boot-inner{position:absolute;top:0;left:0;right:0;bottom:0;z-index:7;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:calc(env(safe-area-inset-top) + 26px) 30px calc(env(safe-area-inset-bottom) + 20px)}
+.boot-top{text-align:center;padding:18px 0 12px;position:relative}
+.boot-top::before{content:"";position:absolute;left:-30px;right:-30px;top:-30px;bottom:-8px;z-index:0;
+  background:linear-gradient(180deg,transparent 0%,rgba(3,7,5,.52) 26%,rgba(3,7,5,.52) 72%,transparent 100%)}
+.boot-top>*{position:relative;z-index:1}
+.boot-kicker{display:flex;align-items:center;justify-content:center;gap:10px;font-size:13px;color:rgba(207,224,214,.62);letter-spacing:.24em}
+.boot-kicker span{width:26px;height:1px;background:linear-gradient(90deg,transparent,var(--line2))}
+.boot-kicker span:last-child{background:linear-gradient(90deg,var(--line2),transparent)}
+.boot-title{margin-top:13px;font-family:var(--serif);font-weight:400;font-size:clamp(44px,12.8vw,60px);line-height:1.08;
+  letter-spacing:.10em;text-indent:.10em;background:linear-gradient(175deg,#f5ead2 8%,#e6d3a4 42%,#b9945c 78%,#8d6d3c 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 26px rgba(201,168,106,.20))}
+.boot-title em{font-style:normal;position:relative;
+  background:linear-gradient(175deg,#fbf2dc 6%,#f2dfb2 38%,#dcb87c 76%,#c09a5c 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.boot-sub{margin-top:9px;font-size:15px;letter-spacing:.68em;text-indent:.68em;color:#d3dfd7;text-shadow:0 2px 14px rgba(0,0,0,.85)}
+.boot-en{margin-top:6px;font-size:9.5px;letter-spacing:.34em;color:rgba(201,168,106,.62);font-family:var(--sans);text-shadow:0 1px 10px rgba(0,0,0,.8)}
+.boot-seal{position:absolute;right:26px;top:calc(env(safe-area-inset-top) + 26px);width:36px;height:48px;border:1.5px solid rgba(176,74,56,.82);
+  color:#c37c62;font-family:var(--serif);font-size:13.5px;line-height:1.25;display:flex;align-items:center;justify-content:center;text-align:center;
+  letter-spacing:.1em;transform:rotate(5deg);opacity:.82;box-shadow:inset 0 0 14px rgba(158,61,48,.2);z-index:8}
+.boot-quote{margin-top:16px;font-family:var(--serif);font-size:15px;line-height:2;color:rgba(222,231,223,.84);letter-spacing:.06em;
+  text-shadow:0 2px 14px rgba(0,0,0,.9),0 0 3px rgba(0,0,0,.7)}
+.boot-quote span{color:rgba(201,168,106,.9);font-size:14px;letter-spacing:.14em}
+.boot-bottom{display:flex;flex-direction:column;align-items:stretch}
+.name-field{display:flex;align-items:center;gap:12px;height:46px;margin-bottom:14px;border-bottom:1px solid rgba(201,168,106,.28)}
+.nf-label{font-family:var(--serif);font-size:13.5px;color:var(--gold);letter-spacing:.2em;white-space:nowrap;opacity:.9}
+.nf-ghost{visibility:hidden;pointer-events:none}
+.name-field input{flex:1;min-width:0;font-family:var(--serif);font-size:20.5px;letter-spacing:.14em;color:var(--paper);text-align:center}
+.name-field input::placeholder{color:rgba(147,163,153,.4);font-size:15.5px;letter-spacing:.1em}
+.boot-minor{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:13px;font-size:14px;color:rgba(207,224,214,.62);letter-spacing:.16em}
+.boot-minor button{padding:6px 2px;letter-spacing:.16em;color:inherit}
+.boot-minor button:active{color:var(--gold2)}
+.boot-minor span{width:1px;height:10px;background:var(--line)}
+.boot-tags{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;font-size:11.5px;color:rgba(143,179,164,.5);letter-spacing:.12em}
+.boot-tags i{width:2px;height:2px;background:rgba(201,168,106,.45);transform:rotate(45deg)}
+.boot-foot{margin-top:8px;text-align:center;font-size:10px;color:rgba(102,118,108,.62);letter-spacing:.14em}
+
+/* ---------- 选身份 ---------- */
+.create{background:linear-gradient(180deg,#060b08,#040706 70%);overflow:hidden}
+.create::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
+  background:radial-gradient(80% 40% at 50% 0%,rgba(143,179,164,.10),transparent 65%)}
+.cr-head{display:flex;align-items:center;gap:14px;padding:calc(env(safe-area-inset-top) + 18px) 22px 10px;position:relative;z-index:2}
+.icon-back{width:34px;height:34px;border:1px solid var(--line);color:var(--gold);font-size:24px;line-height:1;display:grid;place-items:center;font-family:var(--serif);padding-bottom:2px}
+.cr-head h2{font-family:var(--serif);font-weight:400;font-size:24px;letter-spacing:.24em;color:#e8e2d2}
+.cr-head p{font-size:12px;color:var(--dim);letter-spacing:.22em;margin-top:3px}
+.cr-wrap{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;min-height:0;padding:6px 0 calc(env(safe-area-inset-bottom) + 22px)}
+.cr-name{text-align:center;font-size:14px;color:var(--muted);letter-spacing:.18em;margin-bottom:14px}
+.cr-name b{font-family:var(--serif);color:var(--gold2);font-weight:400;font-size:16.5px;letter-spacing:.24em;margin:0 6px}
+.cr-rail{display:flex;gap:16px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;padding:0 24px;flex:1;min-height:0;align-items:center;
+  scrollbar-width:none;touch-action:pan-x;-webkit-overflow-scrolling:touch;
+  
+  }
+.cr-rail::-webkit-scrollbar{display:none;width:0;height:0}
+.cr-card{position:relative;flex:0 0 100%;height:100%;max-height:520px;scroll-snap-align:center;display:flex;flex-direction:column;
+  border:1px solid rgba(201,168,106,.20);background:#070c09;overflow:hidden;padding:0;text-align:left;
+  transition:border-color .35s,box-shadow .35s}
+.cr-card.sel{border-color:rgba(201,168,106,.72);box-shadow:0 0 0 1px rgba(201,168,106,.20),0 18px 50px rgba(0,0,0,.66),0 0 44px rgba(201,168,106,.08)}
+.cc-art{position:relative;flex:0 0 auto;aspect-ratio:100/63;overflow:hidden;background-color:#070c09;
+  background-size:cover;background-position:center 18%;background-repeat:no-repeat}
+.cc-art.art-maid{background-image:url(images/qingwu.jpg)}
+.cc-art.art-miss{background-image:url(images/mingyue.jpg)}
+.cc-art.art-gen{background-image:url(images/feiqiong.jpg);background-position:center 42%}
+.cc-art img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 18%}
+.cc-art.art-gen img{object-position:center 42%}
+.cc-art::after{content:"";position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(5,9,7,.52) 0%,rgba(5,9,7,.06) 24%,rgba(5,9,7,0) 52%,rgba(5,9,7,.28) 76%,rgba(7,12,9,.92) 95%,#070c09 100%)}
+.cr-card .cc-inner{position:relative;z-index:2;flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;padding:18px 20px;
+  background:linear-gradient(180deg,#0a110d,#070c09);border-top:1px solid rgba(201,168,106,.16)}
+.cr-diff{position:absolute;top:-2px;right:20px;z-index:4;min-width:36px;height:30px;padding:0 12px;border:1px solid rgba(194,90,71,.62);color:#d98d76;
+  font-family:var(--serif);font-size:13px;line-height:28px;letter-spacing:.22em;text-align:center;white-space:nowrap;
+  transform:rotate(4deg);background:rgba(10,6,5,.6)}
+.cr-card .cc-idx{position:absolute;top:14px;left:14px;z-index:3;font-family:var(--serif);font-size:12px;color:rgba(207,224,214,.5);letter-spacing:.2em;writing-mode:vertical-rl}
+.cr-card h3{font-family:var(--serif);font-weight:400;font-size:29px;letter-spacing:.14em;color:#f1e8d6;text-shadow:0 2px 18px rgba(0,0,0,.9),0 0 2px rgba(0,0,0,.6)}
+.cr-card .cc-tag{margin-top:5px;font-size:13px;color:var(--gold);letter-spacing:.16em}
+.cr-card .cc-desc{margin-top:9px;font-size:14px;line-height:1.8;color:rgba(224,232,224,.82);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.cr-card .cc-perk{margin-top:12px;font-size:13px;line-height:1.7;color:rgba(163,193,178,.9);border-top:1px solid rgba(201,168,106,.14);padding-top:10px}
+@media (max-height:760px){
+  .cr-card .cc-inner{justify-content:center;padding:12px 16px}
+  .cr-card h3{font-size:25px}
+  .cr-card .cc-tag{font-size:12px;margin-top:4px}
+  .cr-card .cc-desc{font-size:13px;line-height:1.7;-webkit-line-clamp:2}
+  .cr-card .cc-perk{font-size:12px;line-height:1.65;margin-top:9px;padding-top:8px}
+}
+@media (max-height:700px){
+  .cc-art{aspect-ratio:100/54}
+}
+.cr-dots{display:flex;justify-content:center;gap:8px;margin:6px 0 16px}
+.cr-dots i{width:5px;height:5px;background:rgba(201,168,106,.22);transform:rotate(45deg);transition:.3s}
+.cr-dots i.on{background:var(--gold2);box-shadow:0 0 10px rgba(201,168,106,.8)}
+.cr-wrap>.btn-main{width:calc(100% - 56px);margin:0 auto}
+.cr-note{text-align:center;font-size:11.5px;color:var(--dim);letter-spacing:.14em;margin-top:10px}
+/* ---------- 择婿 · 定亲 ---------- */
+.match{background:linear-gradient(180deg,#060b08,#040706 70%);overflow:hidden}
+.match::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
+  background:radial-gradient(80% 40% at 50% 0%,rgba(143,179,164,.10),transparent 65%)}
+.mm-wrap{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;min-height:0;padding:2px 18px calc(env(safe-area-inset-bottom) + 18px)}
+.mm-note{font-size:11.5px;color:var(--dim);letter-spacing:.12em;text-align:center;margin:0 0 12px;line-height:1.7}
+.mm-list{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:11px;padding-bottom:12px;scrollbar-width:none}
+.mm-list::-webkit-scrollbar{display:none}
+.mm-card{position:relative;display:flex;gap:0;border:1px solid rgba(201,168,106,.20);background:#070c09;
+  padding:0;text-align:left;overflow:hidden;transition:border-color .3s,box-shadow .3s}
+.mm-card.sel{border-color:rgba(201,168,106,.72);box-shadow:0 0 0 1px rgba(201,168,106,.18),0 14px 34px rgba(0,0,0,.6)}
+.mm-art{width:104px;flex:0 0 104px;position:relative;overflow:hidden;background-color:#0a110d;
+  background-size:cover;background-position:center 20%;background-repeat:no-repeat}
+.mm-art.art-prince{background-image:url(images/prince.jpg)}
+.mm-art.art-hou{background-image:url(images/hou.jpg)}
+.mm-art.art-spy{background-image:url(images/spy.jpg)}
+.mm-art img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block}
+.mm-art::before{z-index:1;content:"";position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,rgba(7,12,9,.18),rgba(7,12,9,0) 35%,rgba(7,12,9,.22))}
+.mm-fade{position:absolute;top:0;left:0;right:0;bottom:0;z-index:2;background:linear-gradient(90deg,rgba(7,12,9,0) 40%,rgba(7,12,9,.92) 100%);pointer-events:none;display:block}
+.mm-body{padding:12px 13px 13px 4px;flex:1;min-width:0}
+.mm-body h3{font-family:var(--serif);font-weight:400;font-size:18px;color:#efe7d5;letter-spacing:.12em}
+.mm-ttl{font-size:10.5px;color:var(--dim);letter-spacing:.06em;margin-top:3px}
+.mm-quote{margin-top:9px;font-family:var(--serif);font-size:12px;line-height:1.75;color:rgba(226,200,148,.82);padding-left:8px;border-left:1px solid rgba(201,168,106,.4)}
+.mm-line{margin-top:8px;font-size:11px;line-height:1.7;color:rgba(207,224,214,.58)}
+.in-beat{margin-top:14px!important;padding-left:11px;border-left:1px solid rgba(201,168,106,.45);color:rgba(226,200,148,.9)!important;text-indent:0!important;font-size:14.5px!important}
+.en-rel{margin-top:22px;border-top:1px solid rgba(201,168,106,.16);border-bottom:1px solid rgba(201,168,106,.16);padding:14px 0}
+.er-k{text-align:center;font-size:10px;letter-spacing:.28em;color:rgba(201,168,106,.65)}
+.er-row{display:flex;gap:10px;align-items:baseline;margin-top:9px}
+.er-row span{flex:0 0 34px;font-family:var(--serif);font-size:12px;color:rgba(201,168,106,.9);letter-spacing:.1em}
+.er-row p{flex:1;font-family:var(--serif);font-size:13.5px;line-height:1.7;color:rgba(220,228,220,.86);margin:0}
+.ch-route{margin-top:7px;font-size:11px;letter-spacing:.1em;color:rgba(201,168,106,.85)}
+.npc.groom{border-color:rgba(201,168,106,.42)}
+.npc-tie{margin-top:6px;font-size:11px;line-height:1.7;color:rgba(143,179,164,.72);padding-left:8px;border-left:1px solid rgba(143,179,164,.28)}
+.mm-badge{display:inline-block;margin-left:7px;font-size:9px;padding:1px 5px;border:1px solid rgba(201,168,106,.55);color:rgba(226,200,148,.95);letter-spacing:.1em;vertical-align:2px}
+
+/* ---------- 游戏主界面 ---------- */
+.game{overflow:hidden;background:transparent}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 12px) 18px 8px;position:relative;z-index:3}
+.tb-left{display:flex;align-items:center;gap:11px;min-width:0}
+.avatar{position:relative;width:40px;height:40px;border-radius:50%;padding:2px;border:1px solid rgba(201,168,106,.5);flex:0 0 auto}
+.avatar #tbAvatar{position:relative;overflow:hidden;width:100%;height:100%;border-radius:50%;background:#0a110d;box-shadow:inset 0 0 0 1px rgba(201,168,106,.12)}
+.avatar #tbAvatar img{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 0%;transform:scale(2.12);transform-origin:50% 24%;display:block}
+.avatar i{position:absolute;right:-1px;bottom:-1px;width:8px;height:8px;border-radius:50%;background:var(--gold);border:2px solid var(--ink)}
+.tb-name{min-width:0}
+.tb-name b{display:block;font-family:var(--serif);font-weight:400;font-size:18.5px;letter-spacing:.1em;color:#ece4d4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-name span{display:block;font-size:11.5px;color:var(--dim);letter-spacing:.14em;margin-top:1px}
+.tb-right{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.ch-pill{max-width:132px;font-size:11.5px;letter-spacing:.08em;color:var(--gold);border:1px solid var(--line);padding:5px 9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:rgba(201,168,106,.04)}
+.menu-btn{width:36px;height:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:1px solid var(--line);padding:0 8px}
+.menu-btn i{display:block;width:100%;height:1px;background:rgba(201,168,106,.7)}
+.menu-btn:active{background:rgba(201,168,106,.08)}
+.statusbar{display:flex;align-items:center;justify-content:space-between;padding:4px 20px 0;position:relative;z-index:3}
+.ap{display:flex;align-items:center;gap:9px}
+.ap-label{font-size:11.5px;color:var(--dim);letter-spacing:.14em}
+.ap-dots{display:flex;gap:7px}
+.ap-dots i{width:7px;height:7px;transform:rotate(45deg);border:1px solid rgba(201,168,106,.45);background:transparent;transition:.3s}
+.ap-dots i.on{background:linear-gradient(135deg,var(--gold2),var(--gold3));border-color:var(--gold2);box-shadow:0 0 8px rgba(201,168,106,.55)}
+.money{display:flex;align-items:center;gap:5px;font-size:13.5px;color:var(--gold2);letter-spacing:.04em}
+.money svg{width:13px;height:13px;opacity:.85}
+.money small{font-size:10px;color:var(--dim);letter-spacing:.1em}
+.attrs{display:grid;grid-template-columns:repeat(4,1fr);margin:9px 18px 0;border:1px solid rgba(201,168,106,.16);background:rgba(9,15,12,.72);position:relative;z-index:3}
+.attr{display:flex;align-items:baseline;justify-content:center;gap:6px;padding:7px 0;border-right:1px solid rgba(201,168,106,.12)}
+.attr:last-child{border-right:0}
+.attr span{font-family:var(--serif);font-size:12px;color:var(--muted);letter-spacing:.1em}
+.attr b{font-family:var(--serif);font-weight:400;font-size:16.5px;color:var(--gold2)}
+.main{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:14px 18px calc(env(safe-area-inset-bottom) + 92px);position:relative;z-index:2;scroll-behavior:smooth}
+
+/* 章节卡 */
+.ch-card{position:relative;padding:17px 16px 16px;border:1px solid rgba(201,168,106,.18);overflow:hidden;
+  background:linear-gradient(120deg,rgba(19,29,23,.92),rgba(8,13,10,.88) 60%,rgba(26,20,13,.55))}
+.ch-card::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;opacity:.5;pointer-events:none;
+  background-image:linear-gradient(rgba(201,168,106,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,106,.055) 1px,transparent 1px);
+  background-size:26px 26px;}
+.ch-card .ch-n{font-family:var(--serif);font-size:11.5px;color:var(--gold);letter-spacing:.24em;margin-bottom:7px}
+.ch-card h2{font-family:var(--serif);font-weight:400;font-size:26.5px;letter-spacing:.12em;color:#eee6d4;line-height:1.35}
+.ch-card .ch-month{margin-top:6px;font-size:12px;color:var(--jade);letter-spacing:.2em}
+.ch-card .ch-hint{margin-top:9px;font-size:14px;line-height:1.85;color:rgba(147,163,153,.9);position:relative;z-index:1}
+.ch-card .ch-seal{position:absolute;right:14px;top:15px;width:38px;height:50px;border:1px solid rgba(194,90,71,.55);color:#cf7b67;
+  font-family:var(--serif);font-size:11.5px;line-height:1.3;display:flex;align-items:center;justify-content:center;text-align:center;transform:rotate(4deg);opacity:.85}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin:20px 2px 10px}
+.sec-head h3{font-family:var(--serif);font-weight:400;font-size:15.5px;letter-spacing:.24em;color:#d8d2c2;display:flex;align-items:center;gap:8px}
+.sec-head h3::before{content:"";width:3px;height:12px;background:linear-gradient(180deg,var(--gold2),var(--gold3))}
+.sec-head span{font-size:11.5px;color:var(--dim);letter-spacing:.12em}
+
+/* 地图 */
+.map{position:relative;border:1px solid rgba(201,168,106,.22);box-shadow:0 12px 36px rgba(0,0,0,.45),inset 0 0 40px rgba(0,0,0,.5);overflow:hidden}
+.map-art{position:relative;width:100%;height:128vw;overflow:hidden;background:#08100c center/cover no-repeat}
+.map-art img{position:relative;width:100%;height:100%;object-fit:cover;display:block}
+.map-art::after{content:"";position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(4,8,6,.44),rgba(4,8,6,.10) 34%,rgba(4,8,6,.26) 68%,rgba(4,8,6,.60)),
+  radial-gradient(110% 70% at 50% 0%,rgba(201,168,106,.10),transparent 62%)}
+.map::after{content:"";position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;box-shadow:inset 0 0 50px rgba(0,0,0,.55);border:1px solid rgba(201,168,106,.05)}
+.map-pins{position:absolute;top:0;left:0;right:0;bottom:0}
+.pin{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:3px;z-index:2;padding:5px;transition:opacity .25s}
+.pin-dot{position:relative;width:31px;height:31px;border-radius:50%;border:1px solid rgba(201,168,106,.38);background:rgba(7,13,10,.82);
+  display:grid;place-items:center;font-family:var(--serif);font-size:15px;color:rgba(201,168,106,.85);transition:.25s;box-shadow:0 2px 10px rgba(0,0,0,.55)}
+.pin-label{font-family:var(--serif);font-size:11.5px;letter-spacing:.06em;color:#26301f;white-space:nowrap;margin-top:1px;
+  background:linear-gradient(180deg,rgba(241,234,217,.95),rgba(224,213,190,.93));border:1px solid rgba(122,98,62,.55);
+  padding:1.5px 6px;box-shadow:0 2px 8px rgba(0,0,0,.55)}
+.pin.has .pin-dot{border-color:rgba(238,217,168,.9);color:var(--gold2);box-shadow:0 0 0 1px rgba(201,168,106,.22),0 0 16px rgba(201,168,106,.35)}
+.pin.has .pin-dot::after{content:"";position:absolute;top:-5px;left:-5px;right:-5px;bottom:-5px;border-radius:50%;border:1px solid rgba(201,168,106,.35);animation:halo 2.8s ease-out infinite}
+.pin.has .pin-label{background:linear-gradient(180deg,#f8f0dc,#e9dcbe);color:#2b2411;border-color:rgba(160,126,64,.9);box-shadow:0 2px 10px rgba(0,0,0,.6),0 0 14px rgba(201,168,106,.22)}
+.pin.climax .pin-dot{background:linear-gradient(160deg,rgba(158,61,48,.92),rgba(94,30,24,.94));border-color:rgba(238,217,168,.8);color:#f4e6cc;box-shadow:0 0 0 1px rgba(194,90,71,.3),0 0 20px rgba(158,61,48,.5)}
+.pin.climax .pin-dot::after{border-color:rgba(194,90,71,.5)}
+.pin.climax .pin-label{background:linear-gradient(180deg,#a8442f,#7d2c22);color:#f7e9cf;border-color:rgba(238,217,168,.75)}
+.pin.done{opacity:.44}
+.pin:active .pin-dot{transform:scale(.92)}
+@keyframes halo{0%{transform:scale(.82);opacity:.9}70%{transform:scale(1.45);opacity:0}100%{opacity:0}}
+
+/* 行止 */
+.rail{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 4px;scrollbar-width:none;scroll-snap-type:x proximity}
+.rail-card{flex:0 0 132px;scroll-snap-align:start;border:1px solid rgba(201,168,106,.16);background:linear-gradient(160deg,rgba(17,26,21,.9),rgba(8,13,10,.92));padding:11px 11px 10px;position:relative;overflow:hidden;text-align:left;transition:.2s}
+.rail-card::before{content:"";position:absolute;right:-14px;top:-14px;width:52px;height:52px;border:1px solid rgba(201,168,106,.08);transform:rotate(45deg)}
+.rail-card:active{border-color:rgba(201,168,106,.45);transform:translateY(-1px)}
+.rail-glyph{font-family:var(--serif);font-size:18px;color:var(--gold);width:27px;height:27px;border:1px solid rgba(201,168,106,.3);display:grid;place-items:center;margin-bottom:7px}
+.rail-card h4{font-family:var(--serif);font-weight:400;font-size:15px;letter-spacing:.06em;color:#e4ddcc;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rail-card p{margin-top:2px;font-size:10.5px;color:var(--dim);letter-spacing:.06em}
+.rail-card .rc-badge{position:absolute;right:8px;top:9px;font-size:9.5px;color:var(--red2);letter-spacing:.06em}
+
+/* 正戏 */
+.climax-btn{position:relative;width:100%;margin-top:14px;padding:19px 16px;border:1px solid rgba(194,90,71,.5);overflow:hidden;
+  background:linear-gradient(115deg,rgba(66,24,19,.88),rgba(34,16,13,.9) 55%,rgba(201,168,106,.10));text-align:center;transition:.2s}
+.climax-btn::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(80% 150% at 100% 50%,rgba(201,168,106,.14),transparent 60%)}
+.climax-btn:active{transform:scale(.992)}
+.climax-btn .cb-k{font-size:10.5px;color:rgba(238,217,168,.6);letter-spacing:.26em}
+.climax-btn .cb-t{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:5px;font-family:var(--serif);font-size:20.5px;letter-spacing:.14em;color:#f2e2c6}
+.climax-btn .cb-t i{width:5px;height:5px;background:var(--red2);transform:rotate(45deg);box-shadow:0 0 10px rgba(194,90,71,.9)}
+.climax-btn .cb-d{margin-top:4px;font-size:11px;color:rgba(207,224,214,.55);letter-spacing:.06em;white-space:nowrap}
+.climax-btn.done{opacity:.45;pointer-events:none;filter:grayscale(.4)}
+.main-quote{margin:18px 0 2px;text-align:center;font-family:var(--serif);font-size:13px;line-height:2;color:rgba(102,118,108,.82);letter-spacing:.16em}
+
+/* 入夜浮钮 */
+.fab-climax{position:absolute;right:16px;bottom:calc(env(safe-area-inset-bottom) + 76px);z-index:7;
+  display:flex;align-items:center;gap:9px;padding:9px 14px;border:1px solid rgba(194,90,71,.55);
+  background:linear-gradient(120deg,rgba(72,26,20,.94),rgba(26,13,10,.96));
+  box-shadow:0 10px 28px rgba(0,0,0,.62),0 0 22px rgba(158,61,48,.16);animation:fabIn .5s ease both}
+.fab-climax::before{content:"";width:4px;height:4px;background:var(--red2);transform:rotate(45deg);box-shadow:0 0 8px rgba(194,90,71,.9)}
+.fab-climax .fc-k{font-size:10px;letter-spacing:.14em;color:rgba(238,217,168,.66);writing-mode:vertical-rl;line-height:1.1}
+.fab-climax b{font-family:var(--serif);font-weight:400;font-size:15.5px;letter-spacing:.08em;color:#f2e2c6;max-width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fab-climax:active{transform:scale(.97)}
+@keyframes fabIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.map-cue{position:absolute;left:12px;bottom:9px;font-size:10px;color:rgba(201,168,106,.6);letter-spacing:.16em;
+  background:rgba(5,9,7,.55);padding:3px 7px;border:1px solid rgba(201,168,106,.14)}
+
+/* 底栏 */
+.tabbar{position:absolute;left:0;right:0;bottom:0;z-index:8;display:grid;grid-template-columns:repeat(5,1fr);
+  padding:7px 6px calc(env(safe-area-inset-bottom) + 7px);border-top:1px solid rgba(201,168,106,.16);
+  background:linear-gradient(180deg,rgba(6,10,8,.92),rgba(5,9,7,.98))}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0 2px;color:rgba(147,163,153,.6);transition:.2s;position:relative}
+.tab .tab-g{font-family:var(--serif);font-size:18px;width:24px;height:24px;display:grid;place-items:center;border:1px solid transparent;transition:.25s}
+.tab .tab-l{font-size:10px;letter-spacing:.1em}
+.tab.on{color:var(--gold2)}
+.tab.on .tab-g{border-color:rgba(201,168,106,.42);background:rgba(201,168,106,.07);box-shadow:0 0 14px rgba(201,168,106,.10)}
+.tab.on::after{content:"";position:absolute;bottom:-1px;width:16px;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent)}
+.tab:active{color:var(--gold2)}
+
+/* ---------- 章节引言 ---------- */
+.intro{position:absolute;top:0;left:0;right:0;bottom:0;z-index:40;background:
+  radial-gradient(120% 70% at 50% 0%,rgba(143,179,164,.10),transparent 60%),
+  linear-gradient(180deg,#07100c,#040706 75%)}
+.intro::before{content:"";position:absolute;top:22px;left:22px;right:22px;bottom:22px;border:1px solid rgba(201,168,106,.16);pointer-events:none}
+.intro-inner{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:calc(env(safe-area-inset-top) + 34px) 34px calc(env(safe-area-inset-bottom) + 26px);overflow-y:auto}
+.intro-no{font-family:var(--serif);font-size:115px;line-height:.86;color:rgba(201,168,106,.10);letter-spacing:.02em;margin-left:-6px}
+.intro-kicker{margin-top:10px;font-size:11.5px;color:var(--jade);letter-spacing:.3em}
+.intro h2{margin-top:9px;font-family:var(--serif);font-weight:400;font-size:35px;letter-spacing:.18em;color:#efe7d4}
+.intro .in-month{display:inline-block;margin-top:9px;font-size:13px;color:var(--gold);letter-spacing:.2em;border-bottom:1px solid rgba(201,168,106,.3);padding-bottom:3px}
+.intro .in-hint{margin-top:14px;font-size:13.5px;line-height:1.9;color:rgba(147,163,153,.78);letter-spacing:.06em;border-left:1px solid rgba(201,168,106,.28);padding-left:12px}
+.intro-body{margin-top:22px}
+.intro-body p{font-family:var(--serif);font-size:17px;line-height:2.15;color:rgba(217,226,218,.88);text-indent:2em;margin-bottom:10px;opacity:0;transform:translateY(8px);animation:up .8s ease forwards}
+.intro-body p:nth-child(2){animation-delay:.16s}.intro-body p:nth-child(3){animation-delay:.32s}.intro-body p:nth-child(4){animation-delay:.48s}
+.intro .btn-main{margin-top:auto;flex:0 0 auto;margin-top:26px}
+@keyframes up{to{opacity:1;transform:none}}
+
+/* ---------- 剧情 ---------- */
+.scene{position:absolute;top:0;left:0;right:0;bottom:0;z-index:45;background:linear-gradient(180deg,#060b08,#040706 70%)}
+.scene::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;background:radial-gradient(80% 40% at 50% 0%,rgba(143,179,164,.08),transparent 60%)}
+.scene-scroll{position:absolute;left:0;right:0;top:calc(env(safe-area-inset-top) + 51px);bottom:0;overflow-y:auto;display:flex;flex-direction:column;overscroll-behavior:contain;padding:6px 0 calc(env(safe-area-inset-bottom) + 24px)}
+.scene-head{position:absolute;left:0;right:0;top:0;z-index:8;display:flex;align-items:center;gap:11px;
+  padding:calc(env(safe-area-inset-top) + 11px) 14px 12px;background:#050907;
+  border-bottom:1px solid rgba(201,168,106,.10);
+  pointer-events:none}
+.scene-head>*{pointer-events:auto}
+.sc-back{display:flex;align-items:center;gap:5px;height:28px;padding:0 11px;border:1px solid rgba(201,168,106,.3);
+  border-radius:2px;background:rgba(201,168,106,.06);color:rgba(238,217,168,.88);
+  font-family:var(--serif);font-size:13.5px;letter-spacing:.14em;flex:0 0 auto}
+.sc-back b{font-family:var(--sans);font-weight:400;font-size:18px;line-height:1;margin-top:-1px}
+.sc-back:active{background:rgba(201,168,106,.18)}
+.sc-ch{font-size:11.5px;letter-spacing:.16em;color:rgba(147,163,153,.66);white-space:nowrap}
+.sc-loc{margin-left:auto;font-size:11.5px;letter-spacing:.16em;color:rgba(201,168,106,.75);white-space:nowrap}
+.sc-tools{display:flex;gap:10px;margin-top:10px}
+.sc-tools button{flex:1;height:42px;border:1px solid rgba(201,168,106,.26);color:rgba(207,224,214,.82);
+  font-family:var(--serif);font-size:14.5px;letter-spacing:.18em;background:rgba(201,168,106,.05)}
+.sc-tools button:active{background:rgba(201,168,106,.14)}
+.scene-art{position:relative;height:43vh;min-height:260px;max-height:390px;margin:6px 16px 0;overflow:hidden;border:1px solid rgba(201,168,106,.18);animation:sceneIn 1.1s ease both}
+.scene-art{height:75vw;min-height:0;max-height:none}
+.scene-art .sa-bg{position:absolute;top:-14px;left:-14px;right:-14px;bottom:-14px;width:calc(100% + 28px);height:calc(100% + 28px);object-fit:cover;object-position:center;display:block;background:#08100c;filter:blur(24px) saturate(.9) brightness(.5);transform:scale(1.1);z-index:0}
+.scene-art img{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;object-position:center;}
+.scene-art::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(6,11,8,.92) 0%,rgba(6,11,8,.35) 12%,rgba(6,11,8,0) 26%,rgba(6,11,8,0) 74%,rgba(6,11,8,.35) 88%,rgba(6,11,8,.92) 100%)}
+.scene-art::after{content:"";position:absolute;top:0;left:0;right:0;bottom:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(5,9,7,.10) 0%,rgba(5,9,7,0) 30%,rgba(5,9,7,.30) 58%,rgba(5,9,7,.82) 80%,#060b08 100%)}
+.scene-art .sa-cap{position:absolute;left:18px;right:18px;bottom:13px;z-index:3}
+.scene-art .sa-name{font-family:var(--serif);font-size:29px;letter-spacing:.16em;color:#f0e7d3;text-shadow:0 2px 18px rgba(0,0,0,.7)}
+.scene-art .sa-title{margin-top:2px;font-size:12px;letter-spacing:.12em;color:rgba(201,168,106,.82)}
+.scene-art .sa-quote{margin-top:8px;font-family:var(--serif);font-size:14px;line-height:1.8;color:rgba(223,231,223,.9);padding-left:9px;border-left:1px solid rgba(201,168,106,.45);text-shadow:0 1px 10px rgba(0,0,0,.85)}
+.scene-art .sa-corner{position:absolute;width:16px;height:16px;border:1px solid rgba(201,168,106,.5);z-index:3}
+.scene-art .sa-corner.a{left:7px;top:7px;border-right:0;border-bottom:0}
+.scene-art .sa-corner.b{right:7px;top:7px;border-left:0;border-bottom:0}
+.scene-art .sa-corner.c{left:7px;bottom:7px;border-right:0;border-top:0}
+.scene-art .sa-corner.d{right:7px;bottom:7px;border-left:0;border-top:0}
+@keyframes sceneIn{from{opacity:0;transform:scale(1.02)}to{opacity:1;transform:none}}
+.scene-title{margin:22px 24px 0;font-family:var(--serif);font-weight:400;font-size:30px;letter-spacing:.14em;color:#efe7d4;position:relative;z-index:2;text-align:center}
+.scene-title::after{content:"";display:block;width:36px;height:1px;margin:12px auto 0;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.scene-body{padding:16px 28px 0;position:relative;z-index:2}
+.scene-body p{font-family:var(--serif);font-size:18px;line-height:2.12;color:rgba(220,228,220,.9);text-indent:2em;margin-bottom:13px;letter-spacing:.015em;opacity:0;transform:translateY(10px);animation:up .75s ease forwards}
+.scene-body p:nth-child(2){animation-delay:.1s}.scene-body p:nth-child(3){animation-delay:.2s}.scene-body p:nth-child(4){animation-delay:.3s}.scene-body p:nth-child(5){animation-delay:.4s}
+#scBody.is-outcome{flex:1;display:flex;flex-direction:column;justify-content:center}
+.scene-choices{padding:8px 20px 4px;position:relative;z-index:2}
+.choice{position:relative;display:block;width:100%;text-align:left;padding:14px 15px 13px 44px;margin-bottom:10px;
+  border:1px solid rgba(201,168,106,.20);background:linear-gradient(110deg,rgba(19,29,23,.72),rgba(8,13,10,.82));transition:.18s;overflow:hidden}
+.choice::before{content:attr(data-idx);position:absolute;left:15px;top:14px;font-family:var(--serif);font-size:14.5px;color:rgba(201,168,106,.7);letter-spacing:.04em}
+.choice::after{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(201,168,106,.5),transparent);opacity:0;transition:.2s}
+.choice:active{border-color:rgba(201,168,106,.55);background:linear-gradient(110deg,rgba(28,42,33,.8),rgba(10,16,12,.9));transform:scale(.995)}
+.choice:active::after{opacity:1}
+.choice .lab{font-family:var(--serif);font-size:16.5px;line-height:1.7;color:#e9e1cf;letter-spacing:.02em}
+.choice .hint{margin-top:5px;font-size:12px;color:rgba(143,179,164,.78);letter-spacing:.05em}
+.choice.locked{opacity:.44;pointer-events:none}
+.choice.locked .hint{color:rgba(147,163,153,.7)}
+.choice .lock{display:inline-flex;align-items:center;gap:4px;margin-top:5px;font-size:11.5px;color:rgba(194,90,71,.85);letter-spacing:.06em}
+.scene-note{margin:4px 24px 0;text-align:center;font-size:11.5px;color:rgba(102,118,108,.7);letter-spacing:.12em}
+.outcome{width:calc(100% - 32px);margin:auto;padding:22px 18px 20px;text-align:center;
+  border:1px solid rgba(201,168,106,.18);
+  background:linear-gradient(180deg,rgba(17,26,20,.62),rgba(6,10,8,.72));
+  box-shadow:inset 0 0 40px rgba(0,0,0,.35),0 10px 30px rgba(0,0,0,.35)}
+.outcome .oc-k{margin-top:4px;font-size:11.5px;color:var(--gold);letter-spacing:.3em}
+.outcome .oc-t{margin-top:12px;font-family:var(--serif);font-size:18px;line-height:2.1;color:rgba(224,231,223,.92);text-align:left;text-indent:2em}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:22px}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:5px 11px;border:1px solid rgba(143,179,164,.28);font-size:12px;letter-spacing:.06em;color:var(--jade2);background:rgba(143,179,164,.05);animation:chipIn .5s ease both}
+.chip.down{border-color:rgba(194,90,71,.4);color:#dfa08f;background:rgba(158,61,48,.07)}
+.chip.clue{border-color:rgba(201,168,106,.5);color:var(--gold2);background:rgba(201,168,106,.07)}
+@keyframes chipIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.oc-art{display:block;width:228px;height:228px;margin:-10px auto 0;object-fit:contain;
+  animation:ocIn .55s ease both}
+@keyframes ocIn{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+/* ---------- 弹层 ---------- */
+.sheet-wrap{position:absolute;top:0;left:0;right:0;bottom:0;z-index:60;display:flex;align-items:center;justify-content:center;
+  padding:calc(env(safe-area-inset-top) + 18px) 14px calc(env(safe-area-inset-bottom) + 18px)}
+.sheet-mask{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(2,4,3,.8);animation:fade .25s ease}
+.sheet{position:relative;width:100%;max-height:100%;display:flex;flex-direction:column;
+  background:linear-gradient(180deg,#0d1511,#070c09 70%);border:1px solid rgba(201,168,106,.34);
+  border-radius:6px;box-shadow:0 26px 80px rgba(0,0,0,.78),inset 0 0 46px rgba(0,0,0,.35);
+  animation:sheetIn .3s cubic-bezier(.2,.85,.25,1)}
+@keyframes sheetIn{from{opacity:0;transform:translateY(12px) scale(.975)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.sheet-grip{display:none}
+.sheet-scroll{overflow-y:auto;padding:6px 20px calc(env(safe-area-inset-bottom) + 22px)}
+.sh-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:8px 0 14px;border-bottom:1px solid rgba(201,168,106,.14);margin-bottom:14px}
+.sh-head h3{font-family:var(--serif);font-weight:400;font-size:24px;letter-spacing:.16em;color:#efe7d4}
+.sh-head p{margin-top:3px;font-size:11.5px;color:var(--dim);letter-spacing:.1em}
+.sh-close{width:30px;height:30px;border:1px solid rgba(201,168,106,.22);color:var(--muted);display:grid;place-items:center;font-size:15.5px;flex:0 0 auto}
+.sheet-sub{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:12px}
+.evt{position:relative;display:block;width:100%;text-align:left;padding:14px 14px 13px;margin-bottom:10px;border:1px solid rgba(201,168,106,.18);
+  background:linear-gradient(115deg,rgba(19,29,23,.7),rgba(8,13,10,.8));transition:.18s}
+.evt:active{border-color:rgba(201,168,106,.5)}
+.evt h4{font-family:var(--serif);font-weight:400;font-size:18px;letter-spacing:.06em;color:#e9e1cf;display:flex;align-items:center;gap:8px}
+.evt h4 .eg{font-size:13.5px;color:var(--gold);border:1px solid rgba(201,168,106,.3);width:23px;height:23px;display:grid;place-items:center;flex:0 0 auto}
+.evt .cost{margin-left:auto;font-size:10px;color:rgba(201,168,106,.7);letter-spacing:.06em;border:1px solid rgba(201,168,106,.2);padding:2px 6px;white-space:nowrap}
+.evt p{margin-top:7px;font-size:13px;line-height:1.8;color:rgba(147,163,153,.82);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.evt .who{margin-top:7px;font-size:10.5px;color:rgba(143,179,164,.62);letter-spacing:.06em}
+.evt .lock-note{margin-top:7px;font-size:10.5px;color:rgba(194,90,71,.82)}
+.evt.locked{opacity:.46;pointer-events:none}
+.evt.done{opacity:.5;pointer-events:none}
+.evt.climax{border-color:rgba(194,90,71,.45);background:linear-gradient(115deg,rgba(55,22,17,.72),rgba(20,12,9,.85))}
+.evt .tag-new{margin-left:auto;font-size:9.5px;color:#e0a08e;border:1px solid rgba(194,90,71,.4);padding:1px 5px}
+
+/* 商铺 */
+.seg{display:grid;grid-template-columns:1fr 1fr;border:1px solid rgba(201,168,106,.18);margin-bottom:14px}
+.seg button{padding:9px 0;font-size:13.5px;letter-spacing:.18em;color:var(--muted)}
+.seg button.on{color:var(--gold2);background:rgba(201,168,106,.08);box-shadow:inset 0 -1px 0 rgba(201,168,106,.55)}
+.goods-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(201,168,106,.10)}
+.goods-thumb{width:48px;height:62px;object-fit:cover;border:1px solid rgba(201,168,106,.2);flex:0 0 auto}
+.goods-ico{width:42px;height:42px;border-radius:50%;border:1px solid rgba(201,168,106,.3);display:grid;place-items:center;font-family:var(--serif);font-size:15.5px;color:var(--gold);background:radial-gradient(circle at 35% 30%,rgba(201,168,106,.18),rgba(8,13,10,.8));flex:0 0 auto;overflow:hidden}
+.jewel-img{width:100%;height:100%;object-fit:cover;display:block}
+.goods-info{flex:1;min-width:0}
+.goods-info h5{font-family:var(--serif);font-weight:400;font-size:16px;letter-spacing:.06em;color:#e7dfcd}
+.goods-info p{font-size:11.5px;line-height:1.7;color:var(--dim);margin-top:2px}
+.goods-info .eff{font-size:10.5px;color:rgba(143,179,164,.8);margin-top:2px;letter-spacing:.04em}
+.buy-btn{flex:0 0 auto;border:1px solid rgba(201,168,106,.4);padding:6px 10px;font-size:12px;color:var(--gold2);letter-spacing:.06em;min-width:62px;text-align:center}
+.buy-btn small{display:block;font-size:9.5px;color:var(--dim);letter-spacing:0}
+.buy-btn:active{background:rgba(201,168,106,.1)}
+.buy-btn.own{opacity:.4;pointer-events:none}
+.money-line{display:flex;align-items:center;justify-content:flex-end;gap:5px;font-size:13px;color:var(--gold);letter-spacing:.06em;margin-bottom:8px}
+
+/* 衣橱 */
+.ward-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.ward{border:1px solid rgba(201,168,106,.16);background:rgba(10,16,12,.7);overflow:hidden;position:relative}
+.ward.on{border-color:rgba(201,168,106,.6);box-shadow:0 0 0 1px rgba(201,168,106,.16)}
+.ward img{width:100%;height:auto;aspect-ratio:3/4.2;object-fit:cover;object-position:center 10%}
+.ward .w-body{padding:8px 9px 9px}
+.ward h5{font-family:var(--serif);font-weight:400;font-size:14.5px;letter-spacing:.06em;color:#e5ddcb;display:flex;align-items:center;gap:5px}
+.ward .badge{font-size:9px;color:var(--gold2);border:1px solid rgba(201,168,106,.35);padding:1px 4px}
+.ward p{font-size:10px;color:var(--dim);margin-top:3px;line-height:1.6}
+.ward .w-eff{font-size:10px;color:rgba(143,179,164,.8);margin-top:2px}
+.ward .w-btn{margin-top:7px;width:100%;border:1px solid rgba(201,168,106,.28);padding:5px 0;font-size:11.5px;color:var(--gold2);letter-spacing:.1em}
+.ward .w-btn:active{background:rgba(201,168,106,.09)}
+.ward .w-lock{font-size:10px;color:var(--dim);margin-top:7px;text-align:center;padding:5px 0}
+
+/* 线索 */
+.clue-item{padding:12px 0;border-bottom:1px solid rgba(201,168,106,.10)}
+.clue-item .cat{display:inline-block;font-size:9.5px;color:var(--gold);border:1px solid rgba(201,168,106,.25);padding:1px 6px;letter-spacing:.12em;margin-bottom:6px}
+.clue-item h5{font-family:var(--serif);font-weight:400;font-size:16px;letter-spacing:.08em;color:#e7dfcd}
+.clue-item p{font-size:13px;line-height:1.9;color:rgba(147,163,153,.86);margin-top:4px}
+.progress{height:2px;background:rgba(201,168,106,.12);margin:10px 0 4px;overflow:hidden}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--gold3),var(--gold2));transition:.5s}
+.empty{padding:28px 0;text-align:center;font-size:13px;color:var(--dim);line-height:2;letter-spacing:.1em}
+
+/* 人物 */
+.npc{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(201,168,106,.10);cursor:pointer;transition:.2s}
+.npc:active{opacity:.72}
+.art-view img{display:block;width:100%;max-height:62vh;object-fit:contain;margin:0 auto;border:1px solid rgba(201,168,106,.18);background:#050907}
+.av-name{margin-top:12px;text-align:center;font-family:var(--serif);font-size:16.5px;letter-spacing:.18em;color:var(--gold2)}
+.npc img{width:62px;height:82px;object-fit:cover;object-position:center 8%;border:1px solid rgba(201,168,106,.2);flex:0 0 auto}
+.npc-info{flex:1;min-width:0}
+.npc-info h4{font-family:var(--serif);font-weight:400;font-size:16.5px;letter-spacing:.08em;color:#e8e0ce}
+.npc-info .ttl{font-size:10px;color:var(--gold);letter-spacing:.06em;margin-top:2px}
+.npc-info .quote{font-family:var(--serif);font-size:11.5px;line-height:1.75;color:rgba(147,163,153,.78);margin-top:5px}
+.fav{display:flex;align-items:center;gap:7px;margin-top:7px;font-size:9.5px;color:var(--dim)}
+.fav .bar{flex:1;height:2px;background:rgba(201,168,106,.12);overflow:hidden}
+.fav .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--jade3),var(--gold2))}
+.fav b{font-weight:400;color:var(--gold);font-size:10.5px;min-width:16px;text-align:right}
+
+/* 菜单 / 图鉴 */
+.menu-list{display:flex;flex-direction:column;gap:9px}
+.menu-list button{padding:14px;border:1px solid rgba(201,168,106,.2);font-size:14.5px;letter-spacing:.2em;color:#d8d2c2;text-align:center}
+.menu-list button:active{background:rgba(201,168,106,.07);border-color:rgba(201,168,106,.4)}
+.menu-list button.danger{color:#d39a89;border-color:rgba(194,90,71,.3)}
+.menu-tip{margin-top:14px;text-align:center;font-size:10.5px;color:var(--dim);letter-spacing:.12em;line-height:1.9}
+.io-wrap{margin-top:4px}
+.io-file{display:flex;align-items:center;justify-content:center;height:55px;border:1px dashed rgba(201,168,106,.45);
+  background:rgba(201,168,106,.05);color:var(--gold2);font-family:var(--serif);font-size:15.5px;letter-spacing:.3em;text-indent:.3em;cursor:pointer}
+.io-file input{display:none}
+.io-file:active{background:rgba(201,168,106,.13);border-color:rgba(201,168,106,.7)}
+.gal-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.gal{border:1px solid rgba(201,168,106,.14);padding:12px 10px;min-height:78px;position:relative;background:rgba(9,14,11,.6)}
+.gal.on{border-color:rgba(201,168,106,.42);background:linear-gradient(150deg,rgba(28,22,13,.6),rgba(9,14,11,.7))}
+.gal h5{font-family:var(--serif);font-weight:400;font-size:15.5px;letter-spacing:.1em;color:#e7dfcd}
+.gal p{font-size:9.5px;line-height:1.7;color:var(--dim);margin-top:5px}
+.gal .lock-mark{position:absolute;right:9px;top:9px;font-size:10.5px;color:rgba(201,168,106,.3)}
+
+/* ---------- 结局 ---------- */
+.ending{position:absolute;top:0;left:0;right:0;bottom:0;z-index:50;overflow-y:auto;background:#050907;padding-bottom:calc(env(safe-area-inset-bottom) + 26px)}
+.en-art{position:absolute;top:0;left:0;right:0;bottom:0;height:62%;overflow:hidden;background:#08100c center/cover no-repeat;opacity:.34}
+.en-art img{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;object-fit:cover;object-position:center 12%;display:block;background:#08100c}
+.en-art::after{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,rgba(5,9,7,.35),rgba(5,9,7,.15) 40%,#050907 96%)}
+.en-art.duo .duo-fill{position:absolute;top:0;left:0;right:0;bottom:0;background:#08100c center 4%/cover no-repeat;filter:blur(34px) saturate(1.18) brightness(.72);transform:scale(1.22)}
+.en-art.duo .duo-fill.l{-webkit-mask-image:linear-gradient(90deg,#000 26%,transparent 100%);mask-image:linear-gradient(90deg,#000 26%,transparent 100%)}
+.en-art.duo .duo-fill.r{-webkit-mask-image:linear-gradient(270deg,#000 26%,transparent 100%);mask-image:linear-gradient(270deg,#000 26%,transparent 100%)}
+.en-art.duo .duo-half{position:absolute;top:0;bottom:0;width:47%;background:#08100c center 4%/cover no-repeat}
+.en-art.duo .duo-half.l{left:0;-webkit-mask-image:linear-gradient(90deg,#000 62%,transparent 100%);mask-image:linear-gradient(90deg,#000 62%,transparent 100%)}
+.en-art.duo .duo-half.r{right:0;-webkit-mask-image:linear-gradient(270deg,#000 62%,transparent 100%);mask-image:linear-gradient(270deg,#000 62%,transparent 100%)}
+.en-amb{display:none}
+.en-inner{position:relative;z-index:2;padding:calc(env(safe-area-inset-top) + 44px) 28px 0}
+.en-kicker{text-align:center;font-size:10.5px;letter-spacing:.32em;color:rgba(201,168,106,.72)}
+.en-seal{position:relative;overflow:hidden;width:64px;height:64px;margin:18px auto 0;border:2px solid rgba(198,78,58,.9);background:rgba(168,52,38,.16);color:#f5c3b1;font-family:var(--serif);opacity:.45;
+  display:flex;align-items:center;justify-content:center;text-align:center;font-size:12.5px;line-height:1.28;letter-spacing:.1em;transform:rotate(-4deg);
+  box-shadow:0 0 0 3px rgba(158,61,48,.08),inset 0 0 0 3px rgba(5,9,7,.55),inset 0 0 0 4px rgba(198,78,58,.45),inset 0 0 18px rgba(158,61,48,.16)}
+.seal-phx{position:absolute;top:0;left:0;width:100%;height:100%;color:#d4603f;opacity:.7;pointer-events:none}
+.en-seal>span{position:relative;z-index:1}
+.en-title{margin-top:18px;text-align:center;font-family:var(--serif);font-weight:400;font-size:43.5px;letter-spacing:.2em;text-indent:.2em;
+  background:linear-gradient(175deg,#f6ecd5,#e2cfa0 45%,#b08d55);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 20px rgba(201,168,106,.18))}
+.en-tag{margin-top:8px;text-align:center;font-size:12px;color:var(--gold);letter-spacing:.18em}
+.en-cond{margin-top:4px;text-align:center;font-size:10px;color:var(--dim);letter-spacing:.08em}
+.en-body{margin-top:26px;border-top:1px solid rgba(201,168,106,.18);padding-top:20px}
+.en-body p{font-family:var(--serif);font-size:16px;line-height:2.15;color:rgba(220,228,220,.88);text-indent:2em;margin-bottom:12px;opacity:0;transform:translateY(8px);animation:up .9s ease forwards}
+.en-body p:nth-child(2){animation-delay:.2s}.en-body p:nth-child(3){animation-delay:.4s}.en-body p:nth-child(4){animation-delay:.6s}.en-body p:nth-child(5){animation-delay:.8s}
+.en-stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:22px;border-top:1px solid rgba(201,168,106,.14);border-bottom:1px solid rgba(201,168,106,.14)}
+.en-stat{padding:10px 0;text-align:center;border-right:1px solid rgba(201,168,106,.1)}
+.en-stat:last-child{border-right:0}
+.en-stat b{display:block;font-family:var(--serif);font-weight:400;font-size:19.5px;color:var(--gold2)}
+.en-stat span{font-size:9.5px;color:var(--dim);letter-spacing:.1em}
+.en-stats2{display:flex;justify-content:center;gap:16px;margin-top:12px;font-size:10.5px;color:var(--dim);letter-spacing:.08em}
+.en-actions{margin-top:24px;display:flex;flex-direction:column;gap:10px}
+.en-actions .btn-main{height:50px;font-size:15.5px}
+
+/* ---------- 桌面适配 ---------- */
+@media(max-height:700px){
+  .boot-title{font-size:45.5px}
+  .boot-en,.boot-quote,.boot-tags,.boot-seal{display:none}
+  .boot-sub{margin-top:6px}
+  .name-field{height:42px;margin-bottom:10px}
+  .boot-foot{display:none}
+  .cr-name{margin-bottom:8px}
+  .cr-card h3{font-size:25px}
+  .cr-card .cc-inner{padding:12px 16px 14px}
+  .cr-card .cc-desc{-webkit-line-clamp:2;margin-top:7px}
+  .cr-card .cc-perk{margin-top:8px;padding-top:7px}
+}
+@media(max-height:640px){
+  .boot-title{font-size:40.5px}
+  .boot-sub{font-size:13.5px}
+  .name-field{margin-bottom:8px}
+  .scene-art{height:75vw;min-height:0}
+  .intro-no{font-size:84px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+
+
+/* ---------- 防裁切：可滚动列里的条目不许被压扁 ---------- */
+.mm-list>.mm-card{flex:0 0 auto}
+.intro-inner{justify-content:safe center}
+.intro-inner>*{flex:0 0 auto;min-height:0}
+.scene-scroll>*{flex:0 0 auto}
+.ch-card,.evt,.npc,.ward-card,.gal-item{min-height:0}
+.intro-no{line-height:1.25;margin-top:-8px}
+@media (max-height:720px){
+  .intro-no{font-size:66px;line-height:1.25}
+  .intro h2{font-size:30px;margin-top:6px}
+  .intro .in-hint{margin-top:10px;font-size:12.5px;line-height:1.8}
+  .intro-body{margin-top:16px}
+  .intro-body p{font-size:15.5px;line-height:1.95;margin-bottom:8px}
+  .intro .btn-main{margin-top:18px}
+}
+.intro .btn-main{margin-top:26px}
+
+/* =========================================================
+   桌面横屏（≥900px 且横屏）：左右分栏 / 多列 / 宽幅场景
+   ========================================================= */
+@media (min-width:900px) and (orientation:landscape){
+  #app{max-width:1180px}
+
+  /* 封面：左图右文 */
+  .boot{background:#050907}
+  .boot::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;z-index:1;
+    background:url(images/BOOT_ART.jpg) center 20%/cover no-repeat;
+    filter:blur(34px) brightness(.46) saturate(.9);transform:scale(1.08);opacity:.95;
+    -webkit-mask-image:linear-gradient(90deg,transparent 26%,rgba(0,0,0,.5) 46%,#000 72%);
+    mask-image:linear-gradient(90deg,transparent 26%,rgba(0,0,0,.5) 46%,#000 72%)}
+  .boot-bg{width:56%;right:auto;object-position:center 20%;
+    -webkit-mask-image:linear-gradient(90deg,#000 0%,#000 68%,rgba(0,0,0,.55) 86%,transparent 100%);
+    mask-image:linear-gradient(90deg,#000 0%,#000 68%,rgba(0,0,0,.55) 86%,transparent 100%)}
+  .boot-veil{background:
+      linear-gradient(90deg,rgba(5,9,7,0) 0%,rgba(5,9,7,.10) 40%,rgba(5,9,7,.55) 58%,rgba(5,9,7,.74) 74%,rgba(5,9,7,.86) 100%),
+      linear-gradient(180deg,rgba(4,8,6,.30) 0%,rgba(4,8,6,0) 32%,rgba(4,8,6,0) 66%,rgba(4,8,6,.55) 100%)}
+  .boot-inner{padding:48px 64px 40px 58%;justify-content:center}
+  .boot-top{text-align:left;padding:0}
+  .boot-top::before{display:none}
+  .boot-kicker{justify-content:flex-start}
+  .boot-title{font-size:clamp(48px,4.5vw,64px)}
+  .boot-sub{letter-spacing:.5em;text-indent:0}
+  .boot-quote{margin-top:22px}
+  .boot-bottom{margin-top:26px}
+  .boot-minor{justify-content:flex-start}
+  .boot-tags,.boot-foot{justify-content:flex-start;text-align:left}
+  .boot-seal{right:44px;top:44px;width:42px;height:56px;font-size:15px}
+  .boot-kicker{color:rgba(216,232,222,.90)}
+  .boot-en{color:rgba(216,184,126,.86)}
+  .boot-quote{color:rgba(233,239,232,.97)}
+  .boot-quote span{color:rgba(214,178,110,.98)}
+  .boot-minor{color:rgba(215,229,220,.84)}
+  .boot-tags{color:rgba(162,194,180,.74)}
+  .boot-foot{color:rgba(128,146,134,.80)}
+  .nf-label{color:#d9b97a;opacity:1}
+  .name-field input::placeholder{color:rgba(160,176,166,.62)}
+
+  /* 选身份：三列 */
+  .create .cr-head,.match .cr-head{max-width:1060px;width:100%;margin:0 auto;padding:24px 40px 10px}
+  .cr-wrap{max-width:1060px;width:100%;margin:0 auto;padding:0 40px 26px}
+  .cr-rail{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;overflow:visible;padding:0;align-items:stretch}
+  .cr-card{height:calc(100vh - 250px);min-height:430px;max-height:560px}
+  .cc-art{flex:0 0 50%;aspect-ratio:auto}
+  .cr-card .cc-inner{flex:1 1 50%}
+  .cr-dots{display:none}
+  .cr-wrap>.btn-main{width:100%;max-width:420px}
+
+  /* 择婿：三列 */
+  .mm-wrap{max-width:1060px;width:100%;margin:0 auto;padding:0 40px 24px}
+  .mm-list{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;overflow:visible}
+  .mm-card{flex-direction:column;height:calc(100vh - 250px);min-height:470px;max-height:580px}
+  .mm-art{width:100%;flex:0 0 auto;height:54%!important;background-position:center 18%}
+  .mm-fade{background:linear-gradient(180deg,rgba(7,12,9,0) 52%,rgba(7,12,9,.92) 100%)}
+  .mm-body{padding:14px 16px 16px;text-align:center;flex:1 1 auto;display:flex;flex-direction:column;justify-content:center}
+  .mm-quote{padding-left:0;border-left:none}
+  .mm-body h3{font-size:22px}
+  .mm-ttl,.mm-line{font-size:12px}
+  .mm-quote{font-size:13px}
+  .mm-wrap>.btn-main{max-width:420px;margin:16px auto 0}
+
+  /* 主界面框架 */
+  .topbar{padding:18px 40px 8px}
+  .statusbar{padding:6px 42px 0}
+  .attrs{margin:10px 40px 0}
+  .main{padding:16px 40px 106px}
+  .main:not(.tab-map){padding-left:max(40px,calc((100% - 980px)/2));padding-right:max(40px,calc((100% - 980px)/2))}
+
+  /* 舆图：左图右行止 */
+  .main.tab-map{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);grid-template-rows:auto auto 1fr auto auto;grid-template-areas:"ch ch" "s1 s2" "map rail" "map climax" "map quote";gap:0 26px;align-content:start}
+  .main.tab-map>*:nth-child(1){grid-area:ch}
+  .main.tab-map .ch-card{min-height:186px}
+  .main.tab-map>*:nth-child(2){grid-area:s1;margin-top:20px}
+  .main.tab-map>*:nth-child(3){grid-area:map}
+  .main.tab-map>*:nth-child(4){grid-area:s2;margin-top:20px}
+  .main.tab-map>*:nth-child(5){grid-area:rail}
+  .main.tab-map>*:nth-child(6){grid-area:climax}
+  .main.tab-map>*:nth-child(7){grid-area:quote;align-self:start}
+  .main.tab-map .rail{display:grid;grid-template-columns:1fr 1fr;gap:10px;overflow:visible;padding:0}
+  .main.tab-map .rail-card{flex:1 1 auto}
+  .main.tab-map .climax-btn{margin-top:18px;align-self:start;min-height:112px}
+  .main.tab-map .main-quote{margin:18px 0 0}
+
+  /* 衣橱：四列 */
+  .ward-grid{grid-template-columns:repeat(4,1fr);gap:14px}
+
+  /* 云锦阁 / 人物：双列 */
+  .goods-list{display:grid;grid-template-columns:1fr 1fr;gap:0 32px}
+  .npc-list{display:grid;grid-template-columns:1fr 1fr;gap:0 32px}
+
+  /* 弹层居中限宽 */
+  .sheet{max-width:660px;max-height:86%;border:1px solid rgba(201,168,106,.22);box-shadow:0 30px 90px rgba(0,0,0,.8)}
+  .sheet-wrap{padding:20px}
+  .gal-grid{grid-template-columns:repeat(3,1fr)}
+
+  /* 章节引言：居中窄栏 */
+  .intro-inner{align-items:center;padding:40px 60px}
+  .intro-inner>*{width:100%;max-width:760px}
+  .intro-inner>.intro-no{position:absolute;left:58px;top:40px;width:auto;max-width:none;margin:0;
+    font-size:112px;line-height:.9;color:rgba(201,168,106,.16)}
+  .intro .btn-main{max-width:420px}
+
+  /* 剧情：左立绘右文字 */
+  .scene-head{padding:16px 40px 10px}
+  .scene-scroll{display:grid;grid-template-columns:minmax(0,46%) minmax(0,1fr);grid-template-rows:auto auto 1fr auto;gap:0 36px;padding:6px 40px 28px;align-content:start}
+  .scene-scroll:not(:has(.scene-art)){display:block;max-width:820px;margin:0 auto;width:100%}
+  #scTitle{grid-column:1/-1;grid-row:1;text-align:left;margin:8px 0 0}
+  #scTitle::after{margin:12px 0 0}
+  #scArtWrap{grid-column:1;grid-row:2/5;min-width:0}
+  #scBody{grid-column:2;grid-row:2;padding:14px 0 0}
+  #scChoices{grid-column:2;grid-row:3;padding:10px 0 0}
+  #scNote{grid-column:2;grid-row:4}
+  .scene-art{height:100%;min-height:480px;max-height:none;margin:12px 0 0}
+  .scene-body{padding:14px 0 0}
+  .scene-body p{font-size:17.5px}
+  .scene-choices{padding:10px 0 0}
+  .scene-scroll:not(:has(.scene-art)) .scene-art{height:auto}
+
+  /* 结局：与手机端一致的上图下文，居中竖版 */
+  .ending{position:absolute;top:0;left:0;right:0;bottom:0;margin:0 auto;width:100%;max-width:440px;overflow-y:auto;padding-bottom:26px;background:#050907;box-shadow:0 0 0 1px rgba(201,168,106,.10),0 30px 90px rgba(0,0,0,.6)}
+  .en-amb{display:none}
+  .en-art{position:absolute;top:0;left:0;right:0;bottom:auto;width:100%;height:62%;opacity:.34;z-index:1}
+  .en-inner{position:relative;z-index:2;width:auto;height:auto;overflow:visible;padding:calc(env(safe-area-inset-top) + 44px) 28px 0}
+  .en-actions{max-width:none}
+}
+
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="ambient"></div>
+  <div class="grain"></div>
+
+  <!-- 开场 -->
+  <section id="boot" class="boot">
+    <img class="boot-bg" src="images/BOOT_ART.jpg" alt="" onerror="this.style.display='none'">
+    <div class="boot-veil"></div>
+    <canvas id="motes"></canvas>
+    <div class="boot-frame"></div>
+    <div class="boot-seal">联姻<br>是局</div>
+    <div class="boot-inner">
+      <div class="boot-top">
+        <div class="boot-kicker"><span></span>大雍永昌十二年 · 上京 · 帝欲指婚<span></span></div>
+        <h1 class="boot-title">金玉<em>良缘</em></h1>
+        <div class="boot-sub">上 京 联 姻 局</div>
+        <div class="boot-en">A GILDED MATCH · A MARRIAGE OF STATE</div>
+        <p class="boot-quote">婚书是契，嫁妆是条款，新娘是抵押品。<br><span>满城金玉之下，皆是暗涛。</span></p>
+      </div>
+      <div class="boot-bottom">
+        <label class="name-field">
+          <span class="nf-label">闺 名</span>
+          <input id="nameInput" maxlength="6" placeholder="青梧 / 明月 / 飞琼" autocomplete="off" spellcheck="false">
+          <span class="nf-label nf-ghost" aria-hidden="true">闺 名</span>
+        </label>
+        <button class="btn-main" id="btnStart">入 局</button>
+        <div class="boot-minor">
+          <button id="btnContinue" hidden>续 前 缘</button>
+          <span id="minorDot" hidden></span>
+          <button id="btnGallery">结 局 图 鉴</button>
+          <span></span>
+          <button onclick="openImport()">导 入 存 档</button>
+        </div>
+        <div class="boot-tags"><span>三身份</span><i></i><span>五章</span><i></i><span>十三处</span><i></i><span>十一线索</span><i></i><span>十八结局</span></div>
+        <div class="boot-foot">竖屏体验 · 进度自动保存于本机</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 选身份 -->
+  <section id="create" class="screen create" hidden>
+    <div class="cr-head">
+      <button class="icon-back" id="btnBackBoot">‹</button>
+      <div><h2>选 一 枚 落 子</h2><p>同一座城 · 三种真相</p></div>
+    </div>
+    <div class="cr-wrap">
+      <div class="cr-name">以<b id="crName">青梧</b>之名，入上京</div>
+      <span class="cr-diff" id="crDiff">易局</span>
+      <div class="cr-rail" id="idRail"></div>
+      <div class="cr-dots" id="idDots"></div>
+      <button class="btn-main" id="btnNew">落 子 · 开 局</button>
+      <div class="cr-note">每章五点行动力 · 见谁，不见谁，皆是取舍</div>
+    </div>
+  </section>
+
+  <!-- 择婿 -->
+  <section id="matchmake" class="screen match" hidden>
+    <div class="cr-head">
+      <button class="icon-back" id="btnBackCreate">‹</button>
+      <div><h2>择 婿 · 定 亲</h2><p>选一个人，把终身押上去</p></div>
+    </div>
+    <div class="mm-wrap">
+      <div class="mm-note" id="mmNote"></div>
+      <div class="mm-list" id="mmList"></div>
+      <button class="btn-main" id="btnGroom" disabled>先 选 一 个 人</button>
+      <div class="cr-note">亲事由你开口，答不答应在他</div>
+    </div>
+  </section>
+
+  <!-- 主界面 -->
+  <section id="game" class="screen game" hidden>
+    <header class="topbar">
+      <div class="tb-left">
+        <div class="avatar"><div id="tbAvatar"></div><i></i></div>
+        <div class="tb-name"><b id="tbName"></b><span id="tbId"></span></div>
+      </div>
+      <div class="tb-right">
+        <div class="ch-pill" id="tbCh"></div>
+        <button class="menu-btn" id="btnMenu" aria-label="菜单"><i></i><i></i><i></i></button>
+      </div>
+    </header>
+    <div class="statusbar">
+      <div class="ap"><span class="ap-label">行 动</span><div class="ap-dots" id="apDots"></div></div>
+      <div class="money">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#c9a86a" stroke-width="1.1"/><path d="M12 7v10M9 9.6c0-1.2 1.3-2 3-2s2.6.8 2.6 1.8c0 2.6-5.6 1.5-5.6 4.1 0 1 1.2 1.7 2.9 1.7" stroke="#c9a86a" stroke-width="1"/></svg>
+        <b id="tbMoney">0</b><small>两</small>
+      </div>
+    </div>
+    <div class="attrs" id="tbAttrs"></div>
+    <main class="main" id="main"></main>
+    <button id="fabClimax" class="fab-climax" hidden onclick="runClimax()">
+      <span class="fc-k">入夜</span><b id="fabName"></b>
+    </button>
+    <nav class="tabbar" id="tabbar">
+      <button class="tab on" data-tab="map"><span class="tab-g">舆</span><span class="tab-l">舆图</span></button>
+      <button class="tab" data-tab="wardrobe"><span class="tab-g">衣</span><span class="tab-l">衣橱</span></button>
+      <button class="tab" data-tab="shop"><span class="tab-g">锦</span><span class="tab-l">云锦阁</span></button>
+      <button class="tab" data-tab="clues"><span class="tab-g">卷</span><span class="tab-l">线索</span></button>
+      <button class="tab" data-tab="npcs"><span class="tab-g">人</span><span class="tab-l">人物</span></button>
+    </nav>
+  </section>
+
+  <!-- 章节引言 -->
+  <section id="intro" class="intro" hidden></section>
+
+  <!-- 剧情 -->
+  <section id="scene" class="scene" hidden>
+    <div class="scene-head">
+      <button id="scBack" class="sc-back" type="button"><b>‹</b>返 回</button>
+      <span id="scCh" class="sc-ch"></span>
+      <span id="scLoc" class="sc-loc"></span>
+    </div>
+    <div class="scene-scroll">
+      <h2 class="scene-title" id="scTitle"></h2>
+      <div id="scArtWrap"></div>
+      <div class="scene-body" id="scBody"></div>
+      <div class="scene-choices" id="scChoices"></div>
+      <div class="scene-note" id="scNote"></div>
+    </div>
+  </section>
+
+  <!-- 结局 -->
+  <section id="ending" class="ending" hidden></section>
+
+  <!-- 弹层 -->
+  <div id="sheet" class="sheet-wrap" hidden>
+    <div class="sheet-mask" id="sheetMask"></div>
+    <div class="sheet">
+      <div class="sheet-grip"></div>
+      <div class="sheet-scroll" id="sheetBody"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+</div>
+<script>
+const ATTRS=[['charm','魅力'],['wit','聪慧'],['grace','优雅'],['strat','谋略']];
+const LS_SAVE='jyat_save_v1',LS_ARCH='jyat_arch_v1';
+let S=null;
+
+/* ---- 内嵌立绘（参考图 base64，离线可用） ---- */
+const ART={
+boot:'images/boot.jpg',
+rival:'images/rival.jpg',
+prince:'images/prince.jpg',
+hou:'images/hou.jpg',
+spy:'images/spy.jpg',
+qingwu:'images/qingwu.jpg',
+mingyue:'images/mingyue.jpg',
+feiqiong:'images/feiqiong.jpg',
+w0:'images/w0.jpg',
+w1:'images/w1.jpg',
+w2:'images/w2.jpg',
+w4:'images/w4.jpg',
+w5:'images/w5.jpg',
+dress3:'images/dress3.jpg',
+j1:'images/j1.jpg',
+j2:'images/j2.jpg',
+j3:'images/j3.jpg',
+j4:'images/j4.jpg',
+j5:'images/j5.jpg',
+j6:'images/j6.jpg',
+j0:'images/j0.jpg'
+};
+
+
+/* ---- 立绘（SVG 生成，随衣橱换色） ---- */
+const FALLBACK_PAL={bg1:'#1c2722',bg2:'#070d0a',r1:'#3a4a43',r2:'#26332e',r3:'#1b2622',halo:'#8fb3a4',hair:'#141a17',skin:'#2b342f',eye:'#8fb3a4',lip:'#5c3a34',jewel:'#c9a86a'};
+function fallbackArt(){try{return svgPort(FALLBACK_PAL);}catch(e){return PH;}}
+const PH='data:image/svg+xml,'+encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' width='8' height='12'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#1c2722'/><stop offset='1' stop-color='#070d0a'/></linearGradient></defs><rect width='8' height='12' fill='url(#g)'/></svg>");
+document.addEventListener('error',function(e){
+  const t=e.target;
+  if(t&&t.tagName==='IMG'&&!t.getAttribute('data-fb')){
+    t.setAttribute('data-fb','1');
+    try{t.src=PH;}catch(_){t.style.visibility='hidden';}
+  }
+},true);
+function svgPort(o){
+  const d=encodeURIComponent(
+  `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'>
+  <defs><linearGradient id='bg' x1='0' y1='0' x2='0' y2='1'>
+    <stop offset='0' stop-color='${o.bg1}'/><stop offset='1' stop-color='${o.bg2}'/></linearGradient>
+  <linearGradient id='rb' x1='0' y1='0' x2='1' y2='1'>
+    <stop offset='0' stop-color='${o.r1}'/><stop offset='1' stop-color='${o.r2}'/></linearGradient></defs>
+  <rect width='100' height='130' fill='url(#bg)'/>
+  <circle cx='50' cy='30' r='34' fill='${o.halo}' opacity='.28'/>
+  <path d='M14 130 C16 96 30 84 50 84 C70 84 84 96 86 130 Z' fill='url(#rb)'/>
+  <path d='M40 130 L50 88 L60 130 Z' fill='${o.r3}' opacity='.8'/>
+  <path d='M30 130 C32 104 38 96 50 94 C62 96 68 104 70 130 Z' fill='${o.r3}' opacity='.55'/>
+  <path d='M22 96 C14 70 22 34 50 30 C78 34 86 70 78 96 C74 76 70 60 62 52 L38 52 C30 60 26 76 22 96 Z' fill='${o.hair}'/>
+  <path d='M20 100 C16 74 20 52 30 42 C24 62 26 84 28 100 Z' fill='${o.hair}' opacity='.85'/>
+  <path d='M80 100 C84 74 80 52 70 42 C76 62 74 84 72 100 Z' fill='${o.hair}' opacity='.85'/>
+  <ellipse cx='50' cy='58' rx='15' ry='18' fill='${o.skin}'/>
+  <path d='M35 56 C36 42 64 42 65 56 C62 46 38 46 35 56 Z' fill='${o.hair}'/>
+  <path d='M43 58 l4 1.4 M57 58 l-4 1.4' stroke='${o.eye}' stroke-width='1.6' stroke-linecap='round' fill='none'/>
+  <path d='M47 68 q3 2 6 0' stroke='${o.lip}' stroke-width='1.3' stroke-linecap='round' fill='none'/>
+  <circle cx='35.5' cy='70' r='1.4' fill='${o.jewel}'/><circle cx='64.5' cy='70' r='1.4' fill='${o.jewel}'/>
+  <circle cx='50' cy='41.5' r='2.2' fill='${o.jewel}' opacity='.9'/>
+  <path d='M46 36 C48 40 52 40 54 36' stroke='${o.jewel}' stroke-width='1' fill='none' opacity='.8'/>
+  </svg>`);
+  return 'data:image/svg+xml,'+d;
+}
+const HAIR='#181420',SKIN='#f3e3d3';
+const OUTFIT_ART={w0:{src:'images/outfit_w0.jpg'},w1:{src:'images/outfit_w1.jpg'},w2:{src:'images/outfit_w2.jpg'},w3:{src:'images/outfit_w3.jpg'},w4:{src:'images/outfit_w4.jpg'},w5:{src:'images/outfit_w5.jpg'},w6:{src:'images/outfit_w6.jpg'},w7:{src:'images/outfit_w7.jpg'}};
+function outfitArt(id){const m=OUTFIT_ART[id]||OUTFIT_ART.w0;return {src:m.src,cls:''};}
+const ID_ART={maid:'qingwu',miss:'mingyue',gen:'feiqiong'};
+const ART_CLS={prince:1,hou:1,spy:1};
+const OUTFITS=[
+ {id:'w0',name:'桃月裁霜',price:0,own:true,desc:'月白染桃，初入上京的体面。',eff:{grace:1},
+  pal:{bg1:'#232a33',bg2:'#10131a',r1:'#e8e2d2',r2:'#b9c2c9',r3:'#8fa3b0',halo:'#c9d6dd',hair:HAIR,skin:SKIN,eye:'#31404a',lip:'#b06a62',jewel:'#cfd8de'}},
+ {id:'w1',name:'青瓷叠雪',price:60,desc:'青瓷叠雪，江南烟水气。',eff:{grace:2,wit:1},
+  pal:{bg1:'#26303a',bg2:'#12161d',r1:'#7d94a6',r2:'#41586b',r3:'#2c3f50',halo:'#9db4c2',hair:HAIR,skin:SKIN,eye:'#2c3e4a',lip:'#b06a62',jewel:'#bcd0da'}},
+ {id:'w2',name:'樱绯缀雪',price:90,desc:'樱粉堆花，宴上最软的一层春色。',eff:{charm:4},
+  pal:{bg1:'#3a1a18',bg2:'#16090c',r1:'#c9553f',r2:'#7c2a20',r3:'#541a14',halo:'#e08a5a',hair:HAIR,skin:SKIN,eye:'#4a2c24',lip:'#c96a5a',jewel:'#f2dcae'}},
+ {id:'w3',name:'玄枝映雪',price:120,desc:'玄黑织金，静水深流。',eff:{strat:3},
+  pal:{bg1:'#1c1a22',bg2:'#0c0b11',r1:'#2e2b38',r2:'#15131b',r3:'#0f0e14',halo:'#d9b06c',hair:HAIR,skin:SKIN,eye:'#3a3542',lip:'#b06a62',jewel:'#d9b06c'}},
+ {id:'w4',name:'紫烟笼月',price:140,minCh:3,desc:'紫雾笼月，介于梦与局之间。',eff:{charm:3,strat:2},
+  pal:{bg1:'#2e2a48',bg2:'#141126',r1:'#8f83c9',r2:'#565091',r3:'#3a3568',halo:'#c5bce8',hair:HAIR,skin:SKIN,eye:'#3c3560',lip:'#b06a62',jewel:'#dcd4f2'}},
+ {id:'w5',name:'沉璧',price:130,minCh:3,desc:'墨绿沉璧，读史人的颜色。',eff:{wit:2,grace:2},
+  pal:{bg1:'#1f2e28',bg2:'#0d1512',r1:'#4e7a68',r2:'#2c4a3e',r3:'#1c322a',halo:'#9cc2ae',hair:HAIR,skin:SKIN,eye:'#2c4438',lip:'#b06a62',jewel:'#c8e0d2'}},
+ {id:'w6',name:'北漠貂裘',price:200,minCh:4,desc:'北漠白裘，雪山与孤城的礼物。',eff:{charm:2,strat:2},
+  pal:{bg1:'#3a3440',bg2:'#171420',r1:'#efe8dc',r2:'#c2b6a8',r3:'#948880',halo:'#f2e8d8',hair:HAIR,skin:SKIN,eye:'#46403a',lip:'#b06a62',jewel:'#e8c98a'}},
+ {id:'w7',name:'凤冠霞帔',price:0,minCh:5,desc:'大红织金，婚书为凭。',eff:{charm:5,grace:3},
+  pal:{bg1:'#4a1a1c',bg2:'#1c080c',r1:'#c9362b',r2:'#8c1f1a',r3:'#5e130f',halo:'#f2b06a',hair:HAIR,skin:SKIN,eye:'#54241e',lip:'#d05a4a',jewel:'#f2dcae'}},
+];
+const JEWELS=[
+ {id:'j1',name:'珍珠耳珰',price:40,desc:'温润三分，妥帖的大家做派。',eff:{charm:2}},
+ {id:'j2',name:'鎏金步摇',price:80,desc:'一步一摇，宴上无人不看你。',eff:{charm:3,grace:1}},
+ {id:'j3',name:'苏合香',price:30,desc:'衣上冷香，礼数周全。',eff:{grace:2}},
+ {id:'j4',name:'云纹玉棋',price:90,desc:'把玩棋子，心思深一层。',eff:{strat:2}},
+ {id:'j5',name:'前朝残卷',price:70,desc:'残卷半册，读来聪慧。',eff:{wit:3}},
+ {id:'j6',name:'北漠小刀',price:120,minCh:4,desc:'袖中藏锋，防身也防心。',eff:{strat:2,wit:1}},
+ {id:'j0',name:'上好胭脂',price:15,desc:'薄施粉黛，日日可用。',eff:{charm:1},repeat:true},
+];
+
+/* ---- 身份 ---- */
+const IDENTITIES={
+ maid:{key:'maid',name:'洒扫婢女',tag:'没落贵族 · 隐藏最深',diff:'易 · 大BOSS线',
+   defaultName:'青梧',
+   desc:'你在永宁伯府做洒扫婢女，袖口补丁浆得发白。没人知道，你是十二年前获罪的忠靖侯谢家最后的血脉。',
+   bonus:{wit:2,strat:2,charm:1},money:40,income:15,
+   perk:'线索之眼：每章多解锁一条身世暗线；银钱微薄，但藏得最深。',
+   pal:{bg1:'#2a2e33',bg2:'#121317',r1:'#dfe2da',r2:'#a8aca6',r3:'#7c8078',halo:'#d8dce0',hair:HAIR,skin:SKIN,eye:'#33383c',lip:'#b06a62',jewel:'#cfd4d8'},
+   home:'伯府后罩房'},
+ miss:{key:'miss',name:'伯府千金',tag:'中等世家 · 绝不普通',diff:'中 · 家族存续线',
+   defaultName:'崔明月',
+   desc:'永宁伯府嫡女。伯府不算顶显赫，却也诗书传家三代——直到伯父挪用内帑绸缎银的事，成了悬在全家头顶的刀。',
+   bonus:{charm:2,grace:2,wit:1},money:150,income:70,
+   perk:'人脉周全：商铺折扣八成，家宅安稳可修炼。银钱充裕。',
+   pal:{bg1:'#332a30',bg2:'#171218',r1:'#e8d8e0',r2:'#b094a8',r3:'#8a7088',halo:'#e8cfd8',hair:HAIR,skin:SKIN,eye:'#46323c',lip:'#b86a6a',jewel:'#e8d0d8'},
+   home:'伯府绣楼'},
+ gen:{key:'gen',name:'将军独女',tag:'顶级门第 · 风口浪尖',diff:'难 · 和亲危局线',
+   defaultName:'秦飞琼',
+   desc:'镇北大将军秦肃的独女。全上京都羡慕你，没人问过你：父亲手里的虎符，究竟是护身符，还是催命符。',
+   bonus:{charm:2,strat:2,grace:1},money:220,income:110,
+   perk:'将门虎女：开局谋略卓绝，但树大招风，处处有人等你出错。',
+   pal:{bg1:'#3a2226',bg2:'#180d10',r1:'#d8c2b4',r2:'#a8846e',r3:'#7c5e4c',halo:'#e0a882',hair:HAIR,skin:SKIN,eye:'#4a2e24',lip:'#c06a52',jewel:'#e8c088'},
+   home:'将军府听雪阁'},
+};
+
+/* ---- 人物 ---- */
+const NPCS={
+ prince:{name:'萧景珩',title:'三皇子 · 母族凋零的贤王',fav:0,
+   quote:'「旁人看见的是嫡庶尊卑，本王看见的，是棋盘上每一颗都以为自己是执棋人的棋子。」',
+   desc:'温润知礼，礼贤下士，是满朝公认的好皇子。可他在你面前谈起夺嫡时，语气平静得像在谈今晚吃什么。',
+   pal:{bg1:'#3a1418',bg2:'#140608',r1:'#8c2028',r2:'#4a0f14',r3:'#2e0a0d',halo:'#c9553f',hair:HAIR,skin:SKIN,eye:'#48201c',lip:'#a84a42',jewel:'#d9b06c'}},
+ hou:{name:'顾长风',title:'定远侯世子 · 「上京第一纨绔」',fav:0,
+   quote:'「我就是个斗鸡走马的废物——废物活得久，你懂的。」',
+   desc:'白日赌钱斗鸡，夜里翻墙进兵部。他的纨绔是铠甲，穿了很多年，快要长进肉里。',
+   pal:{bg1:'#26221c',bg2:'#100e0a',r1:'#3a3428',r2:'#1c1a14',r3:'#12110c',halo:'#d9b06c',hair:HAIR,skin:SKIN,eye:'#3c3428',lip:'#a8765a',jewel:'#e8c98a'}},
+ spy:{name:'沈栖迟',title:'江南商贾之子 · 行商代表',fav:0,
+   quote:'「在下姓沈，栖迟于野的栖迟。——姑娘信也好，不信也罢。」',
+   desc:'温雅如玉，诗文双绝，出手阔绰。他的商队走的从来不是商道，他的笑也从来不到眼底。',
+   pal:{bg1:'#22262e',bg2:'#0e1116',r1:'#dfe4e6',r2:'#9aa8b2',r3:'#66727e',halo:'#c2ced8',hair:HAIR,skin:SKIN,eye:'#2e3a44',lip:'#a86a62',jewel:'#bcd0da'}},
+ rival:{name:'苏含烟',title:'户部侍郎之女 · 皇后侄女',fav:0,
+   quote:'「妹妹这话说的，我不过是心疼妹妹那身裙子罢了。」',
+   desc:'娇柔可人，滴水不漏。她递过来的每一盏茶都是烫的，说出口的每一句话都是软的。',
+   pal:{bg1:'#3a2a32',bg2:'#1a1216',r1:'#e8c8d0',r2:'#c092a2',r3:'#8e6a7c',halo:'#f0d0d8',hair:HAIR,skin:SKIN,eye:'#4c3440',lip:'#c06a70',jewel:'#f0d8e0'}},
+ qingwu:{name:'青梧',title:'伯府婢女 · 说话极轻',fav:0,
+   quote:'「姑娘们看灯，奴婢看人。看人，比灯亮。」',
+   desc:'（若你未选此线）洒扫婢女，永远垂着眼。可她补衣的针脚，是只有大贵族才教的缠枝纹。',
+   pal:IDENTITIES.maid.pal},
+ mingyue:{name:'崔明月',title:'永宁伯府嫡女',fav:0,
+   quote:'「我家的体面，是账上撑起来的。这话我只说给你听。」',
+   desc:'（若你未选此线）明媚爽利，出手大方。只有你知道她上个月当掉了母亲留下的镯子。',
+   pal:IDENTITIES.miss.pal},
+ feiqiong:{name:'秦飞琼',title:'镇北大将军独女',fav:0,
+   quote:'「我爹守了二十年北境，如今满朝都在算，他什么时候死在北边。」',
+   desc:'（若你未选此线）飒爽英气，骑马能赢半城公子。她的婚事不在她手里，在她父亲的兵符里。',
+   pal:IDENTITIES.gen.pal},
+};
+const ID_NPCS={maid:['mingyue','feiqiong'],miss:['qingwu','feiqiong'],gen:['qingwu','mingyue']};
+
+/* ---- 婚约 · 九条情感线（男/女双向弧线 + 逐章推进） ---- */
+const GROOMS=['prince','hou','spy'];
+const REL={
+ prince:{
+  maid:{name:'恨海情天',chip:'虐恋',mArc:'先恨后爱，爱到极致',fArc:'先恨后信，从棋子到同谋',
+   favStart:0,favMul:0.65,need:18,bias:{strat:1},
+   line:'「谢家余孽——本王找了你十二年。」',
+   beats:[
+    '他查出你腕上的墨梅，把你留在府里当一枚棋。你把恨压在眼底，先学着活下去。',
+    '他故意让你在苏含烟面前露破绽，试试你值几条命。你反手替他挡下一盏毒茶，他第一次皱眉。',
+    '他开始替你抹去身世的痕迹，嘴上仍说「留着有用」。你问他怕什么，他沉默很久：「怕你不恨了。」',
+    '赐婚的诏书下来，他当着满殿撕了，改娶你。你问这算不算爱，他说：「本王只是不肯把人让给别人。」',
+    '宫变那夜他替你挡下一刀，说谢家的债用命还。你终于肯叫他一声景珩。'],
+   end:{name:'以命偿恨',tag:'HE · 三皇子线 · 恨海情天',
+    body:['大婚那夜他没进房，只把十二年前的旧档扔进火盆。火光照着他的脸：「谢家的案子重审了，判词里没有你。」',
+     '「你恨本王吗?」他问。你答恨。他笑了一下:「那就好。恨比爱长久,本王这一生只信长久的东西。」',
+     '后来史书写帝后同朝,一个执刀一个执笔。没人知道那把刀最初架在她颈上,也没人知道她用了多少年,把刀柄换到了自己手里。']}},
+  miss:{name:'爱极生杀',chip:'囚爱',mArc:'先爱后狠，狠到要杀她',fArc:'先信后疑，从信到逃',
+   favStart:10,favMul:1.1,need:24,bias:{grace:1},
+   line:'「阿月，你小时候砸过本王一块石子，记不记得?」',
+   beats:[
+    '他记着十年前伯府后园那块石子，待你极尽温柔。你以为这是天赐的姻缘。',
+    '他借你的手递出一封密信，你替他担了污名。他只说「阿月最懂本王」。',
+    '信送出去后死了人。你追问，他第一次沉下脸：「阿月，你知道得太多了。」',
+    '他一边备大婚，一边往你茶里下慢药。你装作不知，悄悄把药换了。',
+    '他掐着你的脖子说宁可她死也不许她走。她没逃，只在刀锋上吻了他。'],
+   end:{name:'金屋藏刃',tag:'HE · 三皇子线 · 爱极生杀',
+    body:['大婚之后,他再没让她离开过三步之内。宫人私下说,皇后走一步,陛下便要看一眼。',
+     '「你什么时候杀我?」她替他斟茶,语气像问天气。他握住她的手,把刀柄朝自己转过去:「你随时可以。」',
+     '他们就这样互相囚了一辈子。金屋很暖,刃很凉,外人只看见鸾凤和鸣——只有他们知道,中间隔着一条谁也没跨过去的线。']}},
+  gen:{name:'先杀后赎',chip:'救赎',mArc:'先杀后恨，最后被救赎',fArc:'先恨后疑，刀落不下',
+   favStart:2,favMul:1.0,need:24,bias:{strat:1},
+   line:'「秦小姐的刀，本王收了。」',
+   beats:[
+    '他奉旨查将军府，先斩了父亲麾下两名旧部。你夜入三皇子府行刺，只割破了他一截衣袖。',
+    '他当众说「秦小姐的刀本王收了」，替你压下刺客之名。你笑着敬酒，酒里下了药。',
+    '他没喝那杯酒，却在宴上替你挡了一支北漠的箭。你说我还是要杀你，他说知道。',
+    '他把虎符仿案的证据烧了，换你父亲一命。你握着刀站了整夜，第一次没落下去。',
+    '宫变中毒，他命将绝。你割腕喂血，说这条命我还没杀，不许别人拿走。'],
+   end:{name:'血偿',tag:'HE · 三皇子线 · 先杀后赎',
+    body:['他活下来的那天,做的第一件事是把手腕上那道旧疤露给她看:「这一刀,你还欠着。」',
+     '「不还了。」她把刀按进他掌心,「留着吧,往后你欠我。」他低头笑,像个终于被赦免的人。',
+     '北境安定那年,将军府的旧部牌位前多了一杯酒。她替他斟满,也替自己斟满——这一杯,敬所有没能活着看到和解的人。']}}
+ },
+ hou:{
+  maid:{name:'先利用后强娶',chip:'替死',mArc:'先利用，后强娶，爱到替她死',fArc:'先借势，后动心',
+   favStart:8,favMul:1.35,need:26,bias:{charm:1},
+   line:'「你是伯府的婢女?正好，我这缺个管钱的。」',
+   beats:[
+    '他看出你的墨梅却什么也没说，只让你替他递话传信——他在用你。',
+    '苏含烟拿住你的把柄，他当众认下你是他的人。你分不清他是护你，还是圈你。',
+    '你替他把暗卫名单送出城，回来他只说一句：「以后别替我做这种事了。」',
+    '他抢在诏书前头，用侯府名分强娶了你：「我知道你不愿意，可我只有这一条路留你。」',
+    '宫变里他替你挡了三刀，最后一刀没躲：「青梧，这次换你活着。」'],
+   end:{name:'一命换一命',tag:'HE · 侯世子线 · 替死',
+    body:['他醒过来是三个月后。睁眼第一句是问她还活着吗,第二句才是「疼」。',
+     '「你替我死了一次。」她替他换药,手很稳,「往后你这条命归我管。」他笑得伤口发疼:「遵命。」',
+     '后来侯府的账是她管的,马场的名字是她起的。上京人说侯爷怕娘子,他从不辩解——只有他知道,那三刀下去的时候,他一点都不怕。']}},
+  miss:{name:'青梅强夺',chip:'强取',mArc:'青梅竹马，强取豪夺',fArc:'旧情难舍，抗拒到认命',
+   favStart:12,favMul:1.3,need:26,bias:{charm:1},
+   line:'「崔明月，你爹二十年前跟我爹喝多了，把咱俩许了。」',
+   beats:[
+    '他揣着半张黄了的婚书来，笑得没心没肺。你只当这是纨绔的胡闹。',
+    '伯府被债逼到墙角，他替你还了，条件是「明月，你得嫁我」。',
+    '你逃出城一次，他把整条灯市买下来，只为让你回头看一眼。',
+    '他拿侯府兵权换伯府平安，逼你点头：「我从小就想娶你，一直等到现在。」',
+    '宫变那夜他把你锁进地窖，自己上了城头。你砸开门跑了出去。'],
+   end:{name:'旧书新墨',tag:'HE · 侯世子线 · 青梅强夺',
+    body:['城头上找到他时,他半个身子都是血,还攥着那半张婚书。她把纸抽走,把自己的手塞进他掌心。',
+     '「顾长风,」她说,「这次不是你强娶。」他愣了愣,忽然笑得像个抢到糖的孩子。',
+     '婚书后来裱在侯府正堂。下人问为什么不换张新的,他说:旧的好,旧的上头有我一个人等了二十年的字。']}},
+  gen:{name:'利用到托付',chip:'以命',mArc:'利用为先，最后托付',fArc:'先执刀，后被他的真心击中',
+   favStart:9,favMul:1.3,need:26,bias:{strat:1},
+   line:'「秦小姐，你射箭比我准——这门亲事，服气。」',
+   beats:[
+    '他混在你父亲的军营里当了半年小兵。你以为他是侯府的眼线，他也确实在替侯府探你的底。',
+    '他当着满席说「秦小姐的箭，我服」，你只当他是一枚好用的棋。',
+    '他替你顶了私通北漠的罪名，蹲了三日牢。你问值吗，他说值。',
+    '他跪在将军府门口求亲，被父亲打了三十军棍，爬起来还是那句：「我什么都没有，就一条命。」',
+    '城头断后那夜，他把马让给你：「飞琼，你活着，我这条命就没白给。」'],
+   end:{name:'以命为聘',tag:'HE · 侯世子线 · 以命为聘',
+    body:['他拖着一条断腿回了京。她站在城门口,甲都没卸,先把他从马上抱了下来。',
+     '「顾长风,」她说,「我这条命是自己挣的,不是谁给的。」他仰头笑:「那正好,我这条是白给的,你随便用。」',
+     '后来上京人都知道,将军府的秦小姐打仗不要命,因为她身后总跟着一个不要命的侯爷。']}}
+ },
+ spy:{
+  maid:{name:'卑微之爱',chip:'卑微',mArc:'一见即爱，爱到极致卑微',fArc:'戒备利用，最后心软',
+   favStart:6,favMul:1.1,need:22,bias:{wit:1},
+   line:'「姑娘腕上那朵墨梅，在下认得。」',
+   beats:[
+    '他点破你的墨梅，随即跪下：「在下只求姑娘活着，别的都不敢想。」',
+    '苏含烟设局害你，他替你顶下来，挨了二十板，笑着说皮糙肉厚。',
+    '他把沈家三条商路全交给你：「姑娘拿去用，别问在下要什么。」',
+    '赐婚那日他不敢求娶，只求留在你身边。你亲手把婚书塞进他怀里。',
+    '宫变中他用商队护住半城百姓，跪在雨里说：「在下这条命，本来就不值钱。」'],
+   end:{name:'贱命千金',tag:'HE · 沈栖迟线 · 卑微之爱',
+    body:['大婚那日他行了三次大礼,第三次头磕在地上不肯起。她伸手去扶,摸到一手湿。',
+     '「在下这辈子,」他说,「只求过一样东西。」她替他擦脸:「求到了。」',
+     '后来沈家的商队走到哪都挂一盏灯。伙计们说那是东家的规矩——灯是给家里那位留的,怕她夜里等门。']}},
+  miss:{name:'陌生到赎',chip:'救赎',mArc:'从陌生到救赎',fArc:'从被算计到被救',
+   favStart:5,favMul:1.05,need:22,bias:{wit:1},
+   line:'「伯府的亏空，在下可以填——条件是姑娘嫁过来。」',
+   beats:[
+    '他买下伯府所有欠条，把婚书推过来。你恨他趁火打劫。',
+    '伯父被御史弹劾，他一句话压下折子。没人知道为什么。',
+    '他说起自己也是被卖过的孩子。你第一次见他卸下那张笑脸。',
+    '他把婚书撕了：「姑娘若不愿，在下不强求。」你蹲下去，一片片捡起来粘好。',
+    '伯府倾覆那夜，他把你从火里背出来，背上烧掉一层皮。'],
+   end:{name:'赎',tag:'HE · 沈栖迟线 · 陌生到赎',
+    body:['伯府重建那年,他把所有账目摊在桌上:谁欠谁多少,一笔一笔,连利息都算清了。',
+     '「往后伯府不欠任何人。」他说。她看着他背上那片疤,忽然说:「欠我的呢?」他怔住,很久才低声答:「用一辈子还。」',
+     '上京后来有了个说法:沈家做买卖从不亏,只有一桩,他把自己赔进去了。']}},
+  gen:{name:'要权要身',chip:'囚凰',mArc:'要权，更要身，不许她走',fArc:'先夺权，后被囚，最后反制',
+   favStart:4,favMul:1.0,need:24,bias:{strat:1},
+   line:'「心可以不给，人得留下。」',
+   beats:[
+    '他拿虎符仿印的事逼你嫁：「心不用给，人留下就行。」',
+    '他替你父亲补上军饷，条件是将军府账目归他。你答应了，也记下了每一笔。',
+    '你查出他与北漠通信。他不否认，只把院门锁上：「你走不了。」',
+    '大婚那夜他把钥匙吞了：「秦飞琼，你可以恨我，但别想走。」',
+    '宫变里他烧了你的马不让你出城；你转身把他的账本交给了皇帝。'],
+   end:{name:'囚凰',tag:'NE · 沈栖迟线 · 要权要身',
+    body:['他被软禁在城西那座旧宅。院子不大,门口只有两名兵。她每月去一次,带一壶酒。',
+     '「账本是假的。」他终于说。她点头:「我知道,真的在我这儿。」他沉默许久,忽然笑了:「你比在下狠。」',
+     '后来那座宅子的门一直没锁。他也没走。上京人说沈家那位疯了,只有她明白——他这辈子唯一没算准的,是她肯不肯留。']}}
+ }
+};
+/* ---- 婚约线补充：其余两人的态度（同一桩婚，角度不同）+ 结局标签不带路线名 ---- */
+REL.prince.maid.others={hou:'他只知道你是伯府的洒扫婢女，一次次替你挡下管事嬷嬷的鞭子。',spy:'他查到了你的身世，却按下不报，只在你门前留一盏灯。'};
+REL.prince.miss.others={hou:'他攥着那半张旧婚书站在伯府门外，看三皇子的聘礼一担担抬进去。',spy:'他买下伯府的欠条，说不急，等你出嫁那日再谈。'};
+REL.prince.gen.others={hou:'他在城门口拦住你的马：嫁谁都成，别嫁那个会杀你父亲的人。',spy:'他把虎符仿印的拓本送到你手里，只附一句「姑娘自己选」。'};
+REL.hou.maid.others={prince:'他知道你是谁，却按下不表，只在暗处替你收拾了三桩旧案。',spy:'他递给你一张身契：签了，就没人能再叫你婢女。'};
+REL.hou.miss.others={prince:'他在花宴上替你伯父说了半句话——半句，够伯府撑三个月。',spy:'他把伯府的欠条全收了，却一直没来讨。'};
+REL.hou.gen.others={prince:'他在朝上替将军府挡了一道折子，回头只让人带话：别谢本王。',spy:'他找你父亲谈过一笔买卖，谈完，军饷到了。'};
+REL.spy.maid.others={prince:'他在沈家的宴上多看了你一眼，回府便让人查沈栖迟的底。',hou:'他喝醉了堵在沈家门口：这姑娘我认得，你别欺负她。'};
+REL.spy.miss.others={prince:'伯府最难的那年，他送来一句话：要帮忙，开口。',hou:'他替伯府还了三百两，连名字都没留。'};
+REL.spy.gen.others={prince:'他把虎符仿案压了下来，条件是——你要活着。',hou:'他在城头替你挡了一支北漠的箭，说这笔账算沈家的。'};
+REL.prince.maid.end.tag='HE · 三皇子 · 结发';
+REL.prince.miss.end.tag='HE · 三皇子 · 结发';
+REL.prince.gen.end.tag='HE · 三皇子 · 结发';
+REL.hou.maid.end.tag='HE · 侯世子 · 结发';
+REL.hou.miss.end.tag='HE · 侯世子 · 结发';
+REL.hou.gen.end.tag='HE · 侯世子 · 结发';
+REL.spy.maid.end.tag='HE · 沈栖迟 · 结发';
+REL.spy.miss.end.tag='HE · 沈栖迟 · 结发';
+REL.spy.gen.end.tag='NE · 沈栖迟 · 相囚';
+
+const CLUES={
+ c1:{cat:'夺嫡',name:'东宫的旧账',text:'太子詹事三年前经手过一批「北漠皮货」——经的不是商道，是军道。东宫和北漠，早就有钱粮往来。'},
+ c2:{cat:'暗卫',name:'纨绔的箭袖',text:'顾长风虎口的茧是弓茧，靴底的泥是兵部后巷特有的青灰泥。所谓纨绔，是穿了很多年的甲。'},
+ c3:{cat:'北漠',name:'对不上的账本',text:'沈家商队的账目每三月亏空一次，亏空的方向直指北方军镇——有人在用商队给北漠递东西。'},
+ c4:{cat:'后宫',name:'苏家的家书',text:'苏含烟的家书落款不是父亲，是中宫凤仪宫。她进京待嫁，是皇后布下的一枚钉子。'},
+ c5:{cat:'身世',name:'谢氏名录',text:'十二年前忠靖侯谢氏满门获罪，罪档名录被火漆封存。名录最后一行的名字，被人用朱笔圈了又划掉——划得很轻，像舍不得。'},
+ c6:{cat:'帝心',name:'帝疾',text:'皇帝的手在赐婚诏书上抖了一瞬。太医院的方子换了三张，都是治头风的——治不好的那种。'},
+ c7:{cat:'军权',name:'虎符仿印',text:'将军府库房的虎符是真的，可它拓出来的印痕与宫中存档的拓本差了一分——有人在仿印，不知道是哪一边。'},
+ c8:{cat:'北漠',name:'河灯暗语',text:'灯会上一盏双头河灯，灯面画的是北漠祭祀用的狼衔月。双头灯，是「接应」的意思。'},
+ c9:{cat:'家计',name:'亏空的底账',text:'伯父挪用内帑的银子，一半填了旧亏空，另一半进了东宫詹事的袖子。伯府是替人背账的。'},
+ c10:{cat:'凤印',name:'凤印出宫',text:'中宫凤印三个月内两次出宫，去向都是城西曲水巷。巷子里只有一座不起眼的旧宅。'},
+ c11:{cat:'北漠',name:'相似的两张脸',text:'沈栖迟与三皇子有三分像——不是巧合。他这张脸是照着另一张脸改的易容。北漠对东宫的了解，比满朝想象的要深。'},
+};
+
+/* ---- 地点 ---- */
+const LOCS={
+ gong:{name:'大雍宫 · 麟德殿',x:50,y:12},
+ yhy:{name:'宫中 · 御花园',x:26,y:27},
+ donggong:{name:'东宫 · 兵部署',x:76,y:10},
+ sanf:{name:'三皇子府',x:83,y:25},
+ machang:{name:'定远侯府 · 马场',x:13,y:40},
+ yunjing:{name:'云锦阁',x:46,y:41},
+ zuixian:{name:'醉仙楼',x:72,y:42},
+ sufu:{name:'苏府',x:87,y:56},
+ shifang:{name:'东市 · 灯市',x:44,y:58},
+ zhai:{name:'自宅',x:17,y:70,dyn:1},
+ qushui:{name:'曲水巷',x:61,y:74},
+ shiguan:{name:'北漠使馆',x:88,y:80},
+ chi:{name:'曲江池畔',x:46,y:89},
+};
+
+/* ---- 修炼（自宅） ---- */
+const TRAINS=[
+ {id:'t_copyst',name:'临帖',stat:'grace',base:2,desc:'一笔一画，磨的是静气。'},
+ {id:'t_read',name:'读史',stat:'wit',base:2,desc:'前朝旧事里全是现成的刀。'},
+ {id:'t_dress',name:'调香梳妆',stat:'charm',base:2,desc:'对镜理鬓，三分颜色七分心。'},
+ {id:'t_chess',name:'弈棋',stat:'strat',base:2,desc:'棋枰之上，先学输，才学赢。'},
+];
+
+/* ---- 章节 ---- */
+const CHAPTERS=[
+ {n:1,name:'第一章 · 入局',month:'三月初 · 春',
+  hint:'帝欲指婚,四方贵女入京。先摸清这座城,再摸清局里的人。',
+  intro:{
+   maid:['三月三,上京贵女入城,满街都是缠枝纹的新轿帘。你提着伯府的食盒站在巷口,袖口的补丁浆得发白。',
+     '没人看你。这很好。十二年前的旧案教会你一件事——被人看见名字的人,都死了。',
+     '可如今帝欲指婚,满城的金玉之下全是暗涛。你若一直低头,便只能做棋盘;抬起头,才能做执棋的手。'],
+   miss:['永宁伯府的门楣今年格外新——新得刺眼。伯父挪用内帑绸缎银的事,全家只有你和伯母知道底细。',
+     '圣旨上说,帝为诸王勋贵指婚,以固国本。对你家而言,这不是喜事,是唯一的活路:嫁一位得势的皇子,亏空的账就有人压。',
+     '你梳好双鬟,对着镜子里的人笑了笑。从今日起,你既要做千金,也要做账房。'],
+   gen:['将军府的门房今早拦了三拨说媒的帖子。你父亲在北境二十年,回京述职才一个月,满朝的目光已经在他脖颈上量了三圈。',
+     '宫里来话说:帝为诸王指婚,将军之女,理应在册。父亲一夜没睡,早朝时脊背笔直如枪。',
+     '你对镜戴好那支母亲留下的银簪。你可以嫁谁都可以,唯独不能让人觉得,将军府急。']},
+  acts:[
+   {loc:'sanf',id:'m1p',who:'prince',name:'棋枰初逢',glyph:'棋',ap:1,
+    story:['三皇子府的花厅敞着,萧景珩独自与自己对弈,棋局拧成一团死结。见你进来,他把黑子往你面前一推:「来的正好,替本王执一手。」',
+      '满座仆从都屏着息。这局棋输了,是扫王爷的兴;赢了,是扫王爷的面子。'],
+    choices:[
+     {label:'落一子,随即认输,「殿下棋深,妾看不懂」',hint:'优雅+2 · 好感+2',eff:{grace:2,fav:{prince:2}},out:'他笑了笑,替你把黑子捡回棋盒:「深不深,下过才知道。」他看你一眼,像在看棋谱里没有的一步。'},
+     {label:'沉吟片刻,一子断在他旧劫之上',hint:'需聪慧≥7 · 聪慧+2 好感+4',req:{wit:7},eff:{wit:2,fav:{prince:4},flag:'noticed'},out:'死结应声而解。他盯着那枚白子看了很久,忽然抬眼:「你叫什么名字?」——上京的人很快都会知道,三皇子记住了一个名字。'}]},
+   {loc:'machang',id:'m1h',who:'hou',name:'马场赌局',glyph:'马',ap:1,
+    story:['马场里骂声震天。定远侯世子顾长风输红了眼,正把一只鎏金蛐蛐罐押上赌桌,嘴里骂着「再来」。',
+      '所有人都当他是个笑话。可你看见他翻身下马时,虎口处一层旧茧——那是常年开三石弓才磨得出的茧。'],
+    choices:[
+     {label:'随众人笑他纨绔,只当看个热闹',hint:'好感+3',eff:{fav:{hou:3}},out:'他隔着人群冲你拱手:「姑娘也觉得在下荒唐?——荒唐好啊,荒唐的都活得长。」'},
+     {label:'不笑,只多看了他虎口一眼',hint:'需聪慧≥6 · 好感+5 · 伏笔',req:{wit:6},eff:{fav:{hou:5},flag:'saw_callus'},out:'他察觉了你的目光,脸上的醉态淡了一瞬,随即笑得更浪:「姑娘眼神好。——眼神太好的人,在上京活不长。可我记下了。」'}]},
+   {loc:'zuixian',id:'m1s',who:'spy',name:'曲池借伞',glyph:'伞',ap:1,
+    story:['醉仙楼外忽然落雨。一位银灰衫的公子立在檐下,怀里的伞却递到你面前:「姑娘先请。」',
+      '他自称沈栖迟,江南行商。谈吐清雅,像一篇作过很多遍的文章——太顺了,顺得没有一处破绽,本身就是破绽。'],
+    choices:[
+     {label:'接伞道谢,同路一段',hint:'好感+4 · 魅力+1',eff:{fav:{spy:4},charm:1},out:'雨声里他谈的是诗。可他的目光两次掠过街对面的兵部值房,快得像没有发生过。'},
+     {label:'不接伞,只回他一句「君子不立危墙」',hint:'聪慧+1 好感+5',eff:{wit:1,fav:{spy:5}},out:'他怔了一瞬,朗声笑了:「好一个危墙。那在下便替姑娘看看,这墙到底危不危。」——他记住了你,用一种危险的记法。'}]},
+   {loc:'yhy',id:'m1r',who:'rival',name:'赏花帖',glyph:'帖',ap:1,
+    story:['御花园里,苏含烟亲手把一张赏花帖递给你,指尖染着凤仙花的红。',
+      '「妹妹新入京吧?」她笑得极软,「帖子上我特意留了西边的位子——西边风大,妹妹多穿些。」'],
+    choices:[
+     {label:'温声谢过,帖子上挑不出错处',hint:'优雅+2',eff:{grace:2},out:'你把帖子收得妥帖。她目送你走远,笑意不变,回头对婢女低语了一句什么。'},
+     {label:'笑着接帖,顺势记下她袖口滑出的半页家书',hint:'需谋略≥7 · 谋略+2 线索「苏家的家书」',req:{strat:7},eff:{strat:2,clue:['c4']},out:'家书上落款不是苏府——是凤仪宫。她进京待嫁,是中宫布下的一枚钉子。你把纸折好贴身收了,面上笑得分毫不差。'}]},
+   {loc:'chi',id:'m1g',name:'曲江游宴 · 三姝同框',glyph:'宴',ap:1,
+    story:['曲江池畔春宴,满城贵女都在。你一眼就认出了她们——伯府那个总穿月白的婢女青梧正低头收拾茶盏,指尖的针脚却是只有大贵族才教的缠枝纹;将军府的秦飞琼独坐高处,满身荣光,满眼倦意。',
+      '同是女子,同在这盘局里。只是落子的手,从来不在你们自己手上。'],
+    choices:[
+     {label:'去陪秦飞琼坐一会儿',hint:'谋略+1 · 伏笔「将门的无奈」',eff:{strat:1,flag:'saw_gen'},out:'她给你倒酒时忽然说:「我爹守了二十年北境。如今满朝都在算,他什么时候死在北边。」说完她自己先笑了,「抱歉,今日春风太好,不该说这个。」'},
+     {label:'去递给青梧一块帕子',hint:'聪慧+1 · 伏笔「婢女的针脚」',eff:{wit:1,flag:'saw_maid'},out:'她接帕子时指尖微颤,低声道了句谢。你看见她袖口内的缠枝纹,和袖口外的补丁,像同一个人的两种命运。'}]},
+   {loc:'qushui',id:'m1id',dynId:1,name:'巷中旧事',glyph:'巷',ap:1,
+    storyMaid:['曲水巷深处,你按名册寻到一座旧宅。守宅的老仆看见你,浑浊的眼睛忽然亮了:「小姐……不,姑娘。老奴等你等了十二年。」',
+      '他递来半页火漆封存的名录:「忠靖侯谢氏,满门获罪。名录最后一行,是老爷亲手圈了又划掉的名字。」'],
+    storyMiss:['曲水巷的旧宅里,长公主的嬷嬷等你多时:「你伯父那笔银子,一半填旧账,一半进了东宫詹事的袖子。伯府是替人背账的。」',
+      '她推来一册底账:「收着。什么时候用,你自己掂量。」'],
+    storyGen:['曲水巷的旧宅里,兵部一位致仕的老侍郎等你多时:「姑娘,宫中存档的虎符拓本,与你府上那枚,差了一分。」',
+      '他声音压得极低:「有人在国内仿制虎符。至于是谁——老臣查到一半,就告老了。」'],
+    choices:[
+     {label:'把东西收进袖中,谢过',hint:'谋略+2 · 关键线索',eff:{strat:2,clue:{maid:['c5'],miss:['c9'],gen:['c7']}},out:'纸页贴着腕骨,凉得像一块冰。你知道,从今日起你在这局里,不再只是被摆的那颗子。'},
+     {label:'多问一句「还有谁知情」',hint:'聪慧+2 · 线索「凤印出宫」',eff:{wit:2,clue:['c10']},out:'老仆垂目:「中宫凤印三个月内两次出宫,去向都是这条巷子。姑娘,这条巷子水深。」'}]},
+  ],
+  climax:{loc:'gong',name:'麟德殿赐宴',ap:0,
+   story:['麟德殿赐宴,帝亲言:将为诸王与勋贵之家指婚,「以固国本」。殿上金杯交错,人人都在称量自己值几个郡、几万兵。',
+     '你注意到两件事:其一,太子与三皇子的席位隔了整整一桌,太子在那头笑,这头的三皇子也在笑,笑得各怀刀兵;其二,帝盖下朱印时,手腕抖了一瞬——太医院的方子换了三张,都是治头风的,治不好的那种。',
+     '席间有人把话头递到你面前。'],
+   choices:[
+    {label:'垂首饮茶,不接话头',hint:'优雅+3 · 「藏锋」',eff:{grace:3,flag:'humble'},out:'你垂着眼把一盏茶喝出了三十种礼数。散席时,上首有一道目光在你身上停了停——记性很好的一道目光。'},
+    {label:'借问北漠马政,从容陈说',hint:'需聪慧≥8 · 聪慧+2 魅力+2 好感+4 线索「东宫的旧账」',req:{wit:8},eff:{wit:2,charm:2,fav:{prince:4},clue:['c1']},out:'你从马政说到北漠皮货,说到三年前那批「走的不是商道」的货。满座哗然前,萧景珩先笑了——他笑得极浅:「好胆色。」而太子那头,有人放下了杯子。'},
+    {label:'与邻座的沈公子论诗,四两拨千斤',hint:'需好感(沈)≥4 · 魅力+2 好感+5',req:{fav:{spy:4}},eff:{charm:2,fav:{spy:5}},out:'他和你一来一往,把满殿的机锋都引到了诗上。离席时他低声道:「姑娘的诗比命好——命,可别比诗硬。」'}]},
+ },
+
+ {n:2,name:'第二章 · 花宴',month:'三月末 · 谷雨',
+  hint:'御花园设花宴。有人备好了茶,有人备好了局。',
+  intro:{
+   maid:['花宴的帖子没你的份——婢女本就无需帖子。可侍宴的活儿派给了你:端茶、布菜、站在光线照不到的地方。',
+     '也好。光线照不到的地方,才看得清光底下的人。'],
+   miss:['花宴的帖子送到伯府时,伯母握着你的手哭了。这可能是伯府最后一次以「体面」的身份出现在这种地方。',
+     '你穿上最好的一身衣裳。今日之后,要么满上京传崔氏女的风采,要么传崔家的笑话。'],
+   gen:['你还未入场,已有三拨人「恰好」同路。将军之女走到哪儿,哪儿的空气都绷着。',
+     '苏含烟在园门口迎你,笑吟吟执了半礼:「姐姐这身衣裳真好——只是今日风大,仔细茶水泼了裙子。」']},
+  acts:[
+   {loc:'sanf',id:'m2p',who:'prince',name:'密信之瞥',glyph:'信',ap:1,
+    story:['三皇子府的游廊下,萧景珩在读一封信。见你来,他合信的动作快了半拍——那不是侍读学士的字,是东宫詹事幕僚的。',
+      '「看着了?」他不避不闪,反而把信推过来半寸,「看了,就当没看。这世上有些账,早翻比晚翻好。」'],
+    choices:[
+     {label:'垂眸:「妾什么都没看见」',hint:'好感+3 · 谋略+1',eff:{fav:{prince:3},strat:1},out:'他收回信,指尖在火漆上敲了敲:「聪明人。可惜上京的聪明人,大多死在聪明上。」'},
+     {label:'「殿下想翻谁的账,妾帮不上;但妾知道账在哪儿」',hint:'需聪慧≥9 · 好感+6 线索「东宫的旧账」',req:{wit:9},eff:{fav:{prince:6},clue:['c1']},out:'他终于正眼看你,眼里那点温润褪下去,露出底下更硬的东西:「北漠皮货的旧账,三年了,只有你一个外人看见。」「——别死。本王还留着你的用处。」'}]},
+   {loc:'machang',id:'m2h',who:'hou',name:'输钱的世子',glyph:'银',ap:1,
+    story:['马场今日开赌,顾长风输得只剩一只靴子,却笑嘻嘻把赢家的银子又借了回来,当场设局「再赌一把」。',
+      '你路过时,他忽然凑近,压低声音,字字清醒:「姑娘信不信——上京输得最惨的人,赢面最大?」'],
+    choices:[
+     {label:'「信。输光了,才输得起」',hint:'好感+5 · 谋略+2',eff:{fav:{hou:5},strat:2},out:'他大笑,笑声惊起一树雀。笑完他盯着你,眼底那点醉意全散了:「这句话,本世子记你一功。」'},
+     {label:'替他翻错处,指出庄家的骰子灌了铅',hint:'需聪慧≥8 · 聪慧+2 好感+4 伏笔',req:{wit:8},eff:{wit:2,fav:{hou:4},flag:'saw_dice'},out:'骰子剖开,果真有铅。满场哗然里,他凑到你耳边:「姑娘怎么一眼看出来的?——别告诉我,说出来就不灵了。」'}]},
+   {loc:'chi',id:'m2s',who:'spy',name:'池畔账本',glyph:'账',ap:1,
+    story:['曲江池畔,沈栖迟在核对商队账目。风掀动纸页,你瞥见三月一结的亏空——每一笔亏空,都指向北方军镇的方向。',
+      '他察觉了,却没有合上账本,反而推过来一角:「姑娘也懂账?」'],
+    choices:[
+     {label:'「略懂。沈公子的账,走得比商队远」',hint:'需聪慧≥8 · 聪慧+1 好感+5 线索「对不上的账本」',req:{wit:8},eff:{wit:1,fav:{spy:5},clue:['c3']},out:'他眸色深了一瞬,随即笑得温和如常:「商队嘛,总要走得远些才有生意。——姑娘,有些账看了,就得入伙。」'},
+     {label:'笑着移开视线,只论池中新荷',hint:'优雅+2 好感+2',eff:{grace:2,fav:{spy:2}},out:'他也不勉强,合上账本与你赏了一池新荷。分别时他说:「姑娘眼里有荷,也有账。都很好。」'}]},
+   {loc:'yhy',id:'m2r',who:'rival',name:'姐妹茶话',glyph:'茶',ap:1,
+    story:['苏含烟单独请你吃茶。茶是雨前的,话是软的:「妹妹如今同三殿下走得近?」「可要姐姐提点你些规矩?」',
+      '每句话都是提点,每句提点都是宣示。'],
+    choices:[
+     {label:'执半礼:「姐姐说笑了,妾不敢僭越」',hint:'优雅+2',eff:{grace:2},out:'她满意地替你续了茶。你以为退让能换来太平——她转身就把你的名字写进了给凤仪宫的家书。'},
+     {label:'笑着回敬:「姐姐写给凤仪宫的字,真好看」',hint:'需线索「苏家的家书」· 谋略+2 线索「凤印出宫」',req:{clue:['c4']},eff:{strat:2,clue:['c10']},out:'她端茶的手停了半息,随即笑得更柔:「妹妹真是……什么都看得见。」「那妹妹可知道,凤仪宫的凤印,最近也常出宫?」——这句话她说得极轻,轻得像把刀递到了你手里。'}]},
+   {loc:'qushui',id:'m2id',dynId:1,name:'巷中故人',glyph:'巷',ap:1,
+    storyMaid:['曲水巷的老仆又递来一样东西——半枚裂了的玉玦。「老爷获罪那夜,把玉玦一分为二。另一半,老奴寻了十二年,没寻到。」',
+      '「姑娘,当年构陷谢家的册子,就压在东宫詹事的库房里。」'],
+    storyMiss:['嬷嬷传来长公主的话:「詹事要拿你家亏空的账发难,借刀杀人。公主可以压一压——但公主想要你家一个人情。」',
+      '「人情要怎么还,公主没说。没说的,才是最贵的。」'],
+    storyGen:['老侍郎带来一个消息:和亲的名单上,你的名字被朱笔圈了。「北漠点名要将军之女。这不是议和,这是拆将军的臂膀。」',
+      '「姑娘,朝中有人希望你嫁,有人希望你死。两拨人举杯的时候,坐得很近。」'],
+    choices:[
+     {label:'收下消息,冷静致谢',hint:'谋略+2 · 关键线索',eff:{strat:2,clue:{maid:['c5'],miss:['c9'],gen:['c7']}},out:'消息入袖,如冰入领。你知道下一场风浪,已经在路上了。'},
+     {label:'追问「凤印为何总来此巷」',hint:'需聪慧≥9 · 聪慧+2 线索「凤印出宫」',req:{wit:9},eff:{wit:2,clue:['c10']},out:'老仆沉吟许久:「中宫……在替当年构陷谢家的人,收尾灭口。姑娘,凤印出宫,是来杀口的。」'}]},
+  ],
+  climax:{loc:'yhy',name:'花宴泼茶局',ap:0,
+   story:['花宴正酣,苏含烟的婢女「失手」将一盏热茶泼向你的裙角。茶水里掺了香粉,遇热便晕开一大片黄渍,怎么洗都洗不掉。',
+     '苏含烟掩口惊呼,声音柔得能掐出水:「哎呀!妹妹莫恼,我让她们拿我那条云锦裙来赔——只是这裙子……妹妹穿怕是显旧了。」',
+     '满园目光聚过来。有人等着看你失态,有人等着看你狼狈。'],
+   choices:[
+    {label:'拂衣而起,微笑告退',hint:'优雅+3 · 「隐忍,但会留下话柄」',eff:{grace:3,flag:'lost'},out:'你把方寸之地退出了满身气度。可「裙上污痕」的笑话,当晚就传遍了半个上京——隐忍有时是修养,有时是破绽,看对手给不给你第二次机会。'},
+    {label:'当众点破:茶里掺香粉、裙上早做手脚、婢女袖口的茶渍',hint:'需谋略≥8 · 谋略+3 好感+4/2 反杀成功',req:{strat:8},eff:{strat:3,fav:{prince:4,hou:2},flag:'rival_down1'},out:'「这茶,遇热晕色;这婢女,袖口早有茶渍;这条『赔罪』的裙子,尺码竟恰好是妾的身量。」你一件件说,满园死寂。上首,萧景珩抚掌而笑;连顾长风都吹了声口哨。苏含烟的脸,白得像她递的那方帕子。'},
+    {label:'借沈栖迟之口,把赔裙抬成「万两买笑」',hint:'需好感(沈)≥6 · 魅力+2 好感+5',req:{fav:{spy:6}},eff:{charm:2,fav:{spy:5}},out:'沈栖迟适时高声:「苏姑娘的裙子万金难买,不如折银万两,给姑娘赔罪?」满园哄笑里,苏含烟赔不起这一万两,只能眼睁睁看你笑着受了「万两」的人情。'}]},
+ },
+
+ {n:3,name:'第三章 · 灯会',month:'四月初 · 上元补灯',
+  hint:'御街灯会,万灯如昼。灯下有诗,诗下有刀。',
+  intro:{
+   maid:['灯会是你入京以来最亮的一夜——也是你离杀身之祸最近的一夜。东宫詹事的库房,今夜守备最松。',
+     '你提着伯府的灯笼走在人群里,灯笼纸后,是你袖中那半枚玉玦。'],
+   miss:['灯会之期恰逢御史台放风:有人要参伯府亏空。伯父连夜来求你:「明月,詹事府递了话,若你肯……往东宫那边靠一靠。」',
+     '东宫。就是吞了伯父银子、如今还要拿捏伯府的东宫。'],
+   gen:['灯会灯火照着你,也照着你父亲的虎符。今夜兵部值房的灯亮到三更——仿印的事,终于瞒不住了。',
+     '你在灯下忽然明白:这场灯会,是有人替你父亲「量孝」的场合。']},
+  acts:[
+   {loc:'donggong',id:'m3h',who:'hou',name:'夜探被撞破',glyph:'探',ap:1,
+    story:['东宫兵部署外,你撞见一个翻墙的黑影。黑影落地无声,回头时你看见顾长风的脸——和他手里一本从署里带出的册子。',
+      '他没杀人灭口,只是叹了口气:「看见了?——看见了就别装看不见。姑娘,你想不想知道东宫的黑账里,有没有你家的名字?」'],
+    choices:[
+     {label:'「有。我猜有」',hint:'好感+6 线索「纨绔的箭袖」',eff:{fav:{hou:6},clue:['c2']},out:'他把册子页尾一行字指给你看。你家的名字在不在其中,他没说——他说:「想拿回来,就跟我做一桩交易。」'},
+     {label:'「我先问价,再问账」',hint:'需谋略≥9 · 谋略+3 好感+5 线索「纨绔的箭袖」',req:{strat:9},eff:{strat:3,fav:{hou:5},clue:['c2'],flag:'ally_hou'},out:'他挑眉笑出声:「好,够冷静。——价是:你入局之后,帮我盯着一个人。」他没说是谁,只把腰间一枚旧玉扔给你:「信物。危急时,拿它去马场后门。」'}]},
+   {loc:'zuixian',id:'m3s',who:'spy',name:'军道疑云',glyph:'道',ap:1,
+    story:['醉仙楼顶层,沈栖迟独自饮酒,桌上摊着一张北境舆图。他见你上来,竟不惊,只把舆图转向你:「姑娘替我看看,这条道,像商道吗?」',
+      '图上朱线直插北方军镇腹地。那不是商道,是军道。'],
+    choices:[
+     {label:'「像运兵的道。公子好大的生意」',hint:'需谋略≥9 · 谋略+2 好感+6 线索「对不上的账本」',req:{strat:9},eff:{strat:2,fav:{spy:6},clue:['c3']},out:'他抬眼看你,眼里第一次有了「东西」:「我把话放这儿——我来到上京,一半为了生意。」「另一半,为了一个当年死在这条道上的人。」'},
+     {label:'「商道也好军道也罢,与妾无关」',hint:'优雅+2 好感+3',eff:{grace:2,fav:{spy:3}},out:'「无关最好。」他收起舆图,替你满上一盏,「可姑娘的眼神说,很有关。——没关系,早晚的事。」'}]},
+   {loc:'yhy',id:'m3r',who:'rival',name:'诗会偷诗',glyph:'诗',ap:1,
+    story:['灯会诗会,你拟好的诗稿被人先一步用掉了。苏含烟当众吟出你的句子,满堂喝彩,而你成了那个「步韵的」。',
+      '她下阶来扶你,声音甜腻:「妹妹的句子真好,姐姐借来一用,妹妹不会恼吧?」'],
+    choices:[
+     {label:'「姐姐拿去用吧,反正……全诗还有后半」',hint:'需聪慧≥9 · 聪慧+2 反杀',req:{wit:9},eff:{wit:2,flag:'rival_down2'},out:'你当众吟出后半首——后半首才是杀招,前半首只是铺垫。满堂再喝彩时,所有人都在等苏含烟接后半首。她接不上。她永远不会接上。'},
+     {label:'默不作声,记下这笔账',hint:'谋略+2',eff:{strat:2},out:'你笑着受了「步韵」之名。当晚,你的诗稿从你妆匣里失窃的时辰,被人查得清清楚楚——虽然你还没去查。'}]},
+   {loc:'sanf',id:'m3p',who:'prince',name:'灯下题字',glyph:'字',ap:1,
+    story:['三皇子府的花灯下水,萧景珩递来一支笔:「灯会上要题灯谜,本王的灯,请姑娘题字。」',
+      '他的灯上写着四个字:「天下为枰」。这不是灯谜,是试探——你题什么,他就知道你是什么。'],
+    choices:[
+     {label:'题「平安」二字,润物无声',hint:'优雅+2 好感+3',eff:{grace:2,fav:{prince:3}},out:'他看着「平安」二字,半晌,轻声道:「满上京都想要天下,只有你要平安。——本王记住了。」'},
+     {label:'提笔添注:「枰上之子,亦有归处」',hint:'需谋略≥9 · 谋略+3 好感+6',req:{strat:9},eff:{strat:3,fav:{prince:6}},out:'他盯着那句添注,忽然道:「若本王说,枰上之子,本王给归处呢?」你还未答,他自己先摇头:「算了。骗你这种话,说不出口。」——这句话,究竟是权谋,还是真心?'}]},
+   {loc:'qushui',id:'m3id',dynId:1,name:'巷中残卷',glyph:'巷',ap:1,
+    storyMaid:['老仆拼上了另半枚玉玦——玉色对你的那半,严丝合缝。「东宫詹事库房里那册罪档,十五日夜换防。姑娘,要不要老奴……」',
+      '「你等了十二年。老奴只想问你一句:要不要亲手翻案?」'],
+    storyMiss:['嬷嬷传长公主的口信:「詹事把亏空的账攥在手里,就等灯会人多口杂时发难。公主给你两条路:一,把账交出来,与东宫同罪;二,把账改一改,罪只罪伯父一人。」',
+      '「你选哪条?公主只等你一夜。」'],
+    storyGen:['老侍郎查到了仿印的源头:「仿印的刻工,三个月前死于狱中。灭口的线,指向凤仪宫。」',
+      '「姑娘,构陷将军的人不在北漠,在宫里。」'],
+    choices:[
+     {label:'「要。这一局,我来执」',hint:'谋略+3 · 命运线进阶',eff:{strat:3,flag:{maid:'boss_path',miss:'family_path',gen:'army_path'}},out:'话说出口,巷子里的风都静了。你听见自己的心跳,像更漏,一声一声,全是决意。'},
+     {label:'再等等,先看清身边所有人',hint:'聪慧+3',eff:{wit:3},out:'你压下心头翻涌。翻案不是翻一页纸,是翻一座山——山要一寸一寸量。'}]},
+  ],
+  climax:{loc:'chi',name:'河灯交锋',ap:0,
+   story:['曲江放灯,万灯照水。太子与三皇子隔水而立,为北境赈灾银的章程当众相争,字字温和,刀刀见骨。',
+     '人群里,你看见一盏双头河灯顺水漂来——灯面画的是北漠祭祀的狼衔月。双头灯,是「接应」的意思。灯旁,沈栖迟的笑淡得像水底。',
+     '同时,顾长风不知何时立在你身后,声音压得极低:「姑娘,接应的灯不能留到出城。截,还是放?」'],
+   choices:[
+    {label:'旁观到底,谁都不沾',hint:'聪慧+1 · 「隔岸观火」',eff:{wit:1},out:'灯漂远,争端散。你两不相帮——可你忘了,这局里没有岸。'},
+    {label:'替三皇子把话递到御前',hint:'需好感(萧)≥8 或聪慧≥10 · 谋略+2 好感+6 线索「东宫的旧账」',req:{any:[{fav:{prince:8}},{wit:10}]},eff:{strat:2,fav:{prince:6},flag:'side3rd',clue:['c1']},out:'你借赏灯之名,把北漠皮货旧账的线头递到了御史耳中。三日后,詹事下狱查问。太子阵营,记住了你的名字——用记仇的记法。'},
+    {label:'当众拆灯谜,揭破「狼衔月」',hint:'需线索「河灯暗语」与谋略≥9 · 谋略+3 好感+6',req:{clue:['c8'],strat:9},eff:{strat:3,fav:{spy:6},flag:'noticed_spy'},out:'你笑着高声解谜:「双头灯,狼衔月——这不是上京的谜,是北漠『接应』的信号!」满场哗然,那盏灯被巡防捞走。沈栖迟在人群里看着你,不怒,反而笑了,笑得几乎温柔:「姑娘——我们迟早是一路人。」'},
+    {label:'使个眼色,让顾长风的人截灯',hint:'需线索「纨绔的箭袖」与好感(顾)≥6 · 好感+6 线索「河灯暗语」',req:{clue:['c2'],fav:{hou:6}},eff:{fav:{hou:6},clue:['c8'],flag:'ally_hou'},out:'黑影掠过水面,灯与人一同消失。半炷香后,顾长风回来,指间拈着那盏灯:「狼衔月,接应。——姑娘,你的眼睛,借我一用行不行?」'}]},
+ },
+
+ {n:4,name:'第四章 · 赐婚',month:'四月末 · 小满',
+  hint:'指婚诏书将下。有人以婚为局,有人以婚为牢。',
+  intro:{
+   maid:['指婚名单的前一夜,你把谢家名录翻到最后一页。十二年前的朱圈,像一道还没愈合的伤口。',
+     '名单上有三皇子的婚约拟议——拟议的对象里,没有婢女。可名单是人写的,而人,是能被换掉的。'],
+   miss:['诏书未下,御史的弹章先到:参永宁伯亏空内帑。全家跪在祠堂里,祖宗牌位在烛火里明明灭灭。',
+     '伯母拉着你的手:「明月,嫁吧。嫁给得势的皇子,伯府才有活路。」——他们要你嫁的,是救命的药,不是良人。'],
+   gen:['和亲的名单正式下来了:北漠点名,将军之女。父亲一夜白头,却只对你说了一句:「爹宁可抗旨,不卖女儿。」',
+     '可你知道,抗旨,满府性命不保;不抗,你此生再无归途。']},
+  acts:[
+   {loc:'sanf',id:'m4p',who:'prince',name:'摊牌夜话',glyph:'夜',ap:1,
+    story:['三皇子府夜宴散后,萧景珩独留你,案上摊着的不是婚书,是一叠弹章与密报。',
+      '「满上京都道本王贤明。」他忽然笑了一声,笑意冷得像霜,「母妃死得早,母族死绝了,本王若不贤明,活不到今日。姑娘——你看,这就是皇子的不容易:连疯,都要挑没人的时候。」'],
+    choices:[
+     {label:'「殿下今夜说了不该说的话」',hint:'需好感(萧)≥10 · 好感+7 · 「真心」',req:{fav:{prince:10}},eff:{fav:{prince:7},flag:'prince_true'},out:'他沉默良久,道:「是。本王从不在人前说真话。今夜说了——姑娘自己掂量,这话值多少银子,值几条命。」'},
+     {label:'「妾只看见,殿下帐下无一人可用,除了妾」',hint:'谋略+3 好感+5',eff:{strat:3,fav:{prince:5}},out:'他愣住,随即大笑,笑声里有难得的松动:「好。好一个『除了妾』——那就把这句也记在婚书上。」'}]},
+   {loc:'machang',id:'m4h',who:'hou',name:'结盟之夜',glyph:'盟',ap:1,
+    story:['马场后门,顾长风把一坛酒拍在你面前,又拍下一本册子——东宫与北漠往来的账目誊本。',
+      '「我查这册子七年,就差最后一个人证。」他抬眼看你,全无白日的浪荡,「姑娘,做个交易:你助我拿人证,我保你全家周全。」'],
+    choices:[
+     {label:'击掌为盟,分饮此酒',hint:'好感+6 谋略+2 · 「盟友」',eff:{fav:{hou:6},strat:2,flag:'ally_hou'},out:'酒入喉极烈。他看着你饮尽,忽然低声道:「其实我第一次见你,就认出你袖口的针脚了。——上京城里,能把补丁穿得这么理直气壮的,都是狠人。」'},
+     {label:'「先说人证是谁」',hint:'需谋略≥10 · 谋略+3 好感+4',req:{strat:10},eff:{strat:3,fav:{hou:4},flag:'ally_hou'},out:'他吐出两个字:「詹事。」你心头一凛——詹事一倒,东宫断臂;詹事不倒,则你满盘皆输。这交易,比想象中深。'}]},
+   {loc:'shiguan',id:'m4s',who:'spy',name:'使馆摊牌',glyph:'牌',ap:1,
+    story:['北漠使馆后园,沈栖迟焚了一炉安息香,案上摊着你的画像——画师落款,是一个月前。',
+      '「三个月前我就想告诉你。」他替你斟茶,姿态从容得近乎郑重,「我不是沈栖迟。我是北漠九王子,赫连栖。使团此来议和亲,点名要的『将军之女』,是我亲自加的名字。」「——你想知道为什么吗?」'],
+    choices:[
+     {label:'「因为你需要一个上京的人,替你按住军道」',hint:'需谋略≥11 · 谋略+3 好感+7',req:{strat:11},eff:{strat:3,fav:{spy:7},flag:'spy_seen'},out:'他眼中闪过一丝真切的震动,随即笑叹:「我布了三个月的局,你三句话就拆完了。姑娘,我这颗心,是不是也是你局里早就算好的?」'},
+     {label:'「不必说。人心隔两国」',hint:'优雅+2 好感+4',eff:{grace:2,fav:{spy:4}},out:'他久久注视着你,把茶一饮而尽:「两国为界,人心为壑。姑娘站壑的那边——可别怪我,总想往那边看。」'}]},
+   {loc:'sufu',id:'m4r',who:'rival',name:'凤仪宫的钉子',glyph:'钉',ap:1,
+    story:['苏府里,苏含烟为你设茶。这一次她不装了:「凤仪宫已定,和亲的人选是你。你以为拆我两次,我就拿你没办法?」「妹妹,皇后娘娘捏着的东西,可比一封家书多得多。」'],
+    choices:[
+     {label:'「那便请姐姐看看,这个」——递出凤印出宫的记录',hint:'需线索「凤印出宫」· 谋略+3 反制',req:{clue:['c10']},eff:{strat:3,flag:'rival_check'},out:'她看清纸上几行记录,指尖发凉:「你……竟连这个都查得到。」你收信起身,笑意盈盈:「姐姐安心,你我如今是一根绳上的人——凤印出宫的账,揭出来,先烧到的是谁?」'},
+     {label:'不动声色,只问「皇后娘娘安否」',hint:'谋略+2',eff:{strat:2},out:'你一句问候问得她如芒在背。走时你补了一句:「姐姐的家书,往后不如直呈御前,免得经手人杂。」——她的脸色,比茶还凉。'}]},
+   {loc:'qushui',id:'m4id',dynId:1,name:'巷中抉择',glyph:'巷',ap:1,
+    storyMaid:['老仆送来最后一信:詹事府加急调档,罪档明晨转移。今夜,是翻案的最后一夜——可一旦动手,你再无退路。',
+      '「姑娘,老奴这条命是你的。可你才十九岁。」'],
+    storyMiss:['嬷嬷立在灯下:「詹事发难在即。公主的意思:把账交出来,罪止伯父一身,伯府可保——但你要亲手把伯父的名字写上去。」',
+      '「写,还是不写?公主等你到天亮。」'],
+    storyGen:['老侍郎吐血而来:「仿印的线,最终指向凤仪宫。可凤仪宫……动不得。姑娘,只有一条路能把水搅清:让和亲的局,当着满朝文武,做不下去。」',
+      '「怎么做,老臣不知。但你的胆子,比老臣大。」'],
+    choices:[
+     {label:'「做。就今夜」',hint:'谋略+3 · 命运线锁死',eff:{strat:3,flag:{maid:'boss_path',miss:'family_path',gen:'army_path'}},out:'你提起裙摆,踏进夜色。巷口的老仆跪下去,朝着你的背影磕了一个头——十二年了,他终于等到有人回头。'},
+     {label:'「把退路留一寸」',hint:'聪慧+2',eff:{wit:2},out:'你按下冲动,先去布一条退路。谋事者,先谋败。'}]},
+  ],
+  climax:{loc:'gong',name:'御前奏对',ap:0,dyn:1,
+   storyMaid:['御前,帝命人呈上一只匣子——里面是你袖中搜出的谢氏名录。苏含烟垂首立在一旁,是告发她的人。',
+     '满殿死寂。帝眯眼打量你:「忠靖侯之后?朕记得,此案是先帝亲定的铁案。」',
+     '你只有一次开口的机会。'],
+   storyMiss:['御前,御史把亏空的弹章念得字字诛心。帝问:「崔氏,你有何说?」',
+     '你袖中,有改过的账本、有长公主的手令、有三皇子递来的风声。一步走错,伯府满门获罪。'],
+   storyGen:['御前,帝亲自把和亲诏书的草稿推到你面前,目光却越过你,落在大殿外你父亲的甲胄上。',
+     '「秦卿之女,」帝缓缓道,「你父亲交出虎符,你便可留;不交,北漠那边,朕留不住你。」',
+     '满朝文武,看着你,也看着你父亲。'],
+   choices:[
+    {label:'(婢女线)当殿亮明真身,呈上东宫罪档,请帝重审旧案',line:'maid',hint:'需身世线进阶与线索≥6 · 大BOSS转折',req:{flag:'boss_path',clueN:4},eff:{strat:4,flag:'boss_reveal'},out:'「民女不敢翻先帝的铁案,只请陛下重审『证物』——构陷谢家的册子,如今就压在东宫詹事库中,与北漠皮货的旧账,同一批经手人。」满殿哗然里,帝的目光第一次从你父亲的甲胄上,移到了你身上。'},
+    {label:'(千金线)呈上改过的账本,罪止伯父,保全阖族',line:'miss',hint:'需聪慧≥11 · 家族线收束',req:{wit:11},eff:{wit:3,flag:'family_saved'},out:'你一笔一笔指出账目里「替人受过」的痕迹,把詹事的袖子抖了个干净。帝掷笔而叹:「崔氏一门,总算出了一个明白人。」——伯父的名字,你终究写了上去;可族里的血脉,保住了。'},
+    {label:'(将军线)当殿陈说北漠细作与仿印之案,以攻代守',line:'gen',hint:'需线索「对不上的账本」或「河灯暗语」· 谋略+4 · 破局',req:{clue:['c3','c8'],mode:'any'},eff:{strat:4,flag:'army_saved'},out:'「陛下,和亲不是破局,是开城门。」你把军道、账本、狼衔月一一摊开,「北漠要的不是王妃,是内应。」满殿死寂后,帝缓缓收回了和亲的诏书:「好一个秦家女儿。」——你父亲在殿外,老泪纵横,把虎符捧过了头顶。'},
+    {label:'(通用)谁也不求,只说「臣女愿嫁,但嫁谁,由陛下圣裁」',hint:'安全 · 优雅+2',eff:{grace:2,flag:'humble'},out:'你把答案还给了皇帝。他盯着你看了很久,忽然笑了:「聪明,也太聪明了。聪明得……让人想看看你的底线在哪儿。」'}]},
+ },
+
+ {n:5,name:'第五章 · 变天',month:'五月 · 芒种',
+  hint:'帝疾加重,东宫有变,北漠压境。今夜之后,上京再无旧局。',
+  intro:{
+   maid:['名录翻到最后一页,你把十二年的隐忍折进袖中。今夜,宫里要变天——而执灯的人,是你。',
+     '你最后一次替自己补了补丁。从今夜起,补丁的针脚再也不会出现在任何人的视线里。'],
+   miss:['弹章如雪片。伯府的门第在崩塌,崩塌的轰鸣里,你听见自己心跳如鼓:婚书、账本、长公主的手令——你手里每一样,都是别人的命。'],
+   gen:['北境八百里加急入京:北漠陈兵,和亲使团后队全是甲士。和亲是幌子,攻心是真刀。',
+     '你披上最利落的一身衣裳。将军的女儿,今夜不做新娘,做执棋人。']},
+  acts:[
+   {loc:'sanf',id:'m5p',who:'prince',name:'宫变前夜',glyph:'变',ap:1,
+    story:['三皇子府灯火通明,甲士暗藏。萧景珩把一枚令牌推到你面前:「今夜东宫必反。宫门三道,本王只守得住两道。」',
+      '「这一道牌,本王谁都没给,给了你。」他看着你,目光沉得像海,「因为你若进宫,进的不是局——是本王的心。」'],
+    choices:[
+     {label:'收下令牌,与他并肩',hint:'好感+6 谋略+2',eff:{fav:{prince:6},strat:2,flag:'side3rd'},out:'他替你把令牌系上腰间,动作很慢,像在系一生的诺言:「打完今夜,本王给你写婚书——不写『纳』,写『聘』。」'},
+     {label:'「殿下,妾今夜不进宫,妾进史书」',hint:'需谋略≥12 · 谋略+3 好感+4',req:{strat:12},eff:{strat:3,fav:{prince:4}},out:'他怔住,继而大笑,笑出了眼泪:「好!好一个进史书!——那本王就先把『聘书』押在史官那儿,等今夜过后再取。」'}]},
+   {loc:'machang',id:'m5h',who:'hou',name:'顾长风的刀',glyph:'刀',ap:1,
+    story:['马场灯火下,顾长风披甲按刀,再无半分纨绔——甲上是七年暗卫的旧血痕。',
+      '「詹事今夜必反。」他把半块虎符掷给你,「这是真的那半。你执它,调京畿守备;我执刀,拿詹事的人头。」「姑娘,我这条命,七年里有两个主人:陛下,和你。」'],
+    choices:[
+     {label:'接符,与他分兵',hint:'好感+6 · 「并肩」',eff:{fav:{hou:6},flag:'ally_hou'},out:'你与他背对而立,各自点兵。他忽然低声道:「打完今夜,马场那局赌债,该还了——我还你一场聘礼,行不行?」'},
+     {label:'「刀你执,符我来掌。人证名单,我来念」',hint:'需谋略≥12 · 谋略+3 好感+5',req:{strat:12},eff:{strat:3,fav:{hou:5}},out:'他怔了怔,忽然咧嘴一笑,把刀双手奉上:「得嘞。——姑娘发令,顾长风七年来头一回,给人当刀。」'}]},
+   {loc:'shiguan',id:'m5s',who:'spy',name:'城楼论山河',glyph:'城',ap:1,
+    story:['使馆后园,沈栖迟一身北漠王袍,再不遮掩。城楼之上,他指着两国的界河:「和亲作废,和约在我袖中。今夜东宫反,北漠退兵——条件只有一个:你。」',
+      '「跟我走,两国息兵十年。留下,北漠铁骑踏过界河。姑娘,这局棋,我把自己押上了桌。」'],
+    choices:[
+     {label:'「王子殿下算错了一子——上京的女子,不是筹码」',hint:'需谋略≥12 · 谋略+3 好感+6',req:{strat:12},eff:{strat:3,fav:{spy:6},flag:'spy_choice'},out:'他沉默良久,忽然把袖中和约取出,就着火折烧了:「好。那这一局,我重新押——押我北漠九王子,与你,堂堂正正,再下一次棋。」'},
+     {label:'「两国有界,你我有局。今夜先分胜负」',hint:'优雅+2 好感+4',eff:{grace:2,fav:{spy:4}},out:'他大笑,笑声惊起城头宿鸟:「好一个先分胜负!——姑娘,输了的人,可是要赔上一生的。」'}]},
+   {loc:'qushui',id:'m5id',dynId:1,name:'巷中收网',glyph:'网',ap:1,
+    storyMaid:['罪档到手,人证画押,名单齐了。老仆颤抖着替你把最后一页火漆封好:「小姐,收网吧。」',
+      '你望着巷口的月亮:「不是收网。是换天。」'],
+    storyMiss:['长公主的手令、御史的联名、改过的账本,三样在你袖中合成一张网。嬷嬷低声道:「网已织好,姑娘打算网谁?」',
+      '「网该罚的人,」你把账本按在灯下,「也网该活的人。」'],
+    storyGen:['父亲把虎符郑重交到你手里:「阿琼,爹这双手只会打仗。今夜宫变,朝局需人执子——爹把这子,交给你。」',
+      '虎符入手,重逾千斤。你忽然懂了:所谓将门,护的从来不是符,是符后头的万家灯火。'],
+    choices:[
+     {label:'「今夜,以我为主」',hint:'谋略+3 · 终局准备',eff:{strat:3,flag:'self_lead'},out:'你把令旗、账本、名单一一归位,如同落定最后一枚棋子。'},
+     {label:'先去见三位故人一面',hint:'聪慧+2 好感全+2',eff:{wit:2,fav:{prince:2,hou:2,spy:2}},out:'你走了一遭,把每个人的底牌都又看了一遍。回来时,你比来时更清楚:今夜,谁都靠得住,也都靠不住——除了你自己。'}]},
+  ],
+  climax:{loc:'gong',name:'宫变之夜',ap:0,
+   story:['三更,宫中火起。东宫甲士叩门,北漠铁骑压境,帝疾发,卧于榻上——一夜之间,三把刀同时架上这座城的脖子。',
+     '你立于宫门之内。身后是帝榻,眼前是火光,袖中是十二年的旧案、两国的和约、与一枚真的虎符。',
+     '今夜之后,上京再无旧局。你抬脚,走向你认定的那道门。'],
+   choices:[
+    {label:'随三皇子护驾,平东宫之乱',hint:'需好感(萧)≥16 · 走向「贤王之路」',req:{fav:{prince:16}},eff:{flag:'end_prince'},out:'你与萧景珩并肩踏火而行,一道一道宫门地夺。天将明时,他按剑立于丹陛之上,回头对你伸出手——不是拉你,是请你,与他同立。'},
+    {label:'与顾长风提灯直入詹事库,以罪档定乾坤',hint:'需线索「纨绔的箭袖」与盟约 · 走向「旧案昭雪」',req:{clue:['c2'],flag:'ally_hou'},eff:{flag:'end_hou'},out:'火光里,顾长风一刀劈开库门,你捧出罪档与名册。天亮时,十二年沉冤得雪,他卸了甲,站在晨光里朝你伸出手:「姑娘,这回——不谈交易,谈聘礼。」'},
+    {label:'与沈栖迟登城楼,以和约退北漠之兵',hint:'需线索「对不上的账本」与好感(沈)≥16 · 走向「两国之约」',req:{clue:['c3'],fav:{spy:16}},eff:{flag:'end_spy'},out:'城楼之上,他把和约铺开,把笔递给你:「上京人的名字,签在两国之约上——前无古人。」你落笔如落子。城下铁骑缓缓退去,他望着你,眼里再无算计,只有山河。'},
+    {label:'谁都不靠,只身执灯,当殿重审旧案',hint:'需谋略≥13与线索≥7 · 走向「执棋人」',req:{strat:12,clueN:6},eff:{flag:'end_boss'},out:'火光滔天,你提灯独上丹陛,把罪档、名册、和约一一摊在帝榻之前:「陛下,今夜之变,根在十二年前的旧案。臣女——请重审。」满殿甲士跪了一地。灯在你手中,稳得像一道圣旨。'},
+    {label:'守在帝榻之侧,以静制动,见机行事',hint:'无要求 · 稳妥 · 但主局者未必是你',eff:{grace:1},out:'你按剑立于帝榻之侧,把一夜刀光都看在眼里。天亮时,乱平了——平得和你没多大关系。有些局,不下注,就永远只能看别人赢。'}]},
+ },
+];
+
+/* ---- 结局 ---- */
+const ENDINGS={
+ e_zhier:{name:'执棋人',tag:'隐藏结局 · 大BOSS',cond:'婢女线身世走满+高谋略高线索',
+  body:['那一夜之后,上京换了三样东西:东宫换了主人,北漠换了和约,而史官的笔下,多了一个名字。',
+   '没有人再提「婢女」二字。十二年前被朱笔圈了又划掉的名字,如今盖着凤印,压在所有婚书之上。',
+   '三皇子来请你入朝参政,顾长风来请你主持旧案卷宗,北漠使者隔着界河向你递了十年国书。你一一收下,又一一搁在案头。',
+   '「诸位,」你提笔蘸墨,「先说好——这一局,谁执棋,谁落子?」满堂寂静。你落子无声。']},
+ e_fengguan:{name:'鸾凤同谋',tag:'HE · 三皇子线',cond:'萧景珩好感最高≥26且谋略≥12',
+  body:['宫变平定的第七日,聘书送到你面前——不是「纳」,是「聘」,一字之差,他改了三个月。',
+   '大婚那日,他在你耳边说:「满上京都娶联姻,只有朕,娶的是谋士。」你笑着纠正:「是妻,也是谋士。」',
+   '后来史书这样写:帝后同朝,批红交叠,上京之治,半出中宫。',
+   '你终于明白,他当年那句「枰上之子亦有归处」——原来他早把归处,写成了他自己的龙床之侧。']},
+ e_kuaima:{name:'快马鲜衣',tag:'HE · 侯世子线',cond:'顾长风好感最高≥24且识破其身份',
+  body:['聘礼送到那日,上京城门大开——他骑最快的马,穿最鲜的衣,身后没有仪仗,只有马场那局他「输掉」的全部赌债,一一登门还清。',
+   '「顾长风,」你问他,「你的纨绔皮,还披吗?」他翻身下马,单膝点地:「不披了。往后我披你做的衣。」',
+   '旧案昭雪,他交还暗卫印信,做了一个闲散侯爷——白天同你骑马,夜里替你研墨。上京人都说侯府疯了,只有你们知道,这才叫赢。']},
+ e_shanhe:{name:'山河为聘',tag:'HE · 北漠王子线',cond:'沈栖迟好感最高≥26且智斗走满',
+  body:['和约签定的那日,界河两岸同时鸣钟。他站在城楼上等你,身后是两国的地图,膝上是两国的聘书。',
+   '「赫连栖,」你说,「你把我押上桌的时候,想过输吗?」「想过。」他答得干脆,「输了,就赔一生。」',
+   '后来北漠史书与上京史书,各自写了同一段话:两国息兵十年,和议非由王侯——由一桩婚书,与一位不被当作筹码的女子。']},
+ e_jinzhi:{name:'金枝不折',tag:'NE · 千金线',cond:'千金线家族保全',
+  body:['伯父的名字写上去的那一夜,你在祠堂跪到天亮。族老们骂你狠,你只回了一句:「狠,才能活。」',
+   '三年后,永宁伯府换了新的门楣——这一次,是新帝御笔。亏空案翻了,詹事流放,而你成了上京最年轻的内廷女官。',
+   '有人问你后不后悔。你抚着新门楣笑道:「金枝不折,不是天佑。是我自己,一寸一寸撑住的。」']},
+ e_jiangmen:{name:'将门无囚',tag:'NE · 将军线',cond:'将军线虎符局破',
+  body:['和亲的诏书收回那日,北境大捷的军报同时入京。你父亲跪呈虎符,帝亲手扶起:「秦卿,以后虎符,不必捧过头顶。」',
+   '你在军中设了内账房,专门查「仿印」这一类的暗账。北漠的探子提起上京那位「秦小姐」,都要绕道走。',
+   '将门无囚。虎符护家国,而你,护虎符后头那些不被写进兵法的人心。']},
+ e_fengyue:{name:'自在风月',tag:'隐藏结局 · 不嫁',cond:'谋略≥12且无人好感过深',
+  body:['指婚的名单公布那日,你的名字不在上面——不是没人要你,是你先一步,把三条婚路都做成了局,又亲手拆了。',
+   '你在曲水巷开了一间书坊,东家是你,账房是你,执笔的也是你。三位故人时常来坐,喝茶的喝茶,下棋的下棋,谈公务的谈公务。',
+   '有人笑你把一手王炸打成了闲棋。你磨着墨答:「棋盘上最自在的,从来不是车马炮。」',
+   '「是那颗 ——想走哪,就走哪 的过河卒。」']},
+ e_chaliang:{name:'人走茶凉',tag:'BE',cond:'花宴之局大败且声名扫地',
+  body:['泼出去的茶,终究是泼回了自己身上。那场花宴之后,上京的茶会上,再没有你的座次。',
+   '婚书与你无关,旧案与你无关,连曲水巷的风,都不肯再往你这边吹。',
+   '多年后有人路过伯府(或将军府、或某个不知名的小院),看见一个妇人静静坐着补衣。针脚极好,只是再也,没有机会给人看见了。']},
+ e_longzhong:{name:'笼中雀',tag:'BE',cond:'实力不足,沦为联姻棋子',
+  body:['诏书下来,你的婚事被一句「以固国本」轻轻带过,像带走一只鸟,顺手拢上了笼门。',
+   '笼中的日子金玉满堂,只是再没有人问过你一句话。偶尔听见窗外马蹄声急,你分不清是三皇子的,是顾长风的,还是沈栖迟的——后来也不想分了。',
+   '上京依旧金玉满城。只是满城的金玉之下,又多了一只忘了怎么唱歌的雀。']},
+};
+
+/* =========================================================
+   引擎
+   ========================================================= */
+
+</script>
+<script>
+const BOOT_ART="images/BOOT_ART.jpg";
+/* =========================================================
+   金玉良缘 · 手机端
+   界面重制：竖屏 · 舆图 · 章节 · 立绘剧情 · 养成 · 结局
+   ========================================================= */
+const SAVE_KEY='jyat_mobile_save_v1';
+const ARCH_KEY='jyat_mobile_arch_v1';
+const TAB_LABEL={map:'舆图',wardrobe:'衣橱',shop:'云锦阁',clues:'线索',npcs:'人物'};
+let pickedId=null;let pickedGroom=null;
+let currentTab='map';
+let shopTab='jewel';
+let toastTimer=null;
+let lastSceneArt='';
+let lastSceneWho='';
+let lastSceneTitle='';
+let lastSceneLoc='';
+let settled=false;
+
+const el=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const CN=['零','一','二','三','四','五','六','七','八','九','十'];
+const IDX=['壹','贰','叁','肆','伍','陆'];
+
+/* ---------- 基础规则 ---------- */
+function idOf(){return IDENTITIES[S.id]}
+function curCh(){return CHAPTERS[S.ch-1]}
+function effAttr(k){
+  let v=S.base[k]||0;
+  const w=OUTFITS.find(o=>o.id===S.outfit);
+  if(w&&w.eff&&w.eff[k])v+=w.eff[k];
+  S.items.forEach(j=>{const g=JEWELS.find(x=>x.id===j);if(g&&g.eff&&g.eff[k])v+=g.eff[k]});
+  return v;
+}
+const sgn=n=>(n>0?'+':'')+n;
+const hasClue=c=>S.clues.indexOf(c)>=0;
+function flagOf(name){return !!S.flags[name]||!!S.flags[S.id+':'+name]}
+function setFlag(name,val){S.flags[S.id+':'+name]=val===undefined?true:val}
+function dynTxt(obj){
+  const k='story'+S.id.charAt(0).toUpperCase()+S.id.slice(1);
+  return obj[k]||obj.story;
+}
+function dynEff(eff){
+  const e={};
+  for(const k in eff){
+    const v=eff[k];
+    if(k==='flag'&&typeof v==='object'&&!Array.isArray(v)){if(v[S.id])e.flag=v[S.id]}
+    else if(k==='clue'&&typeof v==='object'&&!Array.isArray(v)){e.clue=v[S.id]||[]}
+    else e[k]=v;
+  }
+  return e;
+}
+function defaultState(name,idKey){
+  const d=IDENTITIES[idKey];
+  return {name:name,id:idKey,ch:1,ap:5,used:[],money:d.money,
+    base:{charm:d.bonus.charm||0,wit:d.bonus.wit||0,grace:d.bonus.grace||0,strat:d.bonus.strat||0},
+    fav:{prince:0,hou:0,spy:0},clues:[],flags:{},items:[],outfit:'w0',wardrobe:['w0'],
+    groom:null,ended:null,storyDone:{}};
+}
+function save(){if(S){try{localStorage.setItem(SAVE_KEY,JSON.stringify(S))}catch(e){}}}
+function loadSave(){try{return JSON.parse(localStorage.getItem(SAVE_KEY)||'null')}catch(e){return null}}
+function clearSave(){try{localStorage.removeItem(SAVE_KEY)}catch(e){}}
+function loadArch(){try{return JSON.parse(localStorage.getItem(ARCH_KEY)||'{}')}catch(e){return{}}}
+function saveArch(a){try{localStorage.setItem(ARCH_KEY,JSON.stringify(a))}catch(e){}}
+function toast(msg){
+  const t=el('toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),1900);
+}
+function effTxt(eff){
+  if(!eff)return'';
+  return ATTRS.filter(a=>eff[a[0]]).map(a=>a[1]+'+'+eff[a[0]]).join(' · ');
+}
+function applyEff(eff0){
+  const eff=dynEff(eff0||{});const chips=[];
+  ATTRS.forEach(a=>{const k=a[0];if(eff[k]){S.base[k]+=eff[k];chips.push({t:a[1]+' '+sgn(eff[k]),cls:eff[k]>0?'up':'down'})}});
+  if(eff.money){S.money+=eff.money;chips.push({t:'银两 '+sgn(eff.money),cls:eff.money>0?'up':'down'})}
+  if(eff.fav)for(const f in eff.fav){
+    let v=eff.fav[f];
+    if(v>0&&GROOMS.indexOf(f)>=0){
+      const rel=relOf();
+      v=Math.max(1,Math.round(v*(rel&&f===S.groom?rel.favMul:1)));
+    }
+    S.fav[f]+=v;
+    chips.push({t:(NPCS[f]?NPCS[f].name:f)+' '+sgn(v),cls:v>0?'up':'down'});
+  }
+  let cl=eff.clue||[];
+  if(typeof eff.clue==='string')cl=[eff.clue];
+  if(eff.clueOnly)cl=[eff.clueOnly];
+  cl.forEach(c=>{if(c&&CLUES[c]&&!S.clues.includes(c)){S.clues.push(c);chips.push({t:'线索 · '+CLUES[c].name,cls:'clue'})}});
+  if(eff.flag){setFlag(eff.flag);chips.push({t:'命运转折',cls:'clue'})}
+  if(eff.outfit){if(!S.wardrobe.includes(eff.outfit)){S.wardrobe.push(eff.outfit);const o=OUTFITS.find(x=>x.id===eff.outfit);if(o)chips.push({t:'新衣 · '+o.name,cls:'clue'})}}
+  if(eff.item){if(!S.items.includes(eff.item))S.items.push(eff.item);const j=JEWELS.find(x=>x.id===eff.item);if(j)chips.push({t:'首饰 · '+j.name,cls:'clue'})}
+  save();
+  return chips;
+}
+function reqCheck(req){
+  if(!req)return{ok:true};
+  if(req.mode==='any'&&req.clue){if(req.clue.some(hasClue))return{ok:true};return{ok:false,msg:'需相关线索'}}
+  if(req.clue){const cs=Array.isArray(req.clue)?req.clue:[req.clue];if(!cs.some(hasClue))return{ok:false,msg:'需线索 · '+cs.map(c=>CLUES[c]?CLUES[c].name:c).join(' / ')}}
+  if(req.clueN&&S.clues.length<req.clueN)return{ok:false,msg:'需线索 ≥ '+req.clueN+' 条'}
+  if(req.flag&&!flagOf(req.flag))return{ok:false,msg:'需先做出特定抉择'}
+  if(req.any){for(const r of req.any){if(reqCheck(r).ok)return{ok:true}}return{ok:false,msg:'条件不足'}}
+  if(req.fav)for(const f in req.fav){if((S.fav[f]||0)<req.fav[f])return{ok:false,msg:'需'+(NPCS[f]?NPCS[f].name:f)+'好感 ≥ '+req.fav[f]}}
+  for(const k of ['charm','wit','grace','strat'])if(req[k]&&effAttr(k)<req[k])return{ok:false,msg:'需'+ATTRS.find(a=>a[0]===k)[1]+' ≥ '+req[k]}
+  return{ok:true};
+}
+function reqHint(req){
+  if(!req)return'';
+  const parts=[];
+  if(req.mode!=='any'&&req.clue){const cs=Array.isArray(req.clue)?req.clue:[req.clue];parts.push('线索 '+cs.map(c=>CLUES[c]?CLUES[c].name:c).join('/'))}
+  if(req.clueN)parts.push('线索≥'+req.clueN);
+  if(req.flag)parts.push('特定抉择');
+  if(req.fav)for(const f in req.fav)parts.push((NPCS[f]?NPCS[f].name:f)+'好感≥'+req.fav[f]);
+  for(const k of ['charm','wit','grace','strat'])if(req[k])parts.push(ATTRS.find(a=>a[0]===k)[1]+'≥'+req[k]);
+  return parts.length?('需 '+parts.join(' · ')):'';
+}
+
+/* ---------- 开场 ---------- */
+function setupBoot(){
+  const has=!!loadSave();
+  el('btnContinue').hidden=!has;
+  el('minorDot').hidden=!has;
+}
+const SCREENS=['boot','create','matchmake','game','intro','scene','ending'];
+function hideScreens(keep){
+  SCREENS.forEach(k=>{if(k!==keep)el(k).hidden=true});
+}
+function toBoot(){
+  closeSheet();
+  hideScreens('boot');
+  el('boot').hidden=false;
+  setupBoot();
+}
+function goCreate(){
+  closeSheet();
+  hideScreens('create');
+  pickedGroom=null;settled=false;
+  el('create').hidden=false;
+  renderCreate();
+}
+function nearestCard(){
+  const rail=el('idRail');
+  const rr=rail.getBoundingClientRect(),mid=rr.left+rr.width/2;
+  let best=null,bd=1e9;
+  rail.querySelectorAll('.cr-card').forEach(c=>{
+    const b=c.getBoundingClientRect(),d=Math.abs(b.left+b.width/2-mid);
+    if(d<bd){bd=d;best=c}
+  });
+  return best;
+}
+function selectIdentity(id){
+  if(!id||id===pickedId)return;
+  pickedId=id;
+  el('idRail').querySelectorAll('.cr-card').forEach(c=>c.classList.toggle('sel',c.getAttribute('data-id')===id));
+  updateCreateName();
+  renderDots();
+}
+function renderCreate(){
+  if(!pickedId)pickedId='maid';
+  const rail=el('idRail');
+  rail.innerHTML=Object.keys(IDENTITIES).map((k,i)=>{
+    const d=IDENTITIES[k];
+    const bonus=ATTRS.filter(a=>d.bonus[a[0]]).map(a=>a[1]+'+'+d.bonus[a[0]]).join(' · ');
+    return '<button class="cr-card'+(pickedId===k?' sel':'')+'" data-id="'+k+'">'+
+      '<div class="cc-art art-'+k+'"><img src="'+ART[ID_ART[k]]+'" alt="" onerror="this.style.display=\'none\'"></div>'+
+      '<span class="cc-idx">'+['壹','贰','叁'][i]+'</span>'+
+      '<div class="cc-inner">'+
+        '<h3>'+esc(d.name)+'</h3>'+
+        '<div class="cc-tag">'+esc(d.tag)+'</div>'+
+        '<p class="cc-desc">'+esc(d.desc)+'</p>'+
+        '<div class="cc-perk">'+esc(d.perk)+'<br>初始 '+bonus+' · 银两 '+d.money+' 两</div>'+
+      '</div></button>';
+  }).join('');
+  if(el('crDiff'))el('crDiff').innerHTML=esc(IDENTITIES[pickedId].diff.split(' · ')[0])+'局';
+  rail.querySelectorAll('.cr-card').forEach(card=>{
+    card.addEventListener('click',()=>{
+      if(Date.now()-(rail._moved||0)<300)return;
+      selectIdentity(card.getAttribute('data-id'));
+      card.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+    });
+  });
+  if(!rail._bound){
+    rail._bound=true;
+    rail.addEventListener('scroll',()=>{
+      rail._moved=Date.now();
+      clearTimeout(rail._selT);
+      rail._selT=setTimeout(()=>{
+        const c=nearestCard();
+        if(c)selectIdentity(c.getAttribute('data-id'));
+      },120);
+    },{passive:true});
+  }
+  requestAnimationFrame(()=>{
+    const c=rail.querySelector('.cr-card.sel');
+    if(!c)return;
+    const rr=rail.getBoundingClientRect(),cr=c.getBoundingClientRect();
+    rail.scrollLeft+=(cr.left+cr.width/2)-(rr.left+rr.width/2);
+  });
+  renderDots();
+  updateCreateName();
+}
+function renderDots(){
+  const keys=Object.keys(IDENTITIES);
+  el('idDots').innerHTML=keys.map(k=>'<i class="'+(k===pickedId?'on':'')+'"></i>').join('');
+}
+function updateCreateName(){
+  if(!el('crName')||!pickedId)return;
+  const typed=(el('nameInput').value||'').trim();
+  el('crName').textContent=typed||IDENTITIES[pickedId].defaultName;
+  if(el('crDiff'))el('crDiff').innerHTML=esc(IDENTITIES[pickedId].diff.split(' · ')[0])+'局';
+}
+function startNew(){
+  if(!pickedGroom){toast('先定一门亲事');return}
+  const d=IDENTITIES[pickedId];
+  const typed=(el('nameInput').value||'').trim();
+  S=defaultState(typed||d.defaultName,pickedId);
+  S.groom=pickedGroom;
+  const r=REL[pickedGroom][pickedId];
+  S.fav[pickedGroom]+=r.favStart;
+  if(r.bias)for(const k in r.bias)S.base[k]=(S.base[k]||0)+r.bias[k];
+  currentTab='map';shopTab='jewel';
+  save();
+  el('create').hidden=true;el('matchmake').hidden=true;
+  chapterIntro();
+}
+/* ---------- 择婿 ---------- */
+function goMatch(){
+  hideScreens('matchmake');
+  el('matchmake').hidden=false;
+  pickedGroom=null;
+  el('mmNote').textContent='以「'+IDENTITIES[pickedId].name+'」的身份入京——你会遇见这样三个人。';
+  renderMatch();
+}
+function backToCreate(){
+  el('matchmake').hidden=true;el('create').hidden=false;
+}
+function renderMatch(){
+  const list=el('mmList');
+  const keep=list.scrollTop;
+  list.innerHTML=GROOMS.map(g=>{
+    const n=NPCS[g];
+    const art=(ART[g]||fallbackArt());
+    return '<button class="mm-card'+(pickedGroom===g?' sel':'')+'" data-g="'+g+'">'+
+      '<div class="mm-art'+(ART_CLS[g]?' art-'+g:'')+'"><img src="'+art+'" alt="" onerror="this.style.display=\'none\'"><i class="mm-fade"></i></div>'+
+      '<div class="mm-body"><h3>'+esc(n.name)+'</h3><div class="mm-ttl">'+esc(n.title)+'</div>'+
+        '<div class="mm-quote">'+esc(n.quote)+'</div>'+
+        '<div class="mm-line">'+esc(n.desc)+'</div>'+
+      '</div></button>';
+  }).join('');
+  list.querySelectorAll('.mm-card').forEach(c=>{
+    c.onclick=()=>{pickedGroom=c.getAttribute('data-g');renderMatch();};
+  });
+  list.scrollTop=keep;
+  requestAnimationFrame(sizeMatchArt);
+  const b=el('btnGroom');
+  b.disabled=!pickedGroom;
+  b.textContent=pickedGroom?('与 '+NPCS[pickedGroom].name+' 定 亲'):'先 选 一 个 人';
+}
+function sizeMatchArt(){
+  if(!el('mmList'))return;
+  el('mmList').querySelectorAll('.mm-card').forEach(c=>{
+    const art=c.querySelector('.mm-art');
+    if(!art)return;
+    art.style.height='';
+    const h=c.clientHeight;
+    if(h>0)art.style.height=h+'px';
+  });
+}
+window.addEventListener('resize',()=>{const m=el('matchmake');if(m&&!m.hidden)sizeMatchArt()});
+function relOf(){
+  return (S&&S.groom&&REL[S.groom]&&REL[S.groom][S.id])||null;
+}
+function continueGame(){
+  const s=loadSave();
+  if(!s){toast('尚无前缘可续');return}
+  S=s;
+  if(!('groom' in S)){
+    const bk=['prince','hou','spy'].sort((a,b)=>(S.fav[b]||0)-(S.fav[a]||0))[0];
+    S.groom=(S.fav&&(S.fav[bk]||0)>0)?bk:null;
+  }
+  if(S.ended){renderEnding(S.ended);return}
+  el('boot').hidden=true;
+  showGame();
+  toast('续 · 前 缘');
+}
+
+/* ---------- 章节与主界面 ---------- */
+function showGame(){
+  hideScreens('game');
+  el('game').hidden=false;
+  renderTop();
+  renderTab();
+}
+function chapterIntro(){
+  const ch=curCh();
+  const title=(ch.name.split('·')[1]||ch.name).trim();
+  let paras=(ch.intro&&ch.intro[S.id])||[];
+  const rel=relOf();
+  if(rel&&rel.beats&&rel.beats[ch.n-1])paras=paras.concat([{beat:rel.beats[ch.n-1]}]);
+  hideScreens('intro');
+  el('intro').innerHTML=
+    '<div class="intro-inner">'+
+      '<div class="intro-no">'+(ch.n<10?'0':'')+ch.n+'</div>'+
+      '<div class="intro-kicker">第'+CN[ch.n]+'章 · 上 京</div>'+
+      '<h2>'+esc(title)+'</h2>'+
+      '<span class="in-month">'+esc(ch.month)+'</span>'+
+      '<div class="in-hint">'+esc(ch.hint)+'</div>'+
+      '<div class="intro-body">'+paras.map(p=>typeof p==='string'?'<p>'+esc(p)+'</p>':'<p class="in-beat">'+esc(p.beat)+'</p>').join('')+'</div>'+
+      '<button class="btn-main" id="btnEnterCh">落 · '+esc(title)+'</button>'+
+    '</div>';
+  el('intro').hidden=false;
+  el('btnEnterCh').onclick=()=>{
+    el('intro').hidden=true;
+    currentTab='map';
+    showGame();
+  };
+}
+function renderTop(){
+  if(!S)return;
+  const d=idOf();
+  const av={src:ART[ID_ART[S.id]]||ART.qingwu,cls:'id-face'};
+  const img=el('tbAvatar');
+  let _ai=img.querySelector('img');
+  if(!_ai){img.innerHTML='<img src="'+av.src+'" alt="">';_ai=img.querySelector('img');}
+  else if(_ai.getAttribute('src')!==av.src){_ai.setAttribute('data-fb','');_ai.src=av.src;}
+  img.className=av.cls;
+  el('tbName').textContent=S.name;
+  el('tbId').textContent=d.name+' · '+d.home;
+  el('tbCh').textContent=curCh().name;
+  el('tbMoney').textContent=S.money;
+  let dots='';
+  for(let i=0;i<5;i++)dots+='<i class="'+(i<S.ap?'on':'')+'"></i>';
+  el('apDots').innerHTML=dots;
+  el('tbAttrs').innerHTML=ATTRS.map(a=>
+    '<div class="attr"><span>'+a[1]+'</span><b>'+effAttr(a[0])+'</b></div>'
+  ).join('');
+}
+function renderTab(){
+  if(!S)return;
+  el('main').classList.remove('tab-map');
+  renderTop();
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.getAttribute('data-tab')===currentTab));
+  if(currentTab==='map')renderMapTab();
+  else if(currentTab==='wardrobe')renderWardrobeTab();
+  else if(currentTab==='shop')renderShopTab();
+  else if(currentTab==='clues')renderCluesTab();
+  else renderNpcsTab();
+  updateFab();
+  if(el('main').scrollTop===0){
+    el('main').animate([{opacity:.55},{opacity:1}],{duration:260,easing:'ease-out'});
+  }
+}
+let fabObs=null;
+function updateFab(){
+  const fab=el('fabClimax');
+  if(!fab)return;
+  if(fabObs){fabObs.disconnect();fabObs=null}
+  if(!S||currentTab!=='map'||!climaxOpen()){fab.hidden=true;return}
+  el('fabName').textContent=curCh().climax.name;
+  const target=document.querySelector('.climax-btn');
+  if(!target){fab.hidden=false;return}
+  fab.hidden=false;
+  fabObs=new IntersectionObserver(es=>{
+    fab.hidden=es[0].isIntersecting||!climaxOpen();
+  },{root:el('main'),threshold:.25});
+  fabObs.observe(target);
+}
+function chapterCardHTML(){
+  const ch=curCh();
+  const t=(ch.name.split('·')[1]||ch.name).trim();
+  return '<div class="ch-card">'+
+    '<div class="ch-n">第'+CN[S.ch]+'章 · '+(S.ch<10?'0':'')+S.ch+' / 0'+CHAPTERS.length+'</div>'+
+    '<h2>'+esc(t)+'</h2>'+
+    '<div class="ch-month">'+esc(ch.month)+' · 上京</div>'+
+    (S.groom?'<div class="ch-route">婚约 · '+esc(NPCS[S.groom].name)+'</div>':'')+
+    '<div class="ch-hint">'+esc(ch.hint)+'</div>'+
+    '<div class="ch-seal">'+CN[S.ch]+'<br>章</div>'+
+  '</div>';
+}
+function locShort(key){
+  const map={gong:'麟德殿',yhy:'御花园',donggong:'东宫',sanf:'三皇子府',machang:'马场',yunjing:'云锦阁',zuixian:'醉仙楼',sufu:'苏府',shifang:'灯市',zhai:'自宅',qushui:'曲水巷',shiguan:'北漠使馆',chi:'曲江池'};
+  return map[key]||LOCS[key].name;
+}
+function locGlyph(key){
+  const map={gong:'殿',yhy:'园',donggong:'宫',sanf:'府',machang:'马',yunjing:'锦',zuixian:'楼',sufu:'苏',shifang:'灯',zhai:'宅',qushui:'巷',shiguan:'使',chi:'池'};
+  return map[key]||'处';
+}
+function eventsAt(key){
+  const ch=curCh();const list=[];
+  (ch.acts||[]).forEach(a=>{if(a.loc===key&&!S.used.includes(a.id))list.push(a)});
+  return list;
+}
+function climaxOpen(){return !S.storyDone['climax'+S.ch]}
+const MAP_ART='images/MAP_ART.jpg';
+function renderMapTab(){
+  const ch=curCh();
+  let pins='';
+  Object.keys(LOCS).forEach(key=>{
+    const loc=LOCS[key];
+    const evts=eventsAt(key);
+    const isClimax=ch.climax.loc===key&&climaxOpen();
+    const done=!evts.length&&!isClimax&&key!=='zhai'&&key!=='yunjing';
+    pins+='<button class="pin'+(evts.length||isClimax?' has':'')+(isClimax?' climax':'')+(done?' done':'')+'" style="left:'+loc.x+'%;top:'+(loc.y/128*100)+'%" onclick="openLoc(\''+key+'\')">'+
+      '<span class="pin-dot">'+locGlyph(key)+'</span>'+
+      '<span class="pin-label">'+locShort(key)+'</span>'+
+    '</button>';
+  });
+  const railKeys=Object.keys(LOCS).filter(k=>{
+    if(k==='zhai'||k==='yunjing')return true;
+    return eventsAt(k).length>0||(ch.climax.loc===k&&climaxOpen());
+  });
+  const rail=railKeys.map(k=>{
+    const evts=eventsAt(k);
+    const isClimax=ch.climax.loc===k&&climaxOpen();
+    const badge=isClimax?'<span class="rc-badge">正戏</span>':(evts.length?'<span class="rc-badge">'+evts.length+' 事</span>':'');
+    const sub=k==='zhai'?'修炼 · 月例':k==='yunjing'?'首饰 · 衣裳':(evts.length?evts[0].name:'此处无人');
+    return '<button class="rail-card" onclick="openLoc(\''+k+'\')">'+badge+
+      '<div class="rail-glyph">'+locGlyph(k)+'</div>'+
+      '<h4>'+locShort(k)+'</h4><p>'+esc(sub)+'</p></button>';
+  }).join('');
+  const clOpen=climaxOpen();
+  el('main').classList.add('tab-map');
+  el('main').innerHTML=
+    chapterCardHTML()+
+    '<div class="sec-head"><h3>上 京 舆 图</h3><span>点一处 · 去一处</span></div>'+
+    '<div class="map"><div class="map-art"><img src="'+MAP_ART+'" alt=""></div><div class="map-pins">'+pins+'</div><div class="map-cue">下滑 · 今日行止</div></div>'+
+    '<div class="sec-head"><h3>今 日 行 止</h3><span>'+(S.ap>0?'行动力 '+S.ap+' 点':'行动力已尽')+'</span></div>'+
+    '<div class="rail">'+rail+'</div>'+
+    '<button class="climax-btn'+(clOpen?'':' done')+'" '+(clOpen?'onclick="runClimax()"':'')+'>'+
+      '<div class="cb-k">CHAPTER FINALE · 章末正戏</div>'+
+      '<div class="cb-t"><i></i>'+esc(ch.climax.name)+'</div>'+
+      '<div class="cb-d">'+(clOpen?'本章走向，就此落定 · 不消耗行动力':'正戏已落幕 · 余下的路，下一章见')+'</div>'+
+    '</button>'+
+    '<div class="main-quote">「联姻是局，婚书是契。<br>满城金玉之下，皆是暗涛。」</div>';
+  el('main').scrollTop=0;
+}
+
+/* ---------- 地点 ---------- */
+function openLoc(key){
+  const loc=LOCS[key];
+  if(key==='zhai'){openHome();return}
+  if(key==='yunjing'){currentTab='shop';renderTab();return}
+  const ch=curCh();
+  const evts=eventsAt(key);
+  const isClimax=ch.climax.loc===key&&climaxOpen();
+  let html=sheetHead(loc.name,'行动力 '+S.ap+' 点 · 人或事，都在等你');
+  if(isClimax){
+    html+='<button class="evt climax" onclick="closeSheet();runClimax()">'+
+      '<h4><span class="eg">终</span>'+esc(ch.climax.name)+'<span class="cost">主线</span></h4>'+
+      '<p>'+esc(ch.name)+'正戏。本章走向，就此落定。</p><div class="who">不消耗行动力</div></button>';
+  }
+  if(!evts.length&&!isClimax)html+='<div class="empty">此处已无事件。<br>灯影稀疏，人已散场。</div>';
+  evts.forEach(a=>{
+    const rc=a.dynId?null:reqCheck(a.req);
+    const apOk=S.ap>0;
+    const locked=(rc&&!rc.ok)||!apOk;
+    const who=a.who&&NPCS[a.who]?NPCS[a.who].name:(a.dynId?'身份暗线':'同窗局');
+    const teaser=a.hint||a.desc||((a.story||[])[0]||'');
+    html+='<button class="evt'+(locked?' locked':'')+'" onclick="'+(locked?'':'closeSheet();runAct(\''+a.id+'\')')+'">'+
+      '<h4><span class="eg">'+esc(a.glyph||'事')+'</span>'+esc(a.name)+'<span class="cost">行动 -1</span></h4>'+
+      '<p>'+esc(teaser)+'</p><div class="who">'+esc(who)+'</div>'+
+      (locked?'<div class="lock-note">'+(apOk?esc((rc&&rc.msg)||reqHint(a.req)||'条件不足'):'行动力不足 · 先去自宅歇一歇')+'</div>':'')+
+    '</button>';
+  });
+  if(key==='shifang'){
+    html+='<button class="evt'+(S.ap<1?' locked':'')+'" onclick="'+(S.ap<1?'':'closeSheet();doEarn(\'stall\')')+'">'+
+      '<h4><span class="eg">银</span>夜市摆摊<span class="cost">行动 -1</span></h4>'+
+      '<p>支一张小案，代写灯谜签、卖几样手作。吆喝半夜，钱袋总能鼓一点。</p>'+
+      '<div class="who">可重复 · 约 '+(8+S.base.charm*3+S.base.strat*2)+' 两</div></button>';
+  }
+  openSheet(html);
+}
+function openHome(){
+  const d=idOf();
+  let html=sheetHead(S.id==='maid'?d.home:d.home,'行动力 '+S.ap+' 点 · 每项修炼本章限一次');
+  TRAINS.forEach(t=>{
+    const used=S.used.includes(t.id+S.ch);
+    const locked=used||S.ap<1;
+    html+='<button class="evt'+(used?' done':'')+(S.ap<1?' locked':'')+'" onclick="'+(locked?'':'closeSheet();doTrain(\''+t.id+'\')')+'">'+
+      '<h4><span class="eg">习</span>'+esc(t.name)+'<span class="cost">行动 -1</span></h4>'+
+      '<p>'+esc(t.desc)+'</p><div class="who">'+ATTRS.find(a=>a[0]===t.stat)[1]+' +'+(t.base+S.ch-1)+(used?' · 本月已修':'')+'</div></button>';
+  });
+  html+='<button class="evt'+(S.ap<1?' locked':'')+'" onclick="'+(S.ap<1?'':'closeSheet();doEarn(\'home\')')+'">'+
+    '<h4><span class="eg">银</span>接些私活<span class="cost">行动 -1</span></h4>'+
+    '<p>描花样子、代写书信、替绣坊赶两件活。低头做事，总有零碎银子进袖。</p>'+
+    '<div class="who">可重复 · 约 '+(8+S.base.wit*3+S.base.grace*2)+' 两</div></button>';
+  const incomeKey='income'+S.ch;
+  const got=!!S.flags[incomeKey];
+  html+='<button class="evt'+(got?' done':'')+'" onclick="'+(got?'':'closeSheet();collectIncome()')+'">'+
+    '<h4><span class="eg">银</span>月例支领<span class="cost">免费</span></h4>'+
+    '<p>管事嬷嬷把例银数得清清楚楚，一文不多，一文不少。</p><div class="who">+'+(d.income)+' 两 · 每章一次'+(got?' · 本月已领':'')+'</div></button>';
+  html+='<button class="evt" onclick="closeSheet();currentTab=\'wardrobe\';renderTab()"><h4><span class="eg">妆</span>梳妆换装<span class="cost">免费</span></h4><p>更换衣裳与首饰，立绘与属性随之改变。</p><div class="who">衣橱 · '+S.wardrobe.length+' 套在册</div></button>';
+  openSheet(html);
+}
+function doTrain(tid){
+  const t=TRAINS.find(x=>x.id===tid);if(!t)return;
+  if(S.ap<1){toast('行动力不足');return}
+  if(S.used.includes(tid+S.ch)){toast('本月已修');return}
+  S.used.push(tid+S.ch);S.ap--;
+  const gain=t.base+S.ch-1;
+  const chips=applyEff({[t.stat]:gain});
+  showOutcome('晨课 · '+t.name,t.desc+'你静下心来，细细磨了一个时辰。',chips,'回 · 自宅',()=>{backToMap();openHome()},true,TRAIN_ART[tid]||BOOK_ART);
+}
+function collectIncome(){
+  const key='income'+S.ch;
+  if(S.flags[key]){toast('本月已支领');return}
+  S.flags[key]=true;
+  const chips=applyEff({money:idOf().income});
+  showOutcome('月 例','管事嬷嬷把例银数得清清楚楚，一文不多，一文不少。',chips,'回 · 自宅',()=>{backToMap();openHome()},true,INGOT_ART);
+}
+
+function doEarn(kind){
+  if(S.ap<1){toast('行动力不足，先去自宅歇一歇');return}
+  S.ap--;
+  let gain,title,text;
+  if(kind==='stall'){
+    gain=8+S.base.charm*3+S.base.strat*2;
+    title='夜 市 摆 摊';
+    text='一盏灯、一方小案，替人写灯谜签，卖几样手作。吆喝到半夜，嗓子哑了，钱袋倒是鼓了些。';
+  }else{
+    gain=8+S.base.wit*3+S.base.grace*2;
+    title='私 活';
+    text='描花样子、代写家书，又替绣坊赶了两件活。指尖沾了墨，袖里多了几串钱。';
+  }
+  const chips=applyEff({money:gain});
+  const back=(kind==='home')?()=>{backToMap();openHome()}:backToMap;
+  showOutcome(title,text,chips,(kind==='home')?'回 · 自宅':'回 · 舆图',back,true,INGOT_ART);
+}
+/* ---------- 剧情播放 ---------- */
+function showScene(o){
+  outcomeCb=null;
+  el('scBody').classList.remove('is-outcome');
+  closeSheet();
+  el('scene').hidden=false;
+  el('scBack').hidden=false;
+  el('scBack').onclick=backToMap;
+  el('ending').hidden=true;
+  el('scCh').textContent=curCh().name;
+  el('scLoc').textContent=o.loc||'';
+  el('scTitle').textContent=o.title||'';
+  lastSceneArt='';lastSceneWho='';
+  if(o.art){
+    lastSceneArt=o.art;lastSceneWho=o.whoKey||'';
+    el('scArtWrap').innerHTML='<div class="scene-art">'+
+      '<img class="sa-bg" src="'+o.art+'" alt="">'+
+      '<img src="'+o.art+'" alt="">'+
+      '<span class="sa-corner a"></span><span class="sa-corner b"></span><span class="sa-corner c"></span><span class="sa-corner d"></span>'+
+      '<div class="sa-cap"><div class="sa-name">'+esc(o.artN||'')+'</div><div class="sa-title">'+esc(o.artT||'')+'</div>'+
+      (o.artQ?'<div class="sa-quote">'+esc(o.artQ)+'</div>':'')+'</div></div>';
+  }else{
+    el('scArtWrap').innerHTML='';
+  }
+  el('scBody').innerHTML=(o.paras||[]).map(p=>'<p>'+esc(p)+'</p>').join('');
+  const box=el('scChoices');box.innerHTML='';
+  if(o.noChoice||!o.choices||!o.choices.length){
+    const btn=document.createElement('button');
+    btn.className='btn-main';
+    btn.style.marginTop='8px';
+    btn.textContent=o.btn||'继 续';
+    btn.onclick=()=>{if(o.onPick)o.onPick();(o.onDone||backToMap)();};
+    box.appendChild(btn);
+    el('scNote').textContent='';
+  }else{
+    let anyOk=false,anyLocked=false;
+    const cs=o.choices.filter(c=>!c.line||c.line===S.id);
+    (cs.length?cs:o.choices).forEach((c,i)=>{
+      const rc=reqCheck(c.req);
+      if(rc.ok)anyOk=true;else anyLocked=true;
+      const b=document.createElement('button');
+      b.className='choice'+(rc.ok?'':' locked');
+      b.setAttribute('data-idx',IDX[i]||'·');
+      b.innerHTML='<div class="lab">'+esc(c.label)+'</div>'+
+        '<div class="hint">'+esc(rc.ok?(c.hint||''):('未达 · '+(reqHint(c.req)||rc.msg)))+'</div>';
+      if(rc.ok){
+        b.onclick=(e)=>{
+          e.stopPropagation();
+          if(o.before)S.storyDone[o.before]=true;
+          if(o.onPick)o.onPick();
+          const chips=applyEff(c.eff);
+          const ocArt=o.art||ART[o.whoKey]||SCROLL_ART;
+          showOutcome('抉 择',c.out,chips,o.nextBtn||'回 · 舆图',o.onDone,false,ocArt);
+        };
+      }
+      box.appendChild(b);
+    });
+    if(anyLocked){
+      const tools=document.createElement('div');
+      tools.className='sc-tools';
+      tools.innerHTML='<button type="button" onclick="leaveScene(\'wardrobe\')">衣 · 换 装</button>'+
+        '<button type="button" onclick="leaveScene(\'clues\')">卷 · 线 索</button>';
+      box.appendChild(tools);
+    }
+    el('scNote').textContent=anyOk
+      ? '不满足条件的路，仍在这里 —— 换一身衣、换一条线索，再来。'
+      : '此处的路都需更高的筹码。先添些底气，再回来。';
+  }
+  el('scene').scrollTop=0;
+  el('scene').querySelector('.scene-scroll').scrollTop=0;
+  settled=false;
+}
+const INGOT_ART='images/INGOT_ART.png';
+const BOOK_ART='images/BOOK_ART.jpg';
+const GO_ART='images/GO_ART.jpg';
+const BRUSH_ART='images/BRUSH_ART.jpg';
+const MIRROR_ART='images/MIRROR_ART.jpg';
+const SCROLL_ART='images/SCROLL_ART.jpg';
+const TRAIN_ART={t_copyst:BRUSH_ART,t_read:BOOK_ART,t_dress:MIRROR_ART,t_chess:GO_ART};
+function showOutcome(title,text,chips,btnText,cb,noArt,artSrc){
+  artSrc=artSrc||SCROLL_ART;
+  el('scene').hidden=false;
+  el('scBack').hidden=true;
+  el('scCh').textContent=curCh().name;
+  el('scLoc').textContent='';
+  el('scTitle').textContent=title;
+  el('scArtWrap').innerHTML='';
+  el('scBody').innerHTML='<div class="outcome"><img class="oc-art" src="'+artSrc+'" alt=""><div class="oc-k">RESULT · 落 子</div><p class="oc-t">'+esc(text)+'</p>'+
+    '<div class="chips">'+(chips||[]).map(c=>'<span class="chip '+(c.cls||'')+'">'+esc(c.t)+'</span>').join('')+'</div></div>';
+  const box=el('scChoices');box.innerHTML='';
+  const btn=document.createElement('button');
+  btn.className='btn-main';
+  btn.textContent=btnText||'继 续';
+  outcomeCb=cb||backToMap;
+  btn.onclick=outcomeCb;
+  box.appendChild(btn);
+  el('scNote').textContent='';
+  el('scBody').classList.add('is-outcome');
+  el('scBody').scrollTop=0;
+  el('scene').querySelector('.scene-scroll').scrollTop=0;
+}
+function backToMap(){
+  el('scene').hidden=true;
+  currentTab='map';
+  el('game').hidden=false;
+  renderTab();
+}
+let outcomeCb=null;
+el('scene').addEventListener('click',e=>{
+  if(!el('scBody').classList.contains('is-outcome'))return;
+  if(!e.target.isConnected)return;
+  if(e.target.closest('.outcome')||e.target.closest('#scChoices')||e.target.closest('#scBack'))return;
+  if(outcomeCb){const f=outcomeCb;outcomeCb=null;f()}
+});
+function leaveScene(tab){
+  el('scene').hidden=true;
+  currentTab=tab||'map';
+  el('game').hidden=false;
+  renderTab();
+}
+function runAct(aid){
+  const ch=curCh();
+  let act=null;
+  (ch.acts||[]).forEach(a=>{if(a.id===aid)act=a});
+  if(!act)return;
+  if(S.ap<1){toast('行动力不足，先去自宅歇一歇');return}
+  if(act.req){const rc=reqCheck(act.req);if(!rc.ok){toast(rc.msg);return}}
+  const consume=()=>{
+    if(S.ap<1){toast('行动力不足，先去自宅歇一歇');return}
+    S.ap--;
+    if(!S.used.includes(act.id))S.used.push(act.id);
+    save();renderTop();
+  };
+  const paras=act.dynId?dynTxt(act):act.story;
+  let art=null,artN='',artT='',artQ='',whoKey='';
+  if(act.who&&NPCS[act.who]&&ART[act.who]){
+    const n=NPCS[act.who];
+    art=ART[act.who];artN=n.name;artT=n.title;artQ=n.quote;whoKey=act.who;
+  }else if(act.dynId){
+    art=ART[ID_ART[S.id]];artN=S.name;artT=idOf().tag;artQ='';
+  }
+  showScene({title:act.name,loc:LOCS[act.loc].name,paras:paras,choices:act.choices,art:art,artN:artN,artT:artT,artQ:artQ,whoKey:whoKey,onPick:consume});
+}
+function runClimax(){
+  const ch=curCh(),cl=ch.climax;
+  if(!climaxOpen()){toast('本章正戏已落幕');return}
+  const paras=cl.dyn?dynTxt(cl):cl.story;
+  showScene({title:cl.name,loc:LOCS[cl.loc].name,paras:paras,choices:cl.choices,art:null,
+    nextBtn:S.ch>=CHAPTERS.length?'终 · 落 定':'入 · 下一章',
+    onDone:()=>{
+      S.storyDone['climax'+S.ch]=true;
+      save();
+      if(S.ch>=CHAPTERS.length){evaluateEnding();return}
+      S.ch++;S.ap=5;S.used=[];
+      save();
+      el('scene').hidden=true;
+      chapterIntro();
+    }});
+}
+
+/* ---------- 结局 ---------- */
+GROOMS.forEach(g=>Object.keys(REL[g]).forEach(idk=>{
+  const r=REL[g][idk];
+  ENDINGS['rel_'+g+'_'+idk]={name:r.end.name,tag:r.end.tag,
+    cond:'婚约 · '+NPCS[g].name+' · 好感≥'+r.need,body:r.end.body};
+}));
+function evaluateEnding(){
+  const maxFav=Math.max(S.fav.prince,S.fav.hou,S.fav.spy);
+  const rel=relOf();
+  let end=null;
+  if(flagOf('end_boss')||(S.id==='maid'&&flagOf('boss_path')&&S.clues.length>=6))end='e_zhier';
+  else if(rel&&S.fav[S.groom]>=rel.need)end='rel_'+S.groom+'_'+S.id;
+  else if(!S.groom&&flagOf('end_prince')&&S.fav.prince>=26&&effAttr('strat')>=12)end='e_fengguan';
+  else if(!S.groom&&flagOf('end_hou')&&S.fav.hou>=24&&hasClue('c2'))end='e_kuaima';
+  else if(!S.groom&&flagOf('end_spy')&&S.fav.spy>=26&&hasClue('c3'))end='e_shanhe';
+  else if(flagOf('lost')&&maxFav<24&&effAttr('strat')<8)end='e_chaliang';
+  else if(S.id==='miss'&&flagOf('family_saved'))end='e_jinzhi';
+  else if(S.id==='gen'&&flagOf('army_saved'))end='e_jiangmen';
+  else if(maxFav<22&&effAttr('strat')>=12)end='e_fengyue';
+  else if(flagOf('lost')&&maxFav<24)end='e_chaliang';
+  else if(!S.groom&&S.fav.prince>=26&&effAttr('strat')>=12)end='e_fengguan';
+  else if(!S.groom&&S.fav.hou>=24&&hasClue('c2'))end='e_kuaima';
+  else if(!S.groom&&S.fav.spy>=26&&hasClue('c3'))end='e_shanhe';
+  else if(!S.groom&&flagOf('end_prince'))end='e_fengguan';
+  else if(!S.groom&&flagOf('end_hou'))end='e_kuaima';
+  else if(!S.groom&&flagOf('end_spy'))end='e_shanhe';
+  else end='e_longzhong';
+  S.ended=end;
+  const arch=loadArch();arch[end]=true;saveArch(arch);
+  if(!S.wardrobe.includes('w7'))S.wardrobe.push('w7');
+  S.outfit='w7';
+  save();
+  renderEnding(end);
+}
+const END_PARTNER={e_zhier:'prince',e_fengguan:'prince',e_kuaima:'hou',e_shanhe:'spy',e_jinzhi:'rival',e_jiangmen:'hou',e_fengyue:'spy',e_chaliang:'rival',e_longzhong:'prince'};
+const END_ID={e_zhier:'maid',e_jinzhi:'miss',e_jiangmen:'gen'};
+function endingArt(endId){
+  const m=/^rel_([a-z]+)_([a-z]+)$/.exec(endId||'');
+  if(m){const a1=ART[ID_ART[m[2]]],a2=ART[m[1]];if(a1&&a2)return {duo:[a1,a2]};}
+  const pid=END_ID[endId]||(S&&S.id)||'gen';
+  const a1=ART[ID_ART[pid]],a2=ART[END_PARTNER[endId]];
+  if(a1&&a2)return {duo:[a1,a2]};
+  return {single:outfitArt('w7').src};
+}
+function renderEnding(endId){
+  const e=ENDINGS[endId]||ENDINGS.e_longzhong;
+  hideScreens('ending');
+  const art=endingArt(endId);
+  const artHtml=art.duo?'<div class="en-art duo"><div class="duo-fill l" style="background-image:url(\''+art.duo[0]+'\')"></div><div class="duo-fill r" style="background-image:url(\''+art.duo[1]+'\')"></div><div class="duo-half l" style="background-image:url(\''+art.duo[0]+'\')"></div><div class="duo-half r" style="background-image:url(\''+art.duo[1]+'\')"></div></div>'
+    :'<div class="en-art"><img src="'+art.single+'" alt=""></div>';
+  const stats=S?'<div class="en-stats">'+ATTRS.map(a=>'<div class="en-stat"><b>'+effAttr(a[0])+'</b><span>'+a[1]+'</span></div>').join('')+'</div>'+
+    '<div class="en-stats2"><span>线索 '+S.clues.length+' / '+Object.keys(CLUES).length+'</span><span>身份 · '+idOf().name+'</span></div>':'';
+  const ambHtml='<div class="en-amb"><i class="al" style="background-image:url(\''+(art.duo?art.duo[0]:art.single)+'\')"></i>'+
+    (art.duo?'<i class="ar" style="background-image:url(\''+art.duo[1]+'\')"></i>':'')+'</div>';
+  el('ending').innerHTML=ambHtml+artHtml+
+    '<div class="en-inner">'+
+      '<div class="en-kicker">终 章 · 落 定</div>'+
+      '<div class="en-seal"><svg class="seal-phx" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">'+
+        '<circle cx="32" cy="32" r="25.5" stroke-width="1" opacity=".7"/>'+
+        '<path d="M32 24c-3-1-7-4-10-8"/><path d="M32 27c-4 0-8-2-11-6"/><path d="M32 30c-4 1-8 0-11-3"/>'+
+        '<path d="M32 24c3-1 7-4 10-8"/><path d="M32 27c4 0 8-2 11-6"/><path d="M32 30c4 1 8 0 11-3"/>'+
+        '<path d="M32 24v14"/><circle cx="32" cy="21" r="2"/>'+
+        '<path d="M32 19v-3"/><path d="M30 17l-2-3"/><path d="M34 17l2-3"/>'+
+        '<path d="M32 38c-4 4-7 8-9 13"/><path d="M32 38c0 5 0 9 0 14"/><path d="M32 38c4 4 7 8 9 13"/>'+
+        '</g></svg><span>结<br>局</span></div>'+
+      '<h1 class="en-title">'+esc(e.name)+'</h1>'+
+      '<div class="en-tag">'+esc(e.tag)+'</div>'+
+      '<div class="en-cond">'+esc(e.cond||'')+'</div>'+
+      '<div class="en-body">'+e.body.map(p=>'<p>'+esc(p)+'</p>').join('')+'</div>'+
+      stats+
+      '<div class="en-actions"><button class="btn-main" onclick="restartNow()">再 开 一 局</button>'+
+      '<button class="btn-main ghost" onclick="toBoot()">回 · 开 场</button></div>'+
+    '</div>';
+  el('ending').hidden=false;
+  el('ending').scrollTop=0;
+  settled=true;
+}
+function restartNow(){
+  clearSave();S=null;pickedGroom=null;settled=false;
+  closeSheet();
+  goCreate();
+}
+
+/* ---------- 衣橱 / 商铺 / 线索 / 人物 ---------- */
+function pageHead(title,sub){
+  return '<div class="sh-head" style="padding-top:4px"><div><h3>'+title+'</h3><p>'+sub+'</p></div></div>';
+}
+function renderWardrobeTab(){
+  let html=pageHead('衣 橱 · 妆 台','衣裳改变立绘与属性 · 首饰加成另计');
+  html+='<div class="ward-grid">';
+  OUTFITS.forEach(w=>{
+    if(w.minCh&&S.ch<w.minCh&&!S.wardrobe.includes(w.id))return;
+    const owned=S.wardrobe.includes(w.id);
+    const on=S.outfit===w.id;
+    const a=outfitArt(w.id);
+    html+='<div class="ward'+(on?' on':'')+'">'+
+      '<img src="'+a.src+'" class="'+(a.cls||'')+'" alt="">'+
+      '<div class="w-body"><h5>'+esc(w.name)+(on?'<span class="badge">在穿</span>':'')+'</h5>'+
+      '<p>'+esc(w.desc)+'</p><div class="w-eff">'+(effTxt(w.eff)||'—')+'</div>'+
+      (owned?'<button class="w-btn" '+(on?'disabled':'onclick="wearOutfit(\''+w.id+'\')"')+'>'+(on?'穿 着 中':'换 上')+'</button>':'<div class="w-lock">云锦阁可得 · '+w.price+' 两</div>')+
+      '</div></div>';
+  });
+  html+='</div>';
+  el('main').innerHTML=html;
+}
+function wearOutfit(id){
+  S.outfit=id;save();renderTop();
+  const y=el('main').scrollTop;renderWardrobeTab();el('main').scrollTop=y;
+  toast('换上「'+OUTFITS.find(o=>o.id===id).name+'」');
+}
+function jewelIcon(id){
+  return '<img class="jewel-img" src="'+(ART[id]||fallbackArt())+'" alt="">';
+}
+function renderShopTab(){
+  const disc=S.id==='miss'?0.8:1;
+  let html=pageHead('云 锦 阁','银两 '+S.money+' 两'+(S.id==='miss'?' · 伯府千金享八成':''));
+  html+='<div class="seg"><button class="'+(shopTab==='jewel'?'on':'')+'" onclick="shopTab=\'jewel\';renderTab()">首 饰</button>'+
+    '<button class="'+(shopTab==='robe'?'on':'')+'" onclick="shopTab=\'robe\';renderTab()">衣 裳</button></div>';
+  let rows='';
+  if(shopTab==='jewel'){
+    JEWELS.forEach(j=>{
+      if(j.minCh&&S.ch<j.minCh)return;
+      const owned=!j.repeat&&S.items.includes(j.id);
+      const price=Math.round(j.price*disc);
+      rows+='<div class="goods-row">'+
+        '<div class="goods-ico">'+jewelIcon(j.id)+'</div>'+
+        '<div class="goods-info"><h5>'+esc(j.name)+'</h5><p>'+esc(j.desc)+'</p><div class="eff">'+effTxt(j.eff)+'</div></div>'+
+        '<button class="buy-btn'+(owned?' own':'')+'" onclick="'+(owned?'':'buyItem(\''+j.id+'\')')+'">'+price+' 两<small>'+(owned?'已购入':'购 买')+'</small></button>'+
+      '</div>';
+    });
+  }else{
+    OUTFITS.forEach(w=>{
+      if(!w.price)return;
+      if(w.minCh&&S.ch<w.minCh&&!S.wardrobe.includes(w.id))return;
+      const owned=S.wardrobe.includes(w.id);
+      const price=Math.round(w.price*disc);
+      const a=outfitArt(w.id);
+      rows+='<div class="goods-row">'+
+        '<img class="goods-thumb '+(a.cls||'')+'" src="'+a.src+'" alt="">'+
+        '<div class="goods-info"><h5>'+esc(w.name)+'</h5><p>'+esc(w.desc)+'</p><div class="eff">'+effTxt(w.eff)+'</div></div>'+
+        '<button class="buy-btn'+(owned?' own':'')+'" onclick="'+(owned?'':'buyOutfit(\''+w.id+'\')')+'">'+price+' 两<small>'+(owned?'已入衣橱':'购 买')+'</small></button>'+
+      '</div>';
+    });
+  }
+  html+='<div class="goods-list">'+rows+'</div>';
+  el('main').innerHTML=html;
+}
+function buyItem(jid){
+  const j=JEWELS.find(x=>x.id===jid);if(!j)return;
+  const disc=S.id==='miss'?0.8:1;const price=Math.round(j.price*disc);
+  if(S.money<price){toast('银两不足');return}
+  S.money-=price;
+  if(j.repeat){
+    for(const k in j.eff)S.base[k]=(S.base[k]||0)+j.eff[k];
+    S.items.push(jid);
+    S.items=S.items.filter((v,i)=>S.items.indexOf(v)===i);
+  }else{
+    if(!S.items.includes(jid))S.items.push(jid);
+  }
+  save();renderTop();
+  const y=el('main').scrollTop;renderShopTab();el('main').scrollTop=y;
+  toast('购得「'+j.name+'」');
+}
+function buyOutfit(wid){
+  const w=OUTFITS.find(x=>x.id===wid);if(!w)return;
+  const disc=S.id==='miss'?0.8:1;const price=Math.round(w.price*disc);
+  if(S.money<price){toast('银两不足');return}
+  S.money-=price;
+  if(!S.wardrobe.includes(wid))S.wardrobe.push(wid);
+  S.outfit=wid;
+  save();renderTop();
+  const y=el('main').scrollTop;renderShopTab();el('main').scrollTop=y;
+  toast('换上新衣「'+w.name+'」');
+}
+function renderCluesTab(){
+  let html=pageHead('线 索 册','已集 '+S.clues.length+' / '+Object.keys(CLUES).length+' 条 · 同一局，三种真相');
+  html+='<div class="progress"><i style="width:'+(S.clues.length/Object.keys(CLUES).length*100)+'%"></i></div>';
+  if(!S.clues.length){
+    html+='<div class="empty">尚未得到任何线索。<br>多与人交谈，多走暗巷。</div>';
+  }else{
+    S.clues.forEach(c=>{
+      const d=CLUES[c];if(!d)return;
+      html+='<div class="clue-item"><span class="cat">'+esc(d.cat)+'</span><h5>◈ '+esc(d.name)+'</h5><p>'+esc(d.text)+'</p></div>';
+    });
+  }
+  el('main').innerHTML=html;
+}
+function renderNpcsTab(){
+  const rel=relOf();
+  const order=S.groom?[S.groom].concat(['prince','hou','spy'].filter(k=>k!==S.groom)):['prince','hou','spy'];
+  let html=pageHead('人 物 · 棋 子',S.groom?'婚约已定，其余人便是局中子':'好感最高的人，不一定是活到最后的人');
+  let rows='';
+  order.concat(['rival']).forEach(k=>{
+    const n=NPCS[k];const fv=S.fav[k]||0;const isG=(k===S.groom);
+    rows+='<div class="npc'+(isG?' groom':'')+'" onclick="openArt(\''+k+'\')"><img src="'+ART[k]+'" alt=""><div class="npc-info">'+
+      '<h4>'+esc(n.name)+(isG?'<span class="mm-badge">婚约</span>':'')+'</h4><div class="ttl">'+esc(n.title)+'</div>'+
+      '<div class="quote">'+esc(isG&&rel?rel.line:n.quote)+'</div>'+
+      (!isG&&rel&&rel.others&&rel.others[k]?'<div class="npc-tie">'+esc(rel.others[k])+'</div>':'')+
+      (k==='rival'?'<div class="fav"><span>敌 意</span><div class="bar"><i style="width:82%;background:linear-gradient(90deg,#6b2a22,#c25a47)"></i></div><b style="color:#cf7b67">高</b></div>':
+        '<div class="fav"><span>好 感</span><div class="bar"><i style="width:'+Math.min(100,fv*2.5)+'%"></i></div><b>'+fv+'</b></div>')+
+    '</div></div>';
+  });
+  (ID_NPCS[S.id]||[]).forEach(k=>{
+    const n=NPCS[k];
+    rows+='<div class="npc" onclick="openArt(\''+k+'\')"><img src="'+ART[k]+'" alt=""><div class="npc-info">'+
+      '<h4>'+esc(n.name)+'</h4><div class="ttl">'+esc(n.title)+'</div>'+
+      '<div class="quote">'+esc(n.quote)+'</div><div class="fav"><span>若你未选此线</span></div>'+
+    '</div></div>';
+  });
+  html+='<div class="npc-list">'+rows+'</div>';
+  el('main').innerHTML=html;
+}
+
+/* ---------- 弹层 ---------- */
+function sheetHead(title,sub){
+  return '<div class="sh-head"><div><h3>'+title+'</h3><p>'+sub+'</p></div><button class="sh-close" onclick="closeSheet()">✕</button></div>';
+}
+function openArt(k){
+  const n=NPCS[k],src=ART[k];
+  if(!src)return;
+  openSheet('<div class="art-view"><img src="'+src+'" alt="">'+
+    '<div class="av-name">'+esc(n?n.name:'')+'</div></div>');
+}
+function openSheet(html){
+  el('sheetBody').innerHTML=html;
+  el('sheet').hidden=false;
+  el('sheetBody').scrollTop=0;
+}
+function closeSheet(){el('sheet').hidden=true}
+/* ---------- 存档导入导出 ---------- */
+function packSave(){
+  return JSON.stringify({v:1,at:new Date().toISOString(),save:S,arch:loadArch()},null,2);
+}
+function exportFile(){
+  if(!S)return;
+  const d=new Date(),p=n=>String(n).padStart(2,'0');
+  const fn='金玉良缘_存档_'+d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'_'+p(d.getHours())+p(d.getMinutes())+'.json';
+  const url=URL.createObjectURL(new Blob([packSave()],{type:'application/json'}));
+  const a=document.createElement('a');
+  a.href=url;a.download=fn;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),5000);
+  toast('已导出 '+fn);
+}
+function openImport(){
+  openSheet(sheetHead('导 入 存 档','选择导出的 .json 存档文件')+
+    '<div class="io-wrap"><label class="io-file"><input type="file" id="ioFile" accept="application/json,.json" onchange="readSaveFile(this)"><span>选 择 存 档 文 件</span></label>'+
+    '<div class="menu-tip">导入将覆盖本机现有进度与结局图鉴</div></div>');
+}
+function readSaveFile(inp){
+  const f=inp.files&&inp.files[0];if(!f)return;
+  if(f.size>512*1024){toast('文件过大');return}
+  const r=new FileReader();
+  r.onload=()=>applyImport(String(r.result||''));
+  r.onerror=()=>toast('读取失败');
+  r.readAsText(f);
+}
+function applyImport(txt){
+  let data=null;
+  try{data=JSON.parse(txt)}catch(e){}
+  const sv=data&&data.save;
+  if(!sv||!sv.name||!IDENTITIES[sv.id]||typeof sv.ch!=='number'||!CHAPTERS[sv.ch-1]){toast('存档文件无效');return}
+  S=Object.assign(defaultState(sv.name,sv.id),sv);
+  save();
+  if(data.arch&&typeof data.arch==='object')saveArch(data.arch);
+  closeSheet();showGame();renderTop();renderTab();toast('已导入存档');
+}
+function openMenu(){
+  if(!S)return;
+  openSheet(sheetHead('菜 单','第'+CN[S.ch]+'章 · '+curCh().name.split('·')[1].trim()+' · 行动力 '+S.ap)+
+    '<div class="menu-list">'+
+      '<button onclick="save();closeSheet();toast(\'已存档\')">存 档</button>'+
+      '<button onclick="exportFile()">导 出 存 档</button>'+
+      '<button onclick="openImport()">导 入 存 档</button>'+
+      '<button onclick="openGallery()">结 局 图 鉴</button>'+
+      '<button onclick="toBoot()">回 · 开 场</button>'+
+      '<button class="danger" onclick="confirmRestart()">重 新 开 局</button>'+
+    '</div>'+
+    '<div class="menu-tip">'+esc(idOf().perk)+'<br>进度自动保存于本机</div>');
+}
+function confirmRestart(){
+  openSheet(sheetHead('重 新 开 局','当前进度将被清除，此决定不可撤销')+
+    '<div class="menu-list"><button class="danger" onclick="clearSave();S=null;closeSheet();goCreate()">确 定 · 重 开</button>'+
+    '<button onclick="closeSheet()">再 想 想</button></div>');
+}
+function openGallery(){
+  const arch=loadArch();
+  let html=sheetHead('结 局 图 鉴','已收录 '+Object.keys(arch).length+' / '+Object.keys(ENDINGS).length+' 种');
+  html+='<div class="gal-grid">';
+  Object.keys(ENDINGS).forEach(k=>{
+    const e=ENDINGS[k];const on=!!arch[k];
+    html+='<div class="gal'+(on?' on':'')+'"><span class="lock-mark">'+(on?'◈':'✕')+'</span>'+
+      '<h5>'+(on?esc(e.name):'？？？')+'</h5><p>'+(on?esc(e.tag+' · '+e.cond):'尚未抵达')+'</p></div>';
+  });
+  html+='</div>';
+  openSheet(html);
+}
+
+/* ---------- 浮尘 ---------- */
+(function motes(){
+  const c=el('motes');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  let W=0,H=0,ps=[],raf=0;
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function resize(){
+    const r=c.parentElement.getBoundingClientRect();
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    W=r.width;H=r.height;
+    c.width=W*dpr;c.height=H*dpr;
+    c.style.width=W+'px';c.style.height=H+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ps=[];
+    const n=reduce?10:26;
+    for(let i=0;i<n;i++)ps.push({x:Math.random()*W,y:Math.random()*H,r:.6+Math.random()*1.5,vy:-(.05+Math.random()*.18),vx:(Math.random()-.5)*.06,a:.08+Math.random()*.35,p:Math.random()*6.283});
+  }
+  function tick(t){
+    if(el('boot').hidden){raf=requestAnimationFrame(tick);return}
+    ctx.clearRect(0,0,W,H);
+    ps.forEach((p,i)=>{
+      p.y+=p.vy;p.x+=p.vx;
+      if(p.y<-8){p.y=H+8;p.x=Math.random()*W}
+      if(p.x<-8)p.x=W+8;if(p.x>W+8)p.x=-8;
+      const a=p.a*(.55+.45*Math.sin(t/1400+p.p));
+      ctx.beginPath();
+      const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*3.2);
+      g.addColorStop(0,'rgba(226,200,148,'+a+')');
+      g.addColorStop(1,'rgba(226,200,148,0)');
+      ctx.fillStyle=g;ctx.arc(p.x,p.y,p.r*3.2,0,6.283);ctx.fill();
+    });
+    raf=requestAnimationFrame(tick);
+  }
+  resize();
+  window.addEventListener('resize',resize);
+  raf=requestAnimationFrame(tick);
+})();
+
+/* ---------- 启动 ---------- */
+function init(){
+  setupBoot();
+  el('btnStart').onclick=goCreate;
+  el('btnBackBoot').onclick=toBoot;
+  el('btnNew').onclick=goMatch;
+  el('btnBackCreate').onclick=backToCreate;
+  el('btnGroom').onclick=startNew;
+  el('btnContinue').onclick=continueGame;
+  el('btnGallery').onclick=openGallery;
+  el('btnMenu').onclick=openMenu;
+  el('sheetMask').onclick=closeSheet;
+  el('nameInput').addEventListener('input',updateCreateName);
+  el('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')goCreate()});
+  document.querySelectorAll('.tab').forEach(t=>{
+    t.addEventListener('click',()=>{
+      const tab=t.getAttribute('data-tab');
+      if(tab===currentTab){el('main').scrollTop=0;return}
+      currentTab=tab;
+      renderTab();
+      el('main').scrollTop=0;
+    });
+  });
+}
+init();
+
+</script>
+
+</body>
+</html>
