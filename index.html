@@ -1737,6 +1737,24 @@ function dynF(obj,key){
   const k=key+S.id.charAt(0).toUpperCase()+S.id.slice(1);
   return obj[k]!==undefined?obj[k]:obj[key];
 }
+const CANON_NAME={maid:'青梧',miss:'崔明月',gen:'秦飞琼'};
+function pname(){
+  const id=S?S.id:pickedId;
+  if(!id)return '';
+  let typed='';
+  if(S)typed=S.name||'';
+  else{const inp=el('nameInput');typed=inp?inp.value:'';}
+  typed=(typed||'').trim();
+  return typed||(IDENTITIES[id]?IDENTITIES[id].defaultName:'');
+}
+function pn(text){
+  if(typeof text!=='string'||!text)return text;
+  const id=S?S.id:pickedId;
+  if(!id)return text;
+  const canon=CANON_NAME[id],nm=pname();
+  return canon&&nm&&nm!==canon?text.split(canon).join(nm):text;
+}
+
 function dynEff(eff){
   const e={};
   for(const k in eff){
@@ -2001,7 +2019,7 @@ function chapterIntro(){
       '<h2>'+esc(title)+'</h2>'+
       '<span class="in-month">'+esc(ch.month)+'</span>'+
       '<div class="in-hint">'+esc(ch.hint)+'</div>'+
-      '<div class="intro-body">'+paras.map(p=>typeof p==='string'?'<p>'+esc(p)+'</p>':'<p class="in-beat">'+esc(p.beat)+'</p>').join('')+'</div>'+
+      '<div class="intro-body">'+paras.map(p=>typeof p==='string'?'<p>'+esc(pn(p))+'</p>':'<p class="in-beat">'+esc(pn(p.beat))+'</p>').join('')+'</div>'+
       '<button class="btn-main" id="btnEnterCh">落 · '+esc(title)+'</button>'+
     '</div>';
   el('intro').hidden=false;
@@ -2154,7 +2172,7 @@ function openLoc(key){
     const teaser=a.hint||a.desc||(((a.dynId||a.dyn)?dynTxt(a):a.story)||[])[0]||'';
     html+='<button class="evt'+(locked?' locked':'')+'" onclick="'+(locked?'':'closeSheet();runAct(\''+a.id+'\')')+'">'+
       '<h4><span class="eg">'+esc(a.glyph||'事')+'</span>'+esc(a.name)+'<span class="cost">行动 -1</span></h4>'+
-      '<p>'+esc(teaser)+'</p><div class="who">'+esc(who)+'</div>'+
+      '<p>'+esc(pn(teaser))+'</p><div class="who">'+esc(who)+'</div>'+
       (locked?'<div class="lock-note">'+(apOk?esc((rc&&rc.msg)||reqHint(a.req)||'条件不足'):'行动力不足 · 先去自宅歇一歇')+'</div>':'')+
     '</button>';
   });
@@ -2246,7 +2264,7 @@ function showScene(o){
   }else{
     el('scArtWrap').innerHTML='';
   }
-  el('scBody').innerHTML=(o.paras||[]).map(p=>'<p>'+esc(p)+'</p>').join('');
+  el('scBody').innerHTML=(o.paras||[]).map(p=>'<p>'+esc(pn(p))+'</p>').join('');
   const box=el('scChoices');box.innerHTML='';
   if(o.noChoice||!o.choices||!o.choices.length){
     const btn=document.createElement('button');
@@ -2265,8 +2283,8 @@ function showScene(o){
       const b=document.createElement('button');
       b.className='choice'+(rc.ok?'':' locked');
       b.setAttribute('data-idx',IDX[i]||'·');
-      b.innerHTML='<div class="lab">'+esc(dynF(c,'label'))+'</div>'+
-        '<div class="hint">'+esc(rc.ok?(dynF(c,'hint')||''):('未达 · '+(reqHint(c.req)||rc.msg)))+'</div>';
+      b.innerHTML='<div class="lab">'+esc(pn(dynF(c,'label')))+'</div>'+
+        '<div class="hint">'+esc(pn(rc.ok?(dynF(c,'hint')||''):('未达 · '+(reqHint(c.req)||rc.msg))))+'</div>';
       if(rc.ok){
         b.onclick=(e)=>{
           e.stopPropagation();
@@ -2274,7 +2292,7 @@ function showScene(o){
           if(o.onPick)o.onPick();
           const chips=applyEff(c.eff);
           const ocArt=o.art||ART[o.whoKey]||SCROLL_ART;
-          showOutcome('抉 择',dynF(c,'out'),chips,o.nextBtn||'回 · 舆图',o.onDone,false,ocArt);
+          showOutcome('抉 择',pn(dynF(c,'out')),chips,o.nextBtn||'回 · 舆图',o.onDone,false,ocArt);
         };
       }
       box.appendChild(b);
@@ -2451,7 +2469,7 @@ function renderEnding(endId){
       '<h1 class="en-title">'+esc(e.name)+'</h1>'+
       '<div class="en-tag">'+esc(e.tag)+'</div>'+
       '<div class="en-cond">'+esc(e.cond||'')+'</div>'+
-      '<div class="en-body">'+e.body.map(p=>'<p>'+esc(p)+'</p>').join('')+'</div>'+
+      '<div class="en-body">'+e.body.map(p=>'<p>'+esc(pn(p))+'</p>').join('')+'</div>'+
       stats+
       '<div class="en-actions"><button class="btn-main" onclick="restartNow()">再 开 一 局</button>'+
       '<button class="btn-main ghost" onclick="toBoot()">回 · 开 场</button></div>'+
@@ -2591,7 +2609,7 @@ function renderNpcsTab(){
     const n=NPCS[k];const fv=S.fav[k]||0;const isG=(k===S.groom);
     rows+='<div class="npc'+(isG?' groom':'')+'" onclick="openArt(\''+k+'\')"><img src="'+ART[k]+'" alt=""><div class="npc-info">'+
       '<h4>'+esc(n.name)+(isG?'<span class="mm-badge">婚约</span>':'')+'</h4><div class="ttl">'+esc(n.title)+'</div>'+
-      '<div class="quote">'+esc(isG&&rel?rel.line:n.quote)+'</div>'+
+      '<div class="quote">'+esc(pn(isG&&rel?rel.line:n.quote))+'</div>'+
       (!isG&&rel&&rel.others&&rel.others[k]?'<div class="npc-tie">'+esc(rel.others[k])+'</div>':'')+
       (k==='rival'?'<div class="fav"><span>敌 意</span><div class="bar"><i style="width:82%;background:linear-gradient(90deg,#6b2a22,#c25a47)"></i></div><b style="color:#cf7b67">高</b></div>':
         '<div class="fav"><span>好 感</span><div class="bar"><i style="width:'+Math.min(100,fv*2.5)+'%"></i></div><b>'+fv+'</b></div>')+
