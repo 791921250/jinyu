@@ -1640,6 +1640,16 @@ const ENDINGS={
    '没有人再提「婢女」二字。十二年前被朱笔圈了又划掉的名字,如今盖着凤印,压在所有婚书之上。',
    '三皇子来请你入朝参政,顾长风来请你主持旧案卷宗,北漠使者隔着界河向你递了十年国书。你一一收下,又一一搁在案头。',
    '「诸位,」你提笔蘸墨,「先说好——这一局,谁执棋,谁落子?」满堂寂静。你落子无声。']},
+ e_zhier_miss:{name:'执棋人',tag:'隐藏结局 · 大BOSS',cond:'千金线账局走满+高谋略高线索',
+  body:['那一夜之后,上京换了三样东西:东宫换了主人,北漠换了和约,而永宁伯府的门楣,换了一块。',
+   '没有人再提「亏空」二字。你交出去的那本账,如今压在御史台的铁柜里,成了十二年前旧案的钥匙。',
+   '三皇子来请你入朝掌度支,顾长风来请你重理旧案卷宗,北漠使者隔着界河递来十年的国书。你一一收下,又一一搁在案头。',
+   '「诸位,」你提笔蘸墨,「先说好——这一局,谁执棋,谁落子?」满堂寂静。你落子无声。']},
+ e_zhier_gen:{name:'执棋人',tag:'隐藏结局 · 大BOSS',cond:'将军线虎符局走满+高谋略高线索',
+  body:['那一夜之后,上京换了三样东西:东宫换了主人,北漠换了和约,而北境的军报上,第一次出现了你的名字。',
+   '没有人再提「和亲」二字。你父亲交还的虎符,如今压在你案头——不是谁赐的,是你自己挣的。',
+   '三皇子来请你入朝参赞军务,顾长风来请你主持北线粮道,北漠使者隔着界河递来十年国书。你一一收下,又一一搁在案头。',
+   '「诸位,」你提笔蘸墨,「先说好——这一局,谁执棋,谁落子?」满堂寂静。你落子无声。']},
  e_fengguan:{name:'鸾凤同谋',tag:'HE · 三皇子线',cond:'萧景珩好感最高≥26且谋略≥12',
   body:['宫变平定的第七日,聘书送到你面前——不是「纳」,是「聘」,一字之差,他改了三个月。',
    '大婚那日,他在你耳边说:「满上京都娶联姻,只有朕,娶的是谋士。」你笑着纠正:「是妻,也是谋士。」',
@@ -1669,7 +1679,7 @@ const ENDINGS={
  e_chaliang:{name:'人走茶凉',tag:'BE',cond:'花宴之局大败且声名扫地',
   body:['泼出去的茶,终究是泼回了自己身上。那场花宴之后,上京的茶会上,再没有你的座次。',
    '婚书与你无关,旧案与你无关,连曲水巷的风,都不肯再往你这边吹。',
-   '多年后有人路过伯府(或将军府、或某个不知名的小院),看见一个妇人静静坐着补衣。针脚极好,只是再也,没有机会给人看见了。']},
+   '多年后,有人在城南的一条小巷里,看见一个妇人静静坐着补衣。针脚极好,只是再也,没有机会给人看见了。']},
  e_longzhong:{name:'笼中雀',tag:'BE',cond:'实力不足,沦为联姻棋子',
   body:['诏书下来,你的婚事被一句「以固国本」轻轻带过,像带走一只鸟,顺手拢上了笼门。',
    '笼中的日子金玉满堂,只是再没有人问过你一句话。偶尔听见窗外马蹄声急,你分不清是三皇子的,是顾长风的,还是沈栖迟的——后来也不想分了。',
@@ -2382,7 +2392,8 @@ function evaluateEnding(){
   const maxFav=Math.max(S.fav.prince,S.fav.hou,S.fav.spy);
   const rel=relOf();
   let end=null;
-  if(flagOf('end_boss')||(S.id==='maid'&&flagOf('boss_path')&&S.clues.length>=6))end='e_zhier';
+  const bossEnd=S.id==='miss'?'e_zhier_miss':(S.id==='gen'?'e_zhier_gen':'e_zhier');
+  if(flagOf('end_boss')||(S.id==='maid'&&flagOf('boss_path')&&S.clues.length>=6))end=bossEnd;
   else if(rel&&S.fav[S.groom]>=rel.need)end='rel_'+S.groom+'_'+S.id;
   else if(!S.groom&&flagOf('end_prince')&&S.fav.prince>=26&&effAttr('strat')>=12)end='e_fengguan';
   else if(!S.groom&&flagOf('end_hou')&&S.fav.hou>=24&&hasClue('c2'))end='e_kuaima';
@@ -2406,8 +2417,8 @@ function evaluateEnding(){
   save();
   renderEnding(end);
 }
-const END_PARTNER={e_zhier:'prince',e_fengguan:'prince',e_kuaima:'hou',e_shanhe:'spy',e_jinzhi:'rival',e_jiangmen:'hou',e_fengyue:'spy',e_chaliang:'rival',e_longzhong:'prince'};
-const END_ID={e_zhier:'maid',e_jinzhi:'miss',e_jiangmen:'gen'};
+const END_PARTNER={e_zhier:'prince',e_zhier_miss:'prince',e_zhier_gen:'prince',e_fengguan:'prince',e_kuaima:'hou',e_shanhe:'spy',e_jinzhi:'rival',e_jiangmen:'hou',e_fengyue:'spy',e_chaliang:'rival',e_longzhong:'prince'};
+const END_ID={e_zhier:'maid',e_zhier_miss:'miss',e_zhier_gen:'gen',e_jinzhi:'miss',e_jiangmen:'gen'};
 function endingArt(endId){
   const m=/^rel_([a-z]+)_([a-z]+)$/.exec(endId||'');
   if(m){const a1=ART[ID_ART[m[2]]],a2=ART[m[1]];if(a1&&a2)return {duo:[a1,a2]};}
