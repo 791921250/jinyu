@@ -1243,12 +1243,16 @@ const CHAPTERS=[
     choices:[
      {label:'温声谢过,帖子上挑不出错处',hint:'优雅+2',eff:{grace:2},out:'你把帖子收得妥帖。她目送你走远,笑意不变,回头对婢女低语了一句什么。'},
      {label:'笑着接帖,顺势记下她袖口滑出的半页家书',hint:'需谋略≥7 · 谋略+2 线索「苏家的家书」',req:{strat:7},eff:{strat:2,clue:['c4']},out:'家书上落款不是苏府——是凤仪宫。她进京待嫁,是中宫布下的一枚钉子。你把纸折好贴身收了,面上笑得分毫不差。'}]},
-   {loc:'chi',id:'m1g',name:'曲江游宴 · 三姝同框',glyph:'宴',ap:1,
-    story:['曲江池畔春宴,满城贵女都在。你一眼就认出了她们——伯府那个总穿月白的婢女青梧正低头收拾茶盏,指尖的针脚却是只有大贵族才教的缠枝纹;将军府的秦飞琼独坐高处,满身荣光,满眼倦意。',
+   {loc:'chi',id:'m1g',name:'曲江游宴 · 三姝同框',glyph:'宴',ap:1,dyn:1,
+    storyMaid:['曲江池畔春宴,满城贵女都在。你捧着伯府的茶盘立在廊柱后,没人看你——这很好。将军府的秦飞琼独坐高处,满身荣光,满眼倦意;席上苏含烟笑着替每个人斟酒,酒里都是话。',
+      '同是女子,同在这盘局里。只是落子的手,从来不在你们自己手上。'],
+    storyMiss:['曲江池畔春宴,满城贵女都在。你一眼就认出了她们——伯府那个总穿月白的婢女青梧正低头收拾茶盏,指尖的针脚却是只有大贵族才教的缠枝纹;将军府的秦飞琼独坐高处,满身荣光,满眼倦意。',
+      '同是女子,同在这盘局里。只是落子的手,从来不在你们自己手上。'],
+    storyGen:['曲江池畔春宴,满城贵女都在。伯府那个总穿月白的婢女青梧正低头收拾茶盏,指尖的针脚却是只有大贵族才教的缠枝纹。你独坐高处,满身荣光,满眼倦意;满座的人都在看你,也在看你父亲手里的兵。',
       '同是女子,同在这盘局里。只是落子的手,从来不在你们自己手上。'],
     choices:[
-     {label:'去陪秦飞琼坐一会儿',hint:'谋略+1 · 伏笔「将门的无奈」',eff:{strat:1,flag:'saw_gen'},out:'她给你倒酒时忽然说:「我爹守了二十年北境。如今满朝都在算,他什么时候死在北边。」说完她自己先笑了,「抱歉,今日春风太好,不该说这个。」'},
-     {label:'去递给青梧一块帕子',hint:'聪慧+1 · 伏笔「婢女的针脚」',eff:{wit:1,flag:'saw_maid'},out:'她接帕子时指尖微颤,低声道了句谢。你看见她袖口内的缠枝纹,和袖口外的补丁,像同一个人的两种命运。'}]},
+     {label:'去陪秦飞琼坐一会儿',labelGen:'留在高处,看满园的人如何落子',hint:'谋略+1 · 伏笔「将门的无奈」',eff:{strat:1,flag:'saw_gen'},out:'她给你倒酒时忽然说:「我爹守了二十年北境。如今满朝都在算,他什么时候死在北边。」说完她自己先笑了,「抱歉,今日春风太好,不该说这个。」',outGen:'你端着酒坐回高处,把每一道投向你的目光都记在心里:有人在算你的嫁妆,有人在算你父亲的兵。这场春宴,从来不是赏花。'},
+     {label:'去递给青梧一块帕子',labelMaid:'退回廊下,把满园的闲话都收进耳朵',hint:'聪慧+1 · 伏笔「婢女的针脚」',eff:{wit:1,flag:'saw_maid'},out:'她接帕子时指尖微颤,低声道了句谢。你看见她袖口内的缠枝纹,和袖口外的补丁,像同一个人的两种命运。',outMaid:'你退回廊柱后,替自己续了一盏冷茶。席上的话一句句落进耳朵:谁家的军饷、谁家的旧账、谁家的女儿要进宫。你低头擦净茶盏,把每一句都记下。'}]},
    {loc:'qushui',id:'m1id',dynId:1,name:'巷中旧事',glyph:'巷',ap:1,
     storyMaid:['曲水巷深处,你按名册寻到一座旧宅。守宅的老仆看见你,浑浊的眼睛忽然亮了:「小姐……不,姑娘。老奴等你等了十二年。」',
       '他递来半页火漆封存的名录:「忠靖侯谢氏,满门获罪。名录最后一行,是老爷亲手圈了又划掉的名字。」'],
@@ -1258,7 +1262,7 @@ const CHAPTERS=[
       '他声音压得极低:「有人在国内仿制虎符。至于是谁——老臣查到一半,就告老了。」'],
     choices:[
      {label:'把东西收进袖中,谢过',hint:'谋略+2 · 关键线索',eff:{strat:2,clue:{maid:['c5'],miss:['c9'],gen:['c7']}},out:'纸页贴着腕骨,凉得像一块冰。你知道,从今日起你在这局里,不再只是被摆的那颗子。'},
-     {label:'多问一句「还有谁知情」',hint:'聪慧+2 · 线索「凤印出宫」',eff:{wit:2,clue:['c10']},out:'老仆垂目:「中宫凤印三个月内两次出宫,去向都是这条巷子。姑娘,这条巷子水深。」'}]},
+     {label:'多问一句「还有谁知情」',hint:'聪慧+2 · 线索「凤印出宫」',eff:{wit:2,clue:['c10']},out:'老仆垂目:「中宫凤印三个月内两次出宫,去向都是这条巷子。姑娘,这条巷子水深。」',outMiss:'嬷嬷垂目:「中宫凤印三个月内两次出宫,去向都是这条巷子。姑娘,这条巷子水深。」',outGen:'老侍郎垂目:「中宫凤印三个月内两次出宫,去向都是这条巷子。姑娘,这条巷子水深。」'}]},
   ],
   climax:{loc:'gong',name:'麟德殿赐宴',ap:0,
    story:['麟德殿赐宴,帝亲言:将为诸王与勋贵之家指婚,「以固国本」。殿上金杯交错,人人都在称量自己值几个郡、几万兵。',
@@ -1313,7 +1317,7 @@ const CHAPTERS=[
       '「姑娘,朝中有人希望你嫁,有人希望你死。两拨人举杯的时候,坐得很近。」'],
     choices:[
      {label:'收下消息,冷静致谢',hint:'谋略+2 · 关键线索',eff:{strat:2,clue:{maid:['c5'],miss:['c9'],gen:['c7']}},out:'消息入袖,如冰入领。你知道下一场风浪,已经在路上了。'},
-     {label:'追问「凤印为何总来此巷」',hint:'需聪慧≥9 · 聪慧+2 线索「凤印出宫」',req:{wit:9},eff:{wit:2,clue:['c10']},out:'老仆沉吟许久:「中宫……在替当年构陷谢家的人,收尾灭口。姑娘,凤印出宫,是来杀口的。」'}]},
+     {label:'追问「凤印为何总来此巷」',hint:'需聪慧≥9 · 聪慧+2 线索「凤印出宫」',req:{wit:9},eff:{wit:2,clue:['c10']},out:'老仆沉吟许久:「中宫……在替当年构陷谢家的人,收尾灭口。姑娘,凤印出宫,是来杀口的。」',outMiss:'嬷嬷沉吟许久:「中宫……在替当年构陷忠靖侯的人,收尾灭口。姑娘,凤印出宫,是来杀口的。」',outGen:'老侍郎沉吟许久:「中宫……在替当年构陷忠靖侯的人,收尾灭口。姑娘,凤印出宫,是来杀口的。」'}]},
   ],
   climax:{loc:'yhy',name:'花宴泼茶局',ap:0,
    story:['花宴正酣,苏含烟的婢女「失手」将一盏热茶泼向你的裙角。茶水里掺了香粉,遇热便晕开一大片黄渍,怎么洗都洗不掉。',
@@ -1399,7 +1403,7 @@ const CHAPTERS=[
      {label:'「妾只看见,殿下帐下无一人可用,除了妾」',hint:'谋略+3 好感+5',eff:{strat:3,fav:{prince:5}},out:'他愣住,随即大笑,笑声里有难得的松动:「好。好一个『除了妾』——那就把这句也记在婚书上。」'}]},
    {loc:'machang',id:'m4h',who:'hou',name:'结盟之夜',glyph:'盟',ap:1,
     story:['马场后门,顾长风把一坛酒拍在你面前,又拍下一本册子——东宫与北漠往来的账目誊本。',
-      '「我查这册子七年,就差最后一个人证。」他抬眼看你,全无白日的浪荡,「姑娘,做个交易:你助我拿人证,我保你全家周全。」'],
+      '「我查这册子七年,就差最后一个人证。」他抬眼看你,全无白日的浪荡,「姑娘,做个交易:你助我拿人证,我保你和你身边的人周全。」'],
     choices:[
      {label:'击掌为盟,分饮此酒',hint:'好感+6 谋略+2 · 「盟友」',eff:{fav:{hou:6},strat:2,flag:'ally_hou'},out:'酒入喉极烈。他看着你饮尽,忽然低声道:「其实我第一次见你,就认出你袖口的针脚了。——上京城里,能把补丁穿得这么理直气壮的,都是狠人。」'},
      {label:'「先说人证是谁」',hint:'需谋略≥10 · 谋略+3 好感+4',req:{strat:10},eff:{strat:3,fav:{hou:4},flag:'ally_hou'},out:'他吐出两个字:「詹事。」你心头一凛——詹事一倒,东宫断臂;詹事不倒,则你满盘皆输。这交易,比想象中深。'}]},
@@ -1409,8 +1413,10 @@ const CHAPTERS=[
     choices:[
      {label:'「因为你需要一个上京的人,替你按住军道」',hint:'需谋略≥11 · 谋略+3 好感+7',req:{strat:11},eff:{strat:3,fav:{spy:7},flag:'spy_seen'},out:'他眼中闪过一丝真切的震动,随即笑叹:「我布了三个月的局,你三句话就拆完了。姑娘,我这颗心,是不是也是你局里早就算好的?」'},
      {label:'「不必说。人心隔两国」',hint:'优雅+2 好感+4',eff:{grace:2,fav:{spy:4}},out:'他久久注视着你,把茶一饮而尽:「两国为界,人心为壑。姑娘站壑的那边——可别怪我,总想往那边看。」'}]},
-   {loc:'sufu',id:'m4r',who:'rival',name:'凤仪宫的钉子',glyph:'钉',ap:1,
-    story:['苏府里,苏含烟为你设茶。这一次她不装了:「凤仪宫已定,和亲的人选是你。你以为拆我两次,我就拿你没办法?」「妹妹,皇后娘娘捏着的东西,可比一封家书多得多。」'],
+   {loc:'sufu',id:'m4r',who:'rival',name:'凤仪宫的钉子',glyph:'钉',ap:1,dyn:1,
+    storyMaid:['苏府里,苏含烟为你设茶。这一次她不装了:「凤仪宫把你的名字记下了——一个婢女,能让皇后记住,你猜是福是祸?」「妹妹,皇后娘娘捏着的东西,可比一封家书多得多。」'],
+    storyMiss:['苏府里,苏含烟为你设茶。这一次她不装了:「凤仪宫已定,伯府这桩婚事的人选是你。你以为拆我两次,我就拿你没办法?」「妹妹,皇后娘娘捏着的东西,可比一封家书多得多。」'],
+    storyGen:['苏府里,苏含烟为你设茶。这一次她不装了:「凤仪宫已定,和亲的人选是你。你以为拆我两次,我就拿你没办法?」「妹妹,皇后娘娘捏着的东西,可比一封家书多得多。」'],
     choices:[
      {label:'「那便请姐姐看看,这个」——递出凤印出宫的记录',hint:'需线索「凤印出宫」· 谋略+3 反制',req:{clue:['c10']},eff:{strat:3,flag:'rival_check'},out:'她看清纸上几行记录,指尖发凉:「你……竟连这个都查得到。」你收信起身,笑意盈盈:「姐姐安心,你我如今是一根绳上的人——凤印出宫的账,揭出来,先烧到的是谁?」'},
      {label:'不动声色,只问「皇后娘娘安否」',hint:'谋略+2',eff:{strat:2},out:'你一句问候问得她如芒在背。走时你补了一句:「姐姐的家书,往后不如直呈御前,免得经手人杂。」——她的脸色,比茶还凉。'}]},
@@ -1422,7 +1428,7 @@ const CHAPTERS=[
     storyGen:['老侍郎吐血而来:「仿印的线,最终指向凤仪宫。可凤仪宫……动不得。姑娘,只有一条路能把水搅清:让和亲的局,当着满朝文武,做不下去。」',
       '「怎么做,老臣不知。但你的胆子,比老臣大。」'],
     choices:[
-     {label:'「做。就今夜」',hint:'谋略+3 · 命运线锁死',eff:{strat:3,flag:{maid:'boss_path',miss:'family_path',gen:'army_path'}},out:'你提起裙摆,踏进夜色。巷口的老仆跪下去,朝着你的背影磕了一个头——十二年了,他终于等到有人回头。'},
+     {label:'「做。就今夜」',hint:'谋略+3 · 命运线锁死',eff:{strat:3,flag:{maid:'boss_path',miss:'family_path',gen:'army_path'}},out:'你提起裙摆,踏进夜色。巷口的老仆跪下去,朝着你的背影磕了一个头——十二年了,他终于等到有人回头。',outMiss:'你提起裙摆,踏进夜色。嬷嬷在灯下朝你福了一礼,把长公主的手令按进你掌心——这一夜之后,伯府要么活,要么散。',outGen:'你提起裙摆,踏进夜色。老侍郎扶着门框朝你深深一揖——这一夜之后,将军府要么洗清,要么倾覆。'},
      {label:'「把退路留一寸」',hint:'聪慧+2',eff:{wit:2},out:'你按下冲动,先去布一条退路。谋事者,先谋败。'}]},
   ],
   climax:{loc:'gong',name:'御前奏对',ap:0,dyn:1,
@@ -1435,7 +1441,7 @@ const CHAPTERS=[
      '「秦卿之女,」帝缓缓道,「你父亲交出虎符,你便可留;不交,北漠那边,朕留不住你。」',
      '满朝文武,看着你,也看着你父亲。'],
    choices:[
-    {label:'(婢女线)当殿亮明真身,呈上东宫罪档,请帝重审旧案',line:'maid',hint:'需身世线进阶与线索≥6 · 大BOSS转折',req:{flag:'boss_path',clueN:4},eff:{strat:4,flag:'boss_reveal'},out:'「民女不敢翻先帝的铁案,只请陛下重审『证物』——构陷谢家的册子,如今就压在东宫詹事库中,与北漠皮货的旧账,同一批经手人。」满殿哗然里,帝的目光第一次从你父亲的甲胄上,移到了你身上。'},
+    {label:'(婢女线)当殿亮明真身,呈上东宫罪档,请帝重审旧案',line:'maid',hint:'需身世线进阶与线索≥6 · 大BOSS转折',req:{flag:'boss_path',clueN:4},eff:{strat:4,flag:'boss_reveal'},out:'「民女不敢翻先帝的铁案,只请陛下重审『证物』——构陷谢家的册子,如今就压在东宫詹事库中,与北漠皮货的旧账,同一批经手人。」满殿哗然里,帝的目光第一次真正落在你身上——不是看一个跪在丹墀下的婢女,是看谢家最后一个人。'},
     {label:'(千金线)呈上改过的账本,罪止伯父,保全阖族',line:'miss',hint:'需聪慧≥11 · 家族线收束',req:{wit:11},eff:{wit:3,flag:'family_saved'},out:'你一笔一笔指出账目里「替人受过」的痕迹,把詹事的袖子抖了个干净。帝掷笔而叹:「崔氏一门,总算出了一个明白人。」——伯父的名字,你终究写了上去;可族里的血脉,保住了。'},
     {label:'(将军线)当殿陈说北漠细作与仿印之案,以攻代守',line:'gen',hint:'需线索「对不上的账本」或「河灯暗语」· 谋略+4 · 破局',req:{clue:['c3','c8'],mode:'any'},eff:{strat:4,flag:'army_saved'},out:'「陛下,和亲不是破局,是开城门。」你把军道、账本、狼衔月一一摊开,「北漠要的不是王妃,是内应。」满殿死寂后,帝缓缓收回了和亲的诏书:「好一个秦家女儿。」——你父亲在殿外,老泪纵横,把虎符捧过了头顶。'},
     {label:'(通用)谁也不求,只说「臣女愿嫁,但嫁谁,由陛下圣裁」',hint:'安全 · 优雅+2',eff:{grace:2,flag:'humble'},out:'你把答案还给了皇帝。他盯着你看了很久,忽然笑了:「聪明,也太聪明了。聪明得……让人想看看你的底线在哪儿。」'}]},
@@ -1458,9 +1464,9 @@ const CHAPTERS=[
      {label:'「殿下,妾今夜不进宫,妾进史书」',hint:'需谋略≥12 · 谋略+3 好感+4',req:{strat:12},eff:{strat:3,fav:{prince:4}},out:'他怔住,继而大笑,笑出了眼泪:「好!好一个进史书!——那本王就先把『聘书』押在史官那儿,等今夜过后再取。」'}]},
    {loc:'machang',id:'m5h',who:'hou',name:'顾长风的刀',glyph:'刀',ap:1,
     story:['马场灯火下,顾长风披甲按刀,再无半分纨绔——甲上是七年暗卫的旧血痕。',
-      '「詹事今夜必反。」他把半块虎符掷给你,「这是真的那半。你执它,调京畿守备;我执刀,拿詹事的人头。」「姑娘,我这条命,七年里有两个主人:陛下,和你。」'],
+      '「詹事今夜必反。」他把半块虎符按进你手里,「这是真的那半。若我今夜没回来——拿它去定远侯府旧部,替我调兵,取他的人头。」「姑娘,我这条命,七年里有两个主人:陛下,和你。」'],
     choices:[
-     {label:'接符,与他分兵',hint:'好感+6 · 「并肩」',eff:{fav:{hou:6},flag:'ally_hou'},out:'你与他背对而立,各自点兵。他忽然低声道:「打完今夜,马场那局赌债,该还了——我还你一场聘礼,行不行?」'},
+     {label:'接符,与他分兵',hint:'好感+6 · 「并肩」',eff:{fav:{hou:6},flag:'ally_hou'},out:'你收好虎符,他翻身上马。他忽然低声道:「打完今夜,马场那局赌债,该还了——我还你一场聘礼,行不行?」'},
      {label:'「刀你执,符我来掌。人证名单,我来念」',hint:'需谋略≥12 · 谋略+3 好感+5',req:{strat:12},eff:{strat:3,fav:{hou:5}},out:'他怔了怔,忽然咧嘴一笑,把刀双手奉上:「得嘞。——姑娘发令,顾长风七年来头一回,给人当刀。」'}]},
    {loc:'shiguan',id:'m5s',who:'spy',name:'城楼论山河',glyph:'城',ap:1,
     story:['使馆后园,沈栖迟一身北漠王袍,再不遮掩。城楼之上,他指着两国的界河:「和亲作废,和约在我袖中。今夜东宫反,北漠退兵——条件只有一个:你。」',
@@ -1476,11 +1482,17 @@ const CHAPTERS=[
     storyGen:['父亲把虎符郑重交到你手里:「阿琼,爹这双手只会打仗。今夜宫变,朝局需人执子——爹把这子,交给你。」',
       '虎符入手,重逾千斤。你忽然懂了:所谓将门,护的从来不是符,是符后头的万家灯火。'],
     choices:[
-     {label:'「今夜,以我为主」',hint:'谋略+3 · 终局准备',eff:{strat:3,flag:'self_lead'},out:'你把令旗、账本、名单一一归位,如同落定最后一枚棋子。'},
+     {label:'「今夜,以我为主」',hint:'谋略+3 · 终局准备',eff:{strat:3,flag:'self_lead'},out:'你把账本、名单、人证一一归位,如同落定最后一枚棋子。',outGen:'你把令旗、账本、名单一一归位,如同落定最后一枚棋子。'},
      {label:'先去见三位故人一面',hint:'聪慧+2 好感全+2',eff:{wit:2,fav:{prince:2,hou:2,spy:2}},out:'你走了一遭,把每个人的底牌都又看了一遍。回来时,你比来时更清楚:今夜,谁都靠得住,也都靠不住——除了你自己。'}]},
   ],
-  climax:{loc:'gong',name:'宫变之夜',ap:0,
-   story:['三更,宫中火起。东宫甲士叩门,北漠铁骑压境,帝疾发,卧于榻上——一夜之间,三把刀同时架上这座城的脖子。',
+  climax:{loc:'gong',name:'宫变之夜',ap:0,dyn:1,
+   storyMaid:['三更,宫中火起。东宫甲士叩门,北漠铁骑压境,帝疾发,卧于榻上——一夜之间,三把刀同时架上这座城的脖子。',
+     '你立于宫门之内。身后是帝榻,眼前是火光,袖中是十二年的旧案,与半枚裂了又合上的玉玦。',
+     '今夜之后,上京再无旧局。你抬脚,走向你认定的那道门。'],
+   storyMiss:['三更,宫中火起。东宫甲士叩门,北漠铁骑压境,帝疾发,卧于榻上——一夜之间,三把刀同时架上这座城的脖子。',
+     '你立于宫门之内。身后是帝榻,眼前是火光,袖中是改过的账本、长公主的手令,与伯府一门的命。',
+     '今夜之后,上京再无旧局。你抬脚,走向你认定的那道门。'],
+   storyGen:['三更,宫中火起。东宫甲士叩门,北漠铁骑压境,帝疾发,卧于榻上——一夜之间,三把刀同时架上这座城的脖子。',
      '你立于宫门之内。身后是帝榻,眼前是火光,袖中是十二年的旧案、两国的和约、与一枚真的虎符。',
      '今夜之后,上京再无旧局。你抬脚,走向你认定的那道门。'],
    choices:[
@@ -1582,6 +1594,10 @@ function dynTxt(obj){
   const k='story'+S.id.charAt(0).toUpperCase()+S.id.slice(1);
   return obj[k]||obj.story;
 }
+function dynF(obj,key){
+  const k=key+S.id.charAt(0).toUpperCase()+S.id.slice(1);
+  return obj[k]!==undefined?obj[k]:obj[key];
+}
 function dynEff(eff){
   const e={};
   for(const k in eff){
@@ -1676,7 +1692,7 @@ function toBoot(){
 function goCreate(){
   closeSheet();
   hideScreens('create');
-  pickedGroom=null;settled=false;
+  pickedGroom=null;settled=false;pickedId=null;
   el('create').hidden=false;
   renderCreate();
 }
@@ -1716,7 +1732,6 @@ function renderCreate(){
   if(el('crDiff'))el('crDiff').innerHTML=esc(IDENTITIES[pickedId].diff.split(' · ')[0])+'局';
   rail.querySelectorAll('.cr-card').forEach(card=>{
     card.addEventListener('click',()=>{
-      if(Date.now()-(rail._moved||0)<300)return;
       selectIdentity(card.getAttribute('data-id'));
       card.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
     });
@@ -1997,7 +2012,7 @@ function openLoc(key){
     const apOk=S.ap>0;
     const locked=(rc&&!rc.ok)||!apOk;
     const who=a.who&&NPCS[a.who]?NPCS[a.who].name:(a.dynId?'身份暗线':'同窗局');
-    const teaser=a.hint||a.desc||((a.story||[])[0]||'');
+    const teaser=a.hint||a.desc||(((a.dynId||a.dyn)?dynTxt(a):a.story)||[])[0]||'';
     html+='<button class="evt'+(locked?' locked':'')+'" onclick="'+(locked?'':'closeSheet();runAct(\''+a.id+'\')')+'">'+
       '<h4><span class="eg">'+esc(a.glyph||'事')+'</span>'+esc(a.name)+'<span class="cost">行动 -1</span></h4>'+
       '<p>'+esc(teaser)+'</p><div class="who">'+esc(who)+'</div>'+
@@ -2111,8 +2126,8 @@ function showScene(o){
       const b=document.createElement('button');
       b.className='choice'+(rc.ok?'':' locked');
       b.setAttribute('data-idx',IDX[i]||'·');
-      b.innerHTML='<div class="lab">'+esc(c.label)+'</div>'+
-        '<div class="hint">'+esc(rc.ok?(c.hint||''):('未达 · '+(reqHint(c.req)||rc.msg)))+'</div>';
+      b.innerHTML='<div class="lab">'+esc(dynF(c,'label'))+'</div>'+
+        '<div class="hint">'+esc(rc.ok?(dynF(c,'hint')||''):('未达 · '+(reqHint(c.req)||rc.msg)))+'</div>';
       if(rc.ok){
         b.onclick=(e)=>{
           e.stopPropagation();
@@ -2120,7 +2135,7 @@ function showScene(o){
           if(o.onPick)o.onPick();
           const chips=applyEff(c.eff);
           const ocArt=o.art||ART[o.whoKey]||SCROLL_ART;
-          showOutcome('抉 择',c.out,chips,o.nextBtn||'回 · 舆图',o.onDone,false,ocArt);
+          showOutcome('抉 择',dynF(c,'out'),chips,o.nextBtn||'回 · 舆图',o.onDone,false,ocArt);
         };
       }
       box.appendChild(b);
@@ -2201,7 +2216,7 @@ function runAct(aid){
     if(!S.used.includes(act.id))S.used.push(act.id);
     save();renderTop();
   };
-  const paras=act.dynId?dynTxt(act):act.story;
+  const paras=(act.dynId||act.dyn)?dynTxt(act):act.story;
   let art=null,artN='',artT='',artQ='',whoKey='';
   if(act.who&&NPCS[act.who]&&ART[act.who]){
     const n=NPCS[act.who];
